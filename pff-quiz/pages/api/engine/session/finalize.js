@@ -1,5 +1,5 @@
 // Real Engine API for Vercel
-const { finalizeSession } = require('../../../../engine/index.js');
+import { finalizeSession } from '../../../../engine/index.js';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {

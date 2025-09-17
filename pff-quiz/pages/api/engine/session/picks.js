@@ -1,5 +1,5 @@
 // Real Engine API for Vercel
-const { setPicks } = require('../../../../engine/index.js');
+import { setPicks } from '../../../../engine/index.js';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {

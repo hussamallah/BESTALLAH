@@ -1,6 +1,6 @@
 // Real Engine API for Vercel
-const path = require('path');
-const { initSession } = require('../../../../engine/index.js');
+import path from 'path';
+import { initSession } from '../../../../engine/index.js';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {

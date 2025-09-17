@@ -1,5 +1,5 @@
 // Real Engine API for Vercel
-const { getNextQuestion } = require('../../../../engine/index.js');
+import { getNextQuestion } from '../../../../engine/index.js';
 
 export default async function handler(req, res) {
   if (req.method !== 'GET') {
