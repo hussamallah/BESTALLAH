@@ -1,8 +1,6 @@
 // Real Engine API for Vercel
 const path = require('path');
-const PFFEngine = require('../../../../engine/index.js');
-
-let engine = null;
+const { initSession } = require('../../../../engine/index.js');
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -10,11 +8,6 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Initialize engine if not already done
-    if (!engine) {
-      engine = new PFFEngine();
-    }
-
     const { session_seed } = req.body;
     
     if (!session_seed) {
@@ -24,8 +17,8 @@ export default async function handler(req, res) {
     // Load bank package from the correct path
     const bankPath = path.join(process.cwd(), 'bank', 'packaged', 'bank_package.json');
     
-    // Call the real engine
-    const result = engine.initSession(session_seed, bankPath);
+    // Call the real engine function
+    const result = initSession(session_seed, bankPath);
     
     res.status(200).json(result);
   } catch (error) {

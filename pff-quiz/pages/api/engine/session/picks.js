@@ -1,7 +1,5 @@
 // Real Engine API for Vercel
-const PFFEngine = require('../../../../engine/index.js');
-
-let engine = null;
+const { setPicks } = require('../../../../engine/index.js');
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -9,19 +7,14 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Initialize engine if not already done
-    if (!engine) {
-      engine = new PFFEngine();
-    }
-
     const { session_id, picked_families } = req.body;
     
     if (!session_id || !picked_families) {
       return res.status(400).json({ error: 'session_id and picked_families are required' });
     }
 
-    // Call the real engine
-    const result = engine.setPicks(session_id, picked_families);
+    // Call the real engine function
+    const result = setPicks(session_id, picked_families);
     
     res.status(200).json(result);
   } catch (error) {
