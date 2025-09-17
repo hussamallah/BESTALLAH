@@ -1,0 +1,280 @@
+---
+alwaysApply: true
+description: Implementation patterns and code examples for PFF Quiz Engine
+---
+
+# IMPLEMENTATION PATTERNS
+
+## Bank Loading Pattern
+
+```javascript
+// Always use BankLoader for bank access
+const BankLoader = require('./engine/bankLoader');
+const bankLoader = new BankLoader();
+bankLoader.loadBank(bankPath);
+
+// Access data through indices
+const question = bankLoader.getQuestion(qid);
+const tells = bankLoader.getTellsForOption(qid, optionKey);
+const constants = bankLoader.getConstants();
+```
+
+## Session State Pattern
+
+```javascript
+// Initialize session state exactly as specified
+const session = {
+  sessionId: crypto.createHash('sha256').update(sessionSeed).digest('hex').substring(0, 16),
+  sessionSeed,
+  bankHash: bankLoader.getBankHash(),
+  constantsProfile: bankLoader.getConstantsProfile(),
+  picks: new Set(),
+  schedule: [],
+  lineState: new Map(),
+  screenFaceCount: new Map(),
+  faceLedger: new Map(),
+  status: 'initialized',
+  startedAt: new Date().toISOString(),
+  prng: createPRNG(seed)
+};
+```
+
+## Answer Processing Pattern
+
+```javascript
+// Process answers with exact specification logic
+function submitAnswer(sessionId, qid, optionKey) {
+  const session = this.sessions.get(sessionId);
+  const questionData = this.bankLoader.getQuestion(qid);
+  const option = questionData.options.find(opt => opt.id === optionKey);
+  
+  // Update line state
+  this._updateLineState(session, family, option.lineCOF);
+  
+  // Process tells with concentration cap
+  this._processTells(session, qid, family, option);
+  
+  return session;
+}
+```
+
+## Face State Computation Pattern
+
+```javascript
+// Compute face states using exact thresholds
+function computeFaceState(faceId, ledger, constants) {
+  const { questions_hit, families_hit, signature_qids, context_counts, per_family_counts, contrast_seen } = ledger[faceId];
+  
+  const Q = questions_hit.size;
+  const FAM = families_hit.size;
+  const SIG = signature_qids.size;
+  const CLEAN = context_counts.Clean;
+  const BROKEN = context_counts.Broken;
+  const MAX_FAM_SHARE = Math.max(...Object.values(per_family_counts)) / (CLEAN + context_counts.Bent + BROKEN);
+  
+  // Apply LIT criteria
+  if (Q >= constants.LIT_MIN_QUESTIONS &&
+      FAM >= constants.LIT_MIN_FAMILIES &&
+      SIG >= constants.LIT_MIN_SIGNATURE &&
+      CLEAN >= constants.LIT_MIN_CLEAN &&
+      BROKEN <= constants.LIT_MAX_BROKEN &&
+      MAX_FAM_SHARE <= constants.PER_SCREEN_CAP &&
+      contrast_seen) {
+    return 'LIT';
+  }
+  
+  // Apply other criteria...
+}
+```
+
+## Edge Policy Pattern
+
+```javascript
+// Handle edge cases for question scheduling
+function generateSchedule(pickedFamilies, prng) {
+  const schedule = [];
+  const allFamilies = ['Control', 'Pace', 'Boundary', 'Truth', 'Recognition', 'Bonding', 'Stress'];
+  const notPicked = allFamilies.filter(f => !pickedFamilies.includes(f));
+
+  // Edge case: picks=7 (all families) - 14 questions
+  if (pickedFamilies.length === 7) {
+    pickedFamilies.forEach((family, index) => {
+      const familyScreen = index + 1;
+      const questions = this.bankLoader.getQuestionsForFamily(family);
+      schedule.push(
+        { qid: questions[0].qid, familyScreen, order_in_family: 'C' },
+        { qid: questions[1].qid, familyScreen, order_in_family: 'O' }
+      );
+    });
+    return schedule;
+  }
+
+  // Edge case: picks=1 (single family) - 20 questions
+  if (pickedFamilies.length === 1) {
+    // Implementation...
+  }
+
+  // Normal case: 2-6 picks - 18 questions
+  // Implementation...
+}
+```
+
+## Validation Pattern
+
+```javascript
+// Always validate inputs and fail loudly
+function validateInput(input, schema) {
+  const result = schema.validate(input);
+  if (!result.valid) {
+    throw new Error(`Validation failed: ${result.errors.join(', ')}`);
+  }
+  return result.data;
+}
+
+// Bank validation
+function validateBank(bankPackage) {
+  // Check 7 families, 3 questions each
+  // Check question structure (CO/CO/CF masks)
+  // Check tell caps and opportunities
+  // Check contrast matrix integrity
+  // Fail loudly on any violations
+}
+```
+
+## Error Handling Pattern
+
+```javascript
+// Always fail loudly with descriptive errors
+try {
+  const result = processAnswer(sessionId, qid, optionKey);
+  return result;
+} catch (error) {
+  throw new Error(`Failed to process answer: ${error.message}`);
+}
+
+// Bank loading errors
+if (!this.bankPackage.meta.signature) {
+  throw new Error('Bank package must be signed');
+}
+
+// Session validation errors
+if (!session) {
+  throw new Error('Session not found');
+}
+```
+
+## Testing Pattern
+
+```javascript
+// Always test with complete test suite
+async function runAllTests() {
+  console.log('🧪 Running complete test suite...');
+  
+  // 1. Bank validation
+  await runCommand('node scripts/lint-bank.js');
+  
+  // 2. Bank packaging
+  await runCommand('node scripts/pack-bank.js');
+  await runCommand('node scripts/sign-bank.js sign');
+  await runCommand('node scripts/sign-bank.js verify');
+  
+  // 3. Engine tests
+  await runCommand('node scripts/test-engine.js');
+  
+  // 4. Edge policy tests
+  await runCommand('node scripts/test-edge-policies.js');
+  
+  // 5. Replay tests
+  await runCommand('node scripts/run-replay.js');
+  
+  // 6. Mathematical verification
+  await runCommand('node scripts/verify-counts.js');
+  
+  console.log('✅ All tests passed!');
+}
+```
+
+## Constants Pattern
+
+```javascript
+// Always load constants from bank package
+const constants = this.bankLoader.getConstants();
+
+// Use constants for all thresholds
+if (Q >= constants.LIT_MIN_QUESTIONS &&
+    FAM >= constants.LIT_MIN_FAMILIES &&
+    SIG >= constants.LIT_MIN_SIGNATURE) {
+  // LIT criteria
+}
+
+// Never hardcode thresholds
+// ❌ BAD: if (Q >= 6 && FAM >= 4)
+// ✅ GOOD: if (Q >= constants.LIT_MIN_QUESTIONS && FAM >= constants.LIT_MIN_FAMILIES)
+```
+
+## Deterministic Pattern
+
+```javascript
+// Always use seeded PRNG for deterministic behavior
+function createPRNG(seed) {
+  let state = parseInt(seed.substring(0, 8), 16);
+  return {
+    next: () => {
+      state = (state * 1664525 + 1013904223) % Math.pow(2, 32);
+      return state / Math.pow(2, 32);
+    }
+  };
+}
+
+// Seed computation
+const seed = crypto.createHash('sha256')
+  .update(sessionSeed + bankHash + constantsProfile)
+  .digest('hex');
+```
+
+## Output Pattern
+
+```javascript
+// Always return exact JSON structure from specification
+function finalizeSession(sessionId) {
+  return {
+    line_verdicts: lineVerdicts,
+    face_states: faceStates,
+    family_reps: familyReps,
+    anchor_family: anchorFamily
+  };
+}
+
+// No prose, no hidden weights, no UI data
+// ❌ BAD: { message: "Session completed successfully", score: 85 }
+// ✅ GOOD: { line_verdicts: {...}, face_states: {...} }
+```
+
+## File Organization Pattern
+
+```
+engine/
+├── index.js          # Main engine API (5 core functions)
+├── bankLoader.js     # Bank loading and indices
+└── ...
+
+bank/
+├── bank.meta.json
+├── registries/
+├── constants/
+├── questions/
+└── packaged/
+
+scripts/
+├── lint-bank.js
+├── pack-bank.js
+├── sign-bank.js
+├── test-engine.js
+├── test-edge-policies.js
+├── run-replay.js
+└── verify-counts.js
+```
+
+## Reference Implementation
+
+The current implementation in [engine/index.js](mdc:engine/index.js) and [engine/bankLoader.js](mdc:engine/bankLoader.js) demonstrates all these patterns correctly. Use it as the authoritative reference for any modifications or new features.

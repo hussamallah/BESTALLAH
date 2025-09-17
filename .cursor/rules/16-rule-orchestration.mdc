@@ -1,0 +1,184 @@
+---
+alwaysApply: true
+description: Rule orchestration for automatic multi-step task execution
+---
+
+# Rule Orchestration - Automatic Multi-Step Execution
+
+## When User Asks for Specific Tasks, Automatically Follow Rule Threads
+
+### Bank-Related Tasks
+**Keywords**: "bank", "question", "family", "face", "tell", "probe", "option"
+
+- **"Fix the bank so it changes in the UI"** → Rules 11, 14, 12, 13, 15, 9, 1, 7, 6, 8
+- **"Add a new family to the bank"** → Rules 11, 14, 12, 13, 15, 9
+- **"Update question structure"** → Rules 11, 14, 12, 13, 15, 9
+- **"Fix bank validation errors"** → Rules 14, 11, 9, 15
+- **"Add new tells to faces"** → Rules 11, 14, 12, 13, 15, 9
+- **"Change bank constants"** → Rules 11, 14, 12, 13, 15, 9
+- **"Validate bank schema"** → Rules 14, 11, 9
+- **"Pack bank for deployment"** → Rules 11, 14, 9
+
+### UI Integration Tasks
+**Keywords**: "UI", "interface", "display", "show", "render", "frontend", "component"
+
+- **"Make changes visible in UI"** → Rules 1, 7, 12, 6, 8
+- **"Update UI to show new data"** → Rules 1, 7, 12, 6, 8
+- **"Fix UI display issues"** → Rules 1, 7, 12, 6, 8
+- **"Add new UI components"** → Rules 1, 7, 12, 6, 8
+- **"Update UI state management"** → Rules 1, 7, 12, 6, 8
+- **"Fix UI performance"** → Rules 1, 7, 12, 6, 8
+- **"Update UI styling"** → Rules 1, 7, 12, 6, 8
+
+### Engine Development Tasks
+**Keywords**: "engine", "core", "logic", "algorithm", "state", "session", "finalize"
+
+- **"Implement engine feature"** → Rules 10, 13, 3, 14, 15
+- **"Fix engine bug"** → Rules 10, 13, 3, 14, 15
+- **"Add new engine functionality"** → Rules 10, 13, 3, 14, 15
+- **"Optimize engine performance"** → Rules 10, 13, 3, 14, 15
+- **"Refactor engine code"** → Rules 10, 13, 3, 14, 15
+- **"Fix deterministic behavior"** → Rules 10, 13, 3, 14, 15
+- **"Update state management"** → Rules 10, 13, 3, 14, 15
+
+### API Development Tasks
+**Keywords**: "API", "endpoint", "route", "request", "response", "REST", "server"
+
+- **"Add new API endpoint"** → Rules 12, 7, 6, 8, 15
+- **"Fix API response format"** → Rules 12, 7, 6, 8, 15
+- **"Update API validation"** → Rules 12, 7, 6, 8, 15
+- **"Fix API error handling"** → Rules 12, 7, 6, 8, 15
+- **"Add API authentication"** → Rules 12, 7, 6, 8, 15
+- **"Update API documentation"** → Rules 12, 7, 6, 8, 15
+- **"Fix API performance"** → Rules 12, 7, 6, 8, 15
+
+### Testing Tasks
+**Keywords**: "test", "testing", "spec", "coverage", "mock", "fixture", "assert"
+
+- **"Add tests"** → Rules 15, 8, 4, 3
+- **"Fix test failures"** → Rules 15, 8, 4, 3
+- **"Add golden tests"** → Rules 15, 8, 4, 3
+- **"Add property tests"** → Rules 15, 8, 4, 3
+- **"Fix test coverage"** → Rules 15, 8, 4, 3
+- **"Add integration tests"** → Rules 15, 8, 4, 3
+- **"Fix test performance"** → Rules 15, 8, 4, 3
+
+### Database Tasks
+**Keywords**: "database", "db", "schema", "migration", "query", "table", "index"
+
+- **"Update database schema"** → Rules 11, 12, 7, 15
+- **"Add database migration"** → Rules 11, 12, 7, 15
+- **"Fix database performance"** → Rules 11, 12, 7, 15
+- **"Update database queries"** → Rules 11, 12, 7, 15
+- **"Add database indexes"** → Rules 11, 12, 7, 15
+- **"Fix database constraints"** → Rules 11, 12, 7, 15
+
+### Validation Tasks
+**Keywords**: "validate", "validation", "schema", "guard", "check", "verify"
+
+- **"Add validation"** → Rules 14, 11, 12, 15
+- **"Fix validation errors"** → Rules 14, 11, 12, 15
+- **"Update validation rules"** → Rules 14, 11, 12, 15
+- **"Add runtime guards"** → Rules 14, 11, 12, 15
+- **"Fix validation performance"** → Rules 14, 11, 12, 15
+
+### Deployment Tasks
+**Keywords**: "deploy", "deployment", "build", "production", "staging", "CI", "CD"
+
+- **"Deploy to production"** → Rules 9, 11, 12, 7, 15
+- **"Fix deployment issues"** → Rules 9, 11, 12, 7, 15
+- **"Update CI/CD pipeline"** → Rules 9, 11, 12, 7, 15
+- **"Fix build errors"** → Rules 9, 11, 12, 7, 15
+- **"Update deployment config"** → Rules 9, 11, 12, 7, 15
+
+### Performance Tasks
+**Keywords**: "performance", "optimize", "slow", "fast", "memory", "cpu", "latency"
+
+- **"Fix performance issues"** → Rules 10, 13, 3, 7, 8, 15
+- **"Optimize code"** → Rules 10, 13, 3, 7, 8, 15
+- **"Fix memory leaks"** → Rules 10, 13, 3, 7, 8, 15
+- **"Optimize database queries"** → Rules 11, 12, 7, 15
+- **"Fix API latency"** → Rules 12, 7, 6, 8, 15
+
+### Security Tasks
+**Keywords**: "security", "secure", "auth", "permission", "access", "vulnerability"
+
+- **"Add security measures"** → Rules 12, 7, 6, 8, 15
+- **"Fix security vulnerabilities"** → Rules 12, 7, 6, 8, 15
+- **"Add authentication"** → Rules 12, 7, 6, 8, 15
+- **"Fix access control"** → Rules 12, 7, 6, 8, 15
+
+### Documentation Tasks
+**Keywords**: "documentation", "docs", "readme", "comment", "explain", "guide"
+
+- **"Update documentation"** → Rules 1, 10, 13, 12, 7
+- **"Add code comments"** → Rules 1, 10, 13, 12, 7
+- **"Fix documentation"** → Rules 1, 10, 13, 12, 7
+- **"Add API docs"** → Rules 12, 7, 6, 8
+
+### Configuration Tasks
+**Keywords**: "config", "configuration", "settings", "environment", "constants"
+
+- **"Update configuration"** → Rules 11, 14, 12, 13, 15, 9
+- **"Fix config issues"** → Rules 11, 14, 12, 13, 15, 9
+- **"Add environment variables"** → Rules 11, 14, 12, 13, 15, 9
+- **"Update constants"** → Rules 11, 14, 12, 13, 15, 9
+
+## Automatic Rule Thread Execution
+
+### Step 1: Identify Task Type
+Based on user request keywords:
+- "bank" → Bank-related rules (11, 14, 12, 13, 15, 9)
+- "UI" → UI integration rules (1, 7, 12, 6, 8)
+- "engine" → Engine development rules (10, 13, 3, 14, 15)
+- "test" → Testing rules (15, 8, 4, 3)
+- "database" → Database rules (11, 12, 7, 15)
+
+### Step 2: Fetch Relevant Rules
+Automatically fetch all relevant rules in parallel to understand the complete context.
+
+### Step 3: Execute Multi-Step Plan
+Create a comprehensive plan that follows the rule threads:
+1. **Validation** - Check current state against rules
+2. **Implementation** - Make changes following rule specifications
+3. **Testing** - Add/update tests per rule requirements
+4. **Verification** - Ensure all rules are satisfied
+
+### Step 4: Complete Task in One Go
+Execute the entire plan without asking for confirmation, following all rule constraints.
+
+## Example: "Fix the bank so it changes in the UI"
+
+**Automatic Execution:**
+1. Fetch Rule 11 → Check current bank schema
+2. Fetch Rule 14 → Validate bank structure
+3. Fetch Rule 12 → Update API contracts for new bank fields
+4. Fetch Rule 13 → Update core functions to handle new bank structure
+5. Fetch Rule 7 → Update API endpoints to serve new data
+6. Fetch Rule 6 → Update TypeScript types
+7. Fetch Rule 15 → Update tests for new bank structure
+8. Fetch Rule 9 → Ensure CI validation passes
+9. Execute complete implementation in one go
+
+## Rule Conflict Resolution
+When rules conflict during multi-step execution:
+1. **Rule 5 (Guardrails)** overrides all others
+2. **Rule 10 (STEM Behavior)** overrides implementation details
+3. **Rule 1 (Architecture)** guides structural decisions
+4. **File-specific rules** provide implementation details
+
+## Success Criteria
+Task is complete when:
+- All relevant rules are satisfied
+- No guardrail violations exist
+- All tests pass
+- Code follows deterministic principles
+- API contracts are maintained
+- UI integration works correctly
+
+## Error Handling
+If rule conflicts cannot be resolved:
+1. Emit diff of conflicting requirements
+2. Ask user for clarification on specific conflicts
+3. Proceed with conservative assumptions that preserve determinism
+4. Document the conflict for future resolution

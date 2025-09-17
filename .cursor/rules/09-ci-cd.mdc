@@ -1,0 +1,74 @@
+---
+globs: *.yml,*.yaml,.github/**
+description: CI/CD pipeline configuration and validation rules
+---
+
+# CI/CD Rules
+
+## GitHub Actions Workflow
+```yaml
+name: PFF Quiz Engine CI
+on: [push, pull_request]
+
+jobs:
+  validate-bank:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Validate Bank Schema
+        run: pnpm run validate-bank
+      
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install
+      - name: Run unit tests
+        run: pnpm test
+      - name: Run property tests
+        run: pnpm test:property
+        
+  contract-tests:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run contract tests
+        run: pnpm test:contract
+```
+
+## Validation Steps
+1. **Bank Validation**: JSON schema validation, question count verification
+2. **Type Checking**: TypeScript compilation without errors
+3. **Linting**: ESLint with strict rules
+4. **Unit Tests**: Jest test suite with coverage requirements
+5. **Property Tests**: Fast-check deterministic behavior validation
+6. **Contract Tests**: API integration tests with real databases
+
+## Quality Gates
+- 100% TypeScript coverage for engine code
+- 90%+ test coverage for critical paths
+- All deterministic tests must pass
+- No linting errors or warnings
+- Bank validation must pass
+
+## Deployment
+- Deploy to Vercel (Next.js) or containerized Fastify
+- Environment-specific configuration
+- Database migrations for schema changes
+- Health checks for all services

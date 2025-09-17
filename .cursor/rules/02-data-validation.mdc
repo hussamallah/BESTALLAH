@@ -1,0 +1,32 @@
+---
+globs: *.ts,*.js,*.tsx,*.jsx
+description: Data validation and schema enforcement rules
+---
+
+# Data Validation Rules
+
+## Question Bank Validation
+- Validate all schemas before processing
+- Enforce caps and reject on violations
+- Never mutate registries or question bank shapes
+- Each tell must map to exactly one face
+- Contrast matrix required for per-family sibling disambiguation
+
+## Runtime Validation
+- Constants are read-only at runtime
+- Changing constants requires new bank/hash
+- Validate `PER_SCREEN_CAP=0.40` enforcement
+- Ensure ≤1 tell per face per option
+- Verify exactly 18 questions in session
+
+## Face Detection Rules
+- Only count tells for face presence detection
+- No inference from text or heuristics
+- Single family cannot contribute >40% of face evidence toward LIT
+- Contrast tell required for LIT state
+- Context tracking: Clean (C), Bent (O), Broken (F)
+
+## Error Handling
+- Reject invalid bank packages immediately
+- Emit clear error messages for schema violations
+- Preserve determinism even with invalid inputs

@@ -1,0 +1,63 @@
+{
+  "schema": "question_bank.v1",
+  "family": "Bonding",
+  "questions": [
+    {
+      "qid": "BONDING_Q1",
+      "familyScreen": 6,
+      "order_in_family": "C",
+      "options": [
+        {
+          "id": "A",
+          "text": "Ask \"A or B?\" Take quick votes, decide with them.",
+          "lineCOF": "C",
+          "tells": ["TELL/Bonding/Partner/ask-prefer", "TELL/Recognition/Spotlight/make-visible"]
+        },
+        {
+          "id": "B",
+          "text": "Make the call now, explain your reason after.",
+          "lineCOF": "O",
+          "tells": ["TELL/Bonding/Provider/cover-gap", "TELL/Truth/Seeker/request-evidence"]
+        }
+      ]
+    },
+    {
+      "qid": "BONDING_Q2",
+      "familyScreen": 6,
+      "order_in_family": "O",
+      "options": [
+        {
+          "id": "A",
+          "text": "Pair them with a helper now, unblock together.",
+          "lineCOF": "C",
+          "tells": ["TELL/Bonding/Partner/pair-through", "TELL/Boundary/Equalizer/call-foul"]
+        },
+        {
+          "id": "B",
+          "text": "Take the task yourself, review with them later.",
+          "lineCOF": "O",
+          "tells": ["TELL/Bonding/Provider/shield-team", "TELL/Pace/Visionary/start-now"]
+        }
+      ]
+    },
+    {
+      "qid": "BONDING_Q3",
+      "familyScreen": 6,
+      "order_in_family": "F",
+      "options": [
+        {
+          "id": "A",
+          "text": "Comment and add their name publicly.",
+          "lineCOF": "C",
+          "tells": ["TELL/Recognition/Diplomat/adjust-in-public", "TELL/Truth/Architect/structure-proof"]
+        },
+        {
+          "id": "B",
+          "text": "Fix it quietly in the file, skip the public note.",
+          "lineCOF": "F",
+          "tells": ["TELL/Boundary/Guardian/stop-scope-creep", "TELL/Pace/Navigator/one-clean-block"]
+        }
+      ]
+    }
+  ]
+}

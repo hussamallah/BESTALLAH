@@ -1,0 +1,290 @@
+---
+globs: *.test.ts,*.test.js,*.spec.ts,*.spec.js
+description: Required tests for deterministic golden testing
+---
+
+# Tests You Must Write Before Launching
+
+## Golden Session Tests
+```typescript
+describe('Golden Session Tests', () => {
+  test('canonical session 1: 3 picked families', async () => {
+    const session = initSession('test-session-1', ['Control', 'Pace', 'Boundary']);
+    const goldenAnswers = loadGoldenAnswers('session-1.json');
+    
+    // Apply all answers
+    goldenAnswers.forEach(answer => {
+      applyAnswerEvent(session, answer);
+    });
+    
+    // Finalize and compare
+    const result = finalize(session);
+    const expected = loadGoldenResult('session-1-result.json');
+    
+    expect(result).toEqual(expected);
+  });
+  
+  test('canonical session 2: 1 picked family', async () => {
+    const session = initSession('test-session-2', ['Control']);
+    const goldenAnswers = loadGoldenAnswers('session-2.json');
+    
+    goldenAnswers.forEach(answer => {
+      applyAnswerEvent(session, answer);
+    });
+    
+    const result = finalize(session);
+    const expected = loadGoldenResult('session-2-result.json');
+    
+    expect(result).toEqual(expected);
+  });
+  
+  test('canonical session 3: 7 picked families (all)', async () => {
+    const session = initSession('test-session-3', [
+      'Control', 'Pace', 'Boundary', 'Truth', 
+      'Recognition', 'Bonding', 'Stress'
+    ]);
+    const goldenAnswers = loadGoldenAnswers('session-3.json');
+    
+    goldenAnswers.forEach(answer => {
+      applyAnswerEvent(session, answer);
+    });
+    
+    const result = finalize(session);
+    const expected = loadGoldenResult('session-3-result.json');
+    
+    expect(result).toEqual(expected);
+  });
+});
+```
+
+## Edge Case Tests
+```typescript
+describe('Edge Case Tests', () => {
+  test('picked families = 7 (all families)', () => {
+    const session = initSession('edge-all-picked', [
+      'Control', 'Pace', 'Boundary', 'Truth', 
+      'Recognition', 'Bonding', 'Stress'
+    ]);
+    
+    // Should get 2 questions per family = 14 total
+    expect(session.questionQueue).toHaveLength(14);
+    
+    // Verify C→O→F order is maintained
+    const familyQuestions = groupBy(session.questionQueue, 'familyScreen');
+    Object.values(familyQuestions).forEach(questions => {
+      expect(questions).toHaveLength(2);
+      expect(questions[0].order_in_family).toBe('C');
+      expect(questions[1].order_in_family).toBe('O');
+    });
+  });
+  
+  test('picked families = 1 (single family)', () => {
+    const session = initSession('edge-single-picked', ['Control']);
+    
+    // Should get 2 questions for Control, 3 each for others = 20 total
+    expect(session.questionQueue).toHaveLength(20);
+    
+    const controlQuestions = session.questionQueue.filter(q => q.familyScreen === 1);
+    expect(controlQuestions).toHaveLength(2);
+    
+    const otherQuestions = session.questionQueue.filter(q => q.familyScreen !== 1);
+    expect(otherQuestions).toHaveLength(18);
+  });
+  
+  test('missing O/F question suppressed', () => {
+    const bank = createTestBankWithMissingOF();
+    const session = initSession('edge-missing-of', ['Control'], bank);
+    
+    // Should handle missing O/F gracefully
+    expect(session.questionQueue.length).toBeLessThanOrEqual(18);
+  });
+  
+  test('duplicate tells in single option', () => {
+    const bank = createTestBankWithDuplicateTells();
+    const session = initSession('edge-duplicate-tells', ['Control'], bank);
+    
+    // Should dedupe tells per option
+    const question = session.questionQueue[0];
+    const option = getQuestionOption(question.qid, 'A');
+    
+    expect(option.tells.length).toBeLessThanOrEqual(3);
+    expect(hasDuplicateFaces(option.tells)).toBe(false);
+  });
+  
+  test('per-family repeated same tell (burst guard)', () => {
+    const session = initSession('edge-burst-guard', ['Control']);
+    const burstAnswers = createBurstAnswerSequence();
+    
+    burstAnswers.forEach(answer => {
+      applyAnswerEvent(session, answer);
+    });
+    
+    // Should trigger burst guard warnings
+    expect(console.warn).toHaveBeenCalledWith(
+      expect.stringContaining('exceeds 40% cap')
+    );
+  });
+});
+```
+
+## Property Tests
+```typescript
+import fc from 'fast-check';
+
+describe('Property Tests', () => {
+  test('random valid bank + random legal answer sequences → valid output', () => {
+    fc.assert(fc.property(
+      fc.record({
+        families: fc.array(fc.string(), { minLength: 7, maxLength: 7 }),
+        faces: fc.array(fc.string(), { minLength: 14, maxLength: 14 }),
+        questions: fc.record({
+          'Control': fc.array(validQuestionArbitrary, { minLength: 3, maxLength: 3 }),
+          'Pace': fc.array(validQuestionArbitrary, { minLength: 3, maxLength: 3 }),
+          // ... other families
+        })
+      }),
+      fc.array(validAnswerEventArbitrary, { minLength: 1, maxLength: 18 }),
+      (bank, answers) => {
+        const session = initSession('property-test', ['Control'], bank);
+        
+        answers.forEach(answer => {
+          applyAnswerEvent(session, answer);
+        });
+        
+        const result = finalize(session);
+        
+        // Must produce valid output shape
+        expect(result).toHaveProperty('line_verdicts');
+        expect(result).toHaveProperty('face_states');
+        expect(result).toHaveProperty('family_reps');
+        expect(result).toHaveProperty('anchor_family');
+        
+        // Line verdicts must be valid
+        Object.values(result.line_verdicts).forEach(verdict => {
+          expect(['C', 'O', 'F']).toContain(verdict);
+        });
+        
+        // Face states must be valid
+        Object.values(result.face_states).forEach(state => {
+          expect(['LIT', 'LEAN', 'GHOST', 'COLD', 'ABSENT']).toContain(state);
+        });
+      }
+    ));
+  });
+  
+  test('deterministic runs when repeated', () => {
+    fc.assert(fc.property(
+      fc.string(),
+      fc.array(validAnswerEventArbitrary, { minLength: 1, maxLength: 18 }),
+      (sessionSeed, answers) => {
+        const bank = createValidTestBank();
+        
+        // Run twice with same inputs
+        const session1 = initSession('test-1', ['Control'], bank);
+        const session2 = initSession('test-2', ['Control'], bank);
+        
+        answers.forEach(answer => {
+          applyAnswerEvent(session1, answer);
+          applyAnswerEvent(session2, answer);
+        });
+        
+        const result1 = finalize(session1);
+        const result2 = finalize(session2);
+        
+        // Must produce identical results
+        expect(result1).toEqual(result2);
+      }
+    ));
+  });
+});
+```
+
+## Regression Tests
+```typescript
+describe('Regression Tests', () => {
+  test('change constants in config and assert only intended tests change', () => {
+    const originalConstants = loadConstants();
+    const modifiedConstants = {
+      ...originalConstants,
+      PER_SCREEN_CAP: 0.35 // Changed from 0.40
+    };
+    
+    const bank1 = createTestBank(originalConstants);
+    const bank2 = createTestBank(modifiedConstants);
+    
+    const session1 = initSession('regression-1', ['Control'], bank1);
+    const session2 = initSession('regression-2', ['Control'], bank2);
+    
+    const answers = loadGoldenAnswers('regression-session.json');
+    answers.forEach(answer => {
+      applyAnswerEvent(session1, answer);
+      applyAnswerEvent(session2, answer);
+    });
+    
+    const result1 = finalize(session1);
+    const result2 = finalize(session2);
+    
+    // Only face states affected by PER_SCREEN_CAP should change
+    const affectedFaces = getFacesAffectedByScreenCap();
+    const unaffectedFaces = getFacesNotAffectedByScreenCap();
+    
+    unaffectedFaces.forEach(face => {
+      expect(result1.face_states[face]).toBe(result2.face_states[face]);
+    });
+    
+    // At least some affected faces should change
+    const hasChanges = affectedFaces.some(face => 
+      result1.face_states[face] !== result2.face_states[face]
+    );
+    expect(hasChanges).toBe(true);
+  });
+});
+```
+
+## Test Data Helpers
+```typescript
+// Test data creation helpers
+function createValidTestBank(): BankPackage {
+  return {
+    hash: 'test-hash',
+    families: createTestFamilies(),
+    faces: createTestFaces(),
+    tells: createTestTells(),
+    questions: createTestQuestions(),
+    constants: createTestConstants()
+  };
+}
+
+function loadGoldenAnswers(filename: string): AnswerEvent[] {
+  return JSON.parse(fs.readFileSync(`tests/fixtures/${filename}`, 'utf8'));
+}
+
+function loadGoldenResult(filename: string): FinalizeResponse {
+  return JSON.parse(fs.readFileSync(`tests/fixtures/${filename}`, 'utf8'));
+}
+
+// Arbitrary generators for property testing
+const validQuestionArbitrary = fc.record({
+  qid: fc.string(),
+  familyScreen: fc.integer({ min: 1, max: 7 }),
+  order_in_family: fc.constantFrom('C', 'O', 'F'),
+  options: fc.array(validOptionArbitrary, { minLength: 2, maxLength: 2 })
+});
+
+const validOptionArbitrary = fc.record({
+  id: fc.string(),
+  text: fc.string(),
+  lineCOF: fc.constantFrom('C', 'O', 'F'),
+  tells: fc.array(fc.string(), { minLength: 0, maxLength: 3 })
+});
+
+const validAnswerEventArbitrary = fc.record({
+  qid: fc.string(),
+  familyScreen: fc.integer({ min: 1, max: 7 }),
+  picked_key: fc.boolean(),
+  lineCOF: fc.constantFrom('C', 'O', 'F'),
+  tells: fc.array(fc.string(), { minLength: 0, maxLength: 3 }),
+  ts: fc.integer({ min: 0 }),
+  latency_ms: fc.integer({ min: 0, max: 10000 })
+});
+```

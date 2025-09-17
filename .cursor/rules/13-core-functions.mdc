@@ -1,0 +1,151 @@
+---
+globs: *.ts,*.js
+description: Core function specifications and pseudo-API
+---
+
+# Core Functions (Pseudo-API Inside Codebase)
+
+## initSession(sessionId, pickedFamilies)
+```typescript
+function initSession(sessionId: string, pickedFamilies: string[]): SessionState {
+  // Applies Screen1 seeds: +1 C to picked families
+  const lineState = new Map<string, LineState>();
+  
+  pickedFamilies.forEach(family => {
+    lineState.set(family, { C: 1, O_seen: false, F_seen: false });
+  });
+  
+  // Initialize face ledger for all faces
+  const faceLedger = new Map<string, FaceLedger>();
+  // ... initialize all faces
+  
+  return {
+    sessionId,
+    startedAt: new Date(),
+    status: 'running',
+    picks: pickedFamilies,
+    answers: new Map(),
+    lineState,
+    faceLedger,
+    questionQueue: generateQuestionQueue(pickedFamilies)
+  };
+}
+```
+
+## nextQuestion(session)
+```typescript
+function nextQuestion(session: SessionState): QuestionQueueItem | null {
+  // Sequencer that respects picked/not-picked counts and order (C→O→F)
+  if (session.questionQueue.length === 0) return null;
+  
+  const next = session.questionQueue[0];
+  session.questionQueue = session.questionQueue.slice(1);
+  
+  return {
+    qid: next.qid,
+    familyScreen: next.familyScreen,
+    order_in_family: next.order_in_family
+  };
+}
+```
+
+## applyAnswerEvent(session, answerEvent)
+```typescript
+function applyAnswerEvent(session: SessionState, answerEvent: AnswerEvent): void {
+  // Step 1: Validate qid/key
+  validateAnswerEvent(answerEvent, session);
+  
+  // Step 2: Append AnswerEvent
+  session.answers.set(answerEvent.qid, answerEvent);
+  
+  // Step 3: Update line state (§6)
+  updateLineState(session.lineState, answerEvent);
+  
+  // Step 4: Update face ledger (§7)
+  updateFaceLedger(session.faceLedger, answerEvent);
+}
+
+function updateLineState(lineState: Map<string, LineState>, event: AnswerEvent): void {
+  const family = getFamilyFromScreen(event.familyScreen);
+  const current = lineState.get(family) || { C: 0, O_seen: false, F_seen: false };
+  
+  if (event.lineCOF === 'C') current.C += 1;
+  if (event.lineCOF === 'O') current.O_seen = true;
+  if (event.lineCOF === 'F') current.F_seen = true;
+  
+  lineState.set(family, current);
+}
+
+function updateFaceLedger(faceLedger: Map<string, FaceLedger>, event: AnswerEvent): void {
+  event.tells.forEach(tell => {
+    const face = getFaceFromTell(tell);
+    const ledger = faceLedger.get(face) || createEmptyFaceLedger();
+    
+    // Update tracking
+    ledger.questions_hit.add(event.qid);
+    ledger.families_hit.add(event.familyScreen);
+    
+    if (isSignatureFamily(face, event.familyScreen)) {
+      ledger.signature_qids.add(event.qid);
+    }
+    
+    // Context tracking
+    const context = event.lineCOF === 'C' ? 'Clean' : 
+                    event.lineCOF === 'O' ? 'Bent' : 'Broken';
+    ledger.context_counts[context] = (ledger.context_counts[context] || 0) + 1;
+    ledger.per_family_counts[event.familyScreen] = (ledger.per_family_counts[event.familyScreen] || 0) + 1;
+    
+    faceLedger.set(face, ledger);
+  });
+}
+```
+
+## finalize(session)
+```typescript
+function finalize(session: SessionState): FinalizeResponse {
+  // Compute face states (§8), family reps (§9), line verdicts (§10), optional anchor (§11)
+  // Freeze session
+  
+  const lineVerdicts = computeLineVerdicts(session.lineState);
+  const faceStates = computeFaceStates(session.faceLedger);
+  const familyReps = computeFamilyReps(session.faceLedger);
+  const anchorFamily = computeAnchorFamily(session);
+  
+  // Freeze session
+  session.status = 'finalized';
+  session.finalizedAt = new Date();
+  
+  return {
+    line_verdicts: lineVerdicts,
+    face_states: faceStates,
+    family_reps: familyReps,
+    anchor_family: anchorFamily
+  };
+}
+
+function computeLineVerdicts(lineState: Map<string, LineState>): Record<string, 'C' | 'O' | 'F'> {
+  const verdicts: Record<string, 'C' | 'O' | 'F'> = {};
+  
+  lineState.forEach((state, family) => {
+    if (state.F_seen) verdicts[family] = 'F';
+    else if (state.O_seen) verdicts[family] = 'O';
+    else verdicts[family] = 'C';
+  });
+  
+  return verdicts;
+}
+
+function computeFaceStates(faceLedger: Map<string, FaceLedger>): Record<string, FaceState> {
+  const states: Record<string, FaceState> = {};
+  
+  faceLedger.forEach((ledger, face) => {
+    if (meetsLITCriteria(face, ledger)) states[face] = 'LIT';
+    else if (meetsLEANCriteria(face, ledger)) states[face] = 'LEAN';
+    else if (meetsGHOSTCriteria(face, ledger)) states[face] = 'GHOST';
+    else if (meetsCOLDCriteria(face, ledger)) states[face] = 'COLD';
+    else states[face] = 'ABSENT';
+  });
+  
+  return states;
+}
+```

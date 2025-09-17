@@ -1,0 +1,117 @@
+{
+  "schema": "tell_groups.v1",
+  "groups": [
+    {
+      "face_id": "FACE/Control/Sovereign",
+      "group_id": "SOv_clear_call",
+      "tells": [
+        "TELL/Control/Sovereign/sets-call",
+        "TELL/Control/Sovereign/locks-scope"
+      ]
+    },
+    {
+      "face_id": "FACE/Control/Rebel",
+      "group_id": "REB_challenge_mode",
+      "tells": [
+        "TELL/Control/Rebel/challenges-frame",
+        "TELL/Control/Rebel/breaks-deadlock"
+      ]
+    },
+    {
+      "face_id": "FACE/Pace/Navigator",
+      "group_id": "NAV_structured_approach",
+      "tells": [
+        "TELL/Pace/Navigator/one-clean-block",
+        "TELL/Pace/Navigator/timebox-step"
+      ]
+    },
+    {
+      "face_id": "FACE/Pace/Visionary",
+      "group_id": "VIS_ambition_drive",
+      "tells": [
+        "TELL/Pace/Visionary/start-now",
+        "TELL/Pace/Visionary/raise-ambition"
+      ]
+    },
+    {
+      "face_id": "FACE/Boundary/Guardian",
+      "group_id": "GUA_enforcement_mode",
+      "tells": [
+        "TELL/Boundary/Guardian/enforce-check",
+        "TELL/Boundary/Guardian/gate-criteria"
+      ]
+    },
+    {
+      "face_id": "FACE/Boundary/Equalizer",
+      "group_id": "EQU_fairness_mode",
+      "tells": [
+        "TELL/Boundary/Equalizer/redraw-edge",
+        "TELL/Boundary/Equalizer/call-foul"
+      ]
+    },
+    {
+      "face_id": "FACE/Truth/Seeker",
+      "group_id": "SEEK_verification_mode",
+      "tells": [
+        "TELL/Truth/Seeker/check-source",
+        "TELL/Truth/Seeker/request-evidence"
+      ]
+    },
+    {
+      "face_id": "FACE/Truth/Architect",
+      "group_id": "ARCH_structure_mode",
+      "tells": [
+        "TELL/Truth/Architect/structure-proof",
+        "TELL/Truth/Architect/define-terms"
+      ]
+    },
+    {
+      "face_id": "FACE/Recognition/Spotlight",
+      "group_id": "SPOT_visibility_mode",
+      "tells": [
+        "TELL/Recognition/Spotlight/make-visible",
+        "TELL/Recognition/Spotlight/claim-credit"
+      ]
+    },
+    {
+      "face_id": "FACE/Recognition/Diplomat",
+      "group_id": "DIP_balance_mode",
+      "tells": [
+        "TELL/Recognition/Diplomat/balance-sides",
+        "TELL/Recognition/Diplomat/adjust-in-public"
+      ]
+    },
+    {
+      "face_id": "FACE/Bonding/Partner",
+      "group_id": "PART_collaboration_mode",
+      "tells": [
+        "TELL/Bonding/Partner/ask-prefer",
+        "TELL/Bonding/Partner/pair-through"
+      ]
+    },
+    {
+      "face_id": "FACE/Bonding/Provider",
+      "group_id": "PROV_support_mode",
+      "tells": [
+        "TELL/Bonding/Provider/cover-gap",
+        "TELL/Bonding/Provider/shield-team"
+      ]
+    },
+    {
+      "face_id": "FACE/Stress/Catalyst",
+      "group_id": "CAT_pressure_mode",
+      "tells": [
+        "TELL/Stress/Catalyst/apply-pressure",
+        "TELL/Stress/Catalyst/raise-stakes"
+      ]
+    },
+    {
+      "face_id": "FACE/Stress/Artisan",
+      "group_id": "ART_refinement_mode",
+      "tells": [
+        "TELL/Stress/Artisan/refine-quietly",
+        "TELL/Stress/Artisan/fix-by-hand"
+      ]
+    }
+  ]
+}

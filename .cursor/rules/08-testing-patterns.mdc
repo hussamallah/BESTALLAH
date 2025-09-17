@@ -1,0 +1,78 @@
+---
+globs: *.test.ts,*.test.js,*.spec.ts,*.spec.js
+description: Testing patterns using Jest and supertest
+---
+
+# Testing Patterns
+
+## Jest Configuration
+```typescript
+// jest.config.js
+module.exports = {
+  preset: 'ts-jest',
+  testEnvironment: 'node',
+  setupFilesAfterEnv: ['<rootDir>/tests/setup.ts'],
+  testMatch: ['**/__tests__/**/*.test.ts', '**/?(*.)+(spec|test).ts'],
+  collectCoverageFrom: [
+    'engine/**/*.ts',
+    '!engine/**/*.d.ts',
+    '!engine/**/index.ts'
+  ]
+};
+```
+
+## API Testing with Supertest
+```typescript
+import request from 'supertest';
+import { app } from '../src/app';
+
+describe('Session API', () => {
+  test('POST /api/session/init creates session', async () => {
+    const response = await request(app)
+      .post('/api/session/init')
+      .send({ sessionSeed: 'test123', bankPackage: mockBank })
+      .expect(200);
+    
+    expect(response.body.data.sessionId).toBeDefined();
+    expect(response.body.data.picks).toHaveLength(7);
+  });
+});
+```
+
+## Property Testing for Determinism
+```typescript
+import fc from 'fast-check';
+
+describe('Deterministic Behavior', () => {
+  test('same inputs produce same outputs', () => {
+    fc.assert(fc.property(
+      fc.string(),
+      fc.record({ families: fc.array(fc.string()) }),
+      (seed, bank) => {
+        const result1 = initSession(seed, bank);
+        const result2 = initSession(seed, bank);
+        expect(result1).toEqual(result2);
+      }
+    ));
+  });
+});
+```
+
+## Test Data Management
+```typescript
+// tests/fixtures/mock-bank.ts
+export const mockBankPackage: BankPackage = {
+  hash: 'test-hash-123',
+  families: [...],
+  faces: [...],
+  tells: [...],
+  questions: [...],
+  constants: { PER_SCREEN_CAP: 0.40, ... }
+};
+```
+
+## Database Testing
+- Use test containers for Postgres
+- Mock Redis for unit tests
+- Clean state between tests
+- Test both success and failure paths

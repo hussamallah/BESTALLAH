@@ -1,0 +1,33 @@
+---
+globs: *.ts,*.js
+description: Deterministic behavior and state management rules
+---
+
+# Determinism Rules
+
+## Pure Functions Required
+- All engine functions must be pure (no side effects)
+- No background network calls in core logic
+- Idempotency: last answer per `qid` wins
+- Single-winner finalize only
+
+## Randomness Control
+- Use seeded PRNG only: `seed = hash(session_seed || bank_hash || constants_profile)`
+- No other sources of randomness
+- Deterministic replay must produce identical results
+
+## State Management
+- Line verdicts: any F → F; else any O → O; else C (seeds count)
+- Face states: LIT, LEAN, GHOST, COLD, ABSENT using defined gates
+- Per-click updates: set family flags from `lineCOF`
+- Face credits: once per face named in option's tells
+
+## Edge Cases
+- Handle picks=7 and picks=1 with deterministic policies
+- Picked families: 2 questions; not-picked: 3 questions (C→O→F)
+- Always exactly 18 questions total
+
+## Output Consistency
+- Outputs: `{ line_verdicts, face_states, family_reps, anchor_family? }`
+- No prose, no hidden weights
+- Identical results for given replay file

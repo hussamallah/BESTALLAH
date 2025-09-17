@@ -1,0 +1,63 @@
+{
+  "schema": "question_bank.v1",
+  "family": "Stress",
+  "questions": [
+    {
+      "qid": "STRESS_Q1",
+      "familyScreen": 7,
+      "order_in_family": "C",
+      "options": [
+        {
+          "id": "A",
+          "text": "Pick one route, keep the checks, and move.",
+          "lineCOF": "C",
+          "tells": ["TELL/Stress/Catalyst/apply-pressure", "TELL/Bonding/Partner/pair-through"]
+        },
+        {
+          "id": "B",
+          "text": "Move fast, announce the risk, monitor closely.",
+          "lineCOF": "O",
+          "tells": ["TELL/Stress/Artisan/refine-quietly", "TELL/Recognition/Spotlight/make-visible"]
+        }
+      ]
+    },
+    {
+      "qid": "STRESS_Q2",
+      "familyScreen": 7,
+      "order_in_family": "O",
+      "options": [
+        {
+          "id": "A",
+          "text": "Split into smaller checks, protect the standard.",
+          "lineCOF": "C",
+          "tells": ["TELL/Stress/Artisan/fix-by-hand", "TELL/Boundary/Equalizer/call-foul"]
+        },
+        {
+          "id": "B",
+          "text": "Cut scope, deliver a smaller version today.",
+          "lineCOF": "O",
+          "tells": ["TELL/Stress/Catalyst/raise-stakes", "TELL/Truth/Seeker/check-source"]
+        }
+      ]
+    },
+    {
+      "qid": "STRESS_Q3",
+      "familyScreen": 7,
+      "order_in_family": "F",
+      "options": [
+        {
+          "id": "A",
+          "text": "Stop launch, post status, fix fully, then resume.",
+          "lineCOF": "C",
+          "tells": ["TELL/Recognition/Diplomat/smooth-conflict", "TELL/Bonding/Provider/cover-gap"]
+        },
+        {
+          "id": "B",
+          "text": "Push a quick patch live, hide the issue, fix later.",
+          "lineCOF": "F",
+          "tells": ["TELL/Truth/Architect/trace-assumptions", "TELL/Boundary/Guardian/enforce-check"]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "schema": "contrast_tells_template.v1",
+  "description": "Template for authoring contrast tells between sibling faces",
+  "family": "FAMILY_NAME",
+  "sibling_pairs": [
+    {
+      "face_a": "FACE/FAMILY/FACE_A",
+      "face_b": "FACE/FAMILY/FACE_B",
+      "contrast_tells_a": [
+        {
+          "id": "TELL/FAMILY/FACE_A/contrast-action-1",
+          "face_id": "FACE/FAMILY/FACE_A",
+          "contrast": true,
+          "explicit": true,
+          "priority": 1,
+          "description": "Primary contrast tell for FACE_A",
+          "opposes": "TELL/FAMILY/FACE_B/contrast-action-1"
+        },
+        {
+          "id": "TELL/FAMILY/FACE_A/contrast-action-2",
+          "face_id": "FACE/FAMILY/FACE_A",
+          "contrast": true,
+          "explicit": true,
+          "priority": 2,
+          "description": "Secondary contrast tell for FACE_A",
+          "opposes": "TELL/FAMILY/FACE_B/contrast-action-2"
+        }
+      ],
+      "contrast_tells_b": [
+        {
+          "id": "TELL/FAMILY/FACE_B/contrast-action-1",
+          "face_id": "FACE/FAMILY/FACE_B",
+          "contrast": true,
+          "explicit": true,
+          "priority": 1,
+          "description": "Primary contrast tell for FACE_B",
+          "opposes": "TELL/FAMILY/FACE_A/contrast-action-1"
+        },
+        {
+          "id": "TELL/FAMILY/FACE_B/contrast-action-2",
+          "face_id": "FACE/FAMILY/FACE_B",
+          "contrast": true,
+          "explicit": true,
+          "priority": 2,
+          "description": "Secondary contrast tell for FACE_B",
+          "opposes": "TELL/FAMILY/FACE_A/contrast-action-2"
+        }
+      ]
+    }
+  ],
+  "authoring_guidelines": {
+    "contrast_principle": "Each tell should directly oppose its counterpart",
+    "explicit_contrast": "Contrast tells should be clearly distinguishable",
+    "priority_1": "Most important contrast behaviors",
+    "priority_2": "Secondary contrast behaviors",
+    "opposition_mapping": "Each tell should have a clear opposing tell"
+  }
+}

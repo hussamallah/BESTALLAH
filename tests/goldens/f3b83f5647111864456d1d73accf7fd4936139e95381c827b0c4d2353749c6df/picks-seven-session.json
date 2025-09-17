@@ -1,0 +1,294 @@
+{
+  "session": {
+    "session_id": "ecf2c8924176fe63",
+    "session_seed": "picks-seven-session-001",
+    "picked_families": [
+      "Control",
+      "Pace",
+      "Boundary",
+      "Truth",
+      "Recognition",
+      "Bonding",
+      "Stress"
+    ],
+    "bank_hash": "f3b83f5647111864456d1d73accf7fd4936139e95381c827b0c4d2353749c6df",
+    "constants_profile": "DEFAULT"
+  },
+  "answers": [
+    {
+      "qid": "CONTROL_Q1",
+      "familyScreen": 1,
+      "picked_key": true,
+      "lineCOF": "C",
+      "tells": [],
+      "ts": 1758070480729,
+      "latency_ms": 1413.0720656827327
+    },
+    {
+      "qid": "CONTROL_Q2",
+      "familyScreen": 1,
+      "picked_key": true,
+      "lineCOF": "C",
+      "tells": [],
+      "ts": 1758070481729,
+      "latency_ms": 1035.3421032954575
+    },
+    {
+      "qid": "PACE_Q1",
+      "familyScreen": 2,
+      "picked_key": true,
+      "lineCOF": "C",
+      "tells": [],
+      "ts": 1758070482729,
+      "latency_ms": 1060.042791035811
+    },
+    {
+      "qid": "PACE_Q2",
+      "familyScreen": 2,
+      "picked_key": true,
+      "lineCOF": "C",
+      "tells": [],
+      "ts": 1758070483729,
+      "latency_ms": 1279.2961900944379
+    },
+    {
+      "qid": "BOUNDARY_Q1",
+      "familyScreen": 3,
+      "picked_key": true,
+      "lineCOF": "C",
+      "tells": [],
+      "ts": 1758070484729,
+      "latency_ms": 1922.3689604577391
+    },
+    {
+      "qid": "BOUNDARY_Q2",
+      "familyScreen": 3,
+      "picked_key": true,
+      "lineCOF": "C",
+      "tells": [],
+      "ts": 1758070485729,
+      "latency_ms": 1595.355296141479
+    },
+    {
+      "qid": "TRUTH_Q1",
+      "familyScreen": 4,
+      "picked_key": true,
+      "lineCOF": "C",
+      "tells": [],
+      "ts": 1758070486729,
+      "latency_ms": 1663.8192970883563
+    },
+    {
+      "qid": "TRUTH_Q2",
+      "familyScreen": 4,
+      "picked_key": true,
+      "lineCOF": "C",
+      "tells": [],
+      "ts": 1758070487729,
+      "latency_ms": 1493.030108362487
+    },
+    {
+      "qid": "RECOGNITION_Q1",
+      "familyScreen": 5,
+      "picked_key": true,
+      "lineCOF": "C",
+      "tells": [],
+      "ts": 1758070488729,
+      "latency_ms": 1664.3338789409947
+    },
+    {
+      "qid": "RECOGNITION_Q2",
+      "familyScreen": 5,
+      "picked_key": true,
+      "lineCOF": "C",
+      "tells": [],
+      "ts": 1758070489729,
+      "latency_ms": 1068.5956206468875
+    },
+    {
+      "qid": "BONDING_Q1",
+      "familyScreen": 6,
+      "picked_key": true,
+      "lineCOF": "C",
+      "tells": [],
+      "ts": 1758070490729,
+      "latency_ms": 1849.458382888688
+    },
+    {
+      "qid": "BONDING_Q2",
+      "familyScreen": 6,
+      "picked_key": true,
+      "lineCOF": "C",
+      "tells": [],
+      "ts": 1758070491729,
+      "latency_ms": 1722.7680021866822
+    },
+    {
+      "qid": "STRESS_Q1",
+      "familyScreen": 7,
+      "picked_key": true,
+      "lineCOF": "C",
+      "tells": [],
+      "ts": 1758070492729,
+      "latency_ms": 1503.8260075012172
+    },
+    {
+      "qid": "STRESS_Q2",
+      "familyScreen": 7,
+      "picked_key": true,
+      "lineCOF": "C",
+      "tells": [],
+      "ts": 1758070493729,
+      "latency_ms": 1583.1189959912608
+    }
+  ],
+  "expected_result": {
+    "line_verdicts": {
+      "Control": "C",
+      "Pace": "C",
+      "Boundary": "C",
+      "Truth": "C",
+      "Recognition": "C",
+      "Bonding": "C",
+      "Stress": "C"
+    },
+    "face_states": {
+      "FACE/Control/Sovereign": {
+        "state": "GHOST",
+        "q_hits": 3,
+        "fam_hits": 3,
+        "sig": 1,
+        "clean": 3,
+        "broken": 0,
+        "contrast": true
+      },
+      "FACE/Control/Rebel": {
+        "state": "ABSENT",
+        "q_hits": 0,
+        "fam_hits": 0,
+        "sig": 0,
+        "clean": 0,
+        "broken": 0,
+        "contrast": false
+      },
+      "FACE/Pace/Visionary": {
+        "state": "GHOST",
+        "q_hits": 3,
+        "fam_hits": 3,
+        "sig": 1,
+        "clean": 3,
+        "broken": 0,
+        "contrast": true
+      },
+      "FACE/Pace/Navigator": {
+        "state": "COLD",
+        "q_hits": 1,
+        "fam_hits": 1,
+        "sig": 1,
+        "clean": 1,
+        "broken": 0,
+        "contrast": true
+      },
+      "FACE/Boundary/Equalizer": {
+        "state": "GHOST",
+        "q_hits": 3,
+        "fam_hits": 3,
+        "sig": 0,
+        "clean": 3,
+        "broken": 0,
+        "contrast": true
+      },
+      "FACE/Boundary/Guardian": {
+        "state": "COLD",
+        "q_hits": 1,
+        "fam_hits": 1,
+        "sig": 1,
+        "clean": 1,
+        "broken": 0,
+        "contrast": true
+      },
+      "FACE/Truth/Seeker": {
+        "state": "COLD",
+        "q_hits": 2,
+        "fam_hits": 2,
+        "sig": 1,
+        "clean": 2,
+        "broken": 0,
+        "contrast": true
+      },
+      "FACE/Truth/Architect": {
+        "state": "ABSENT",
+        "q_hits": 0,
+        "fam_hits": 0,
+        "sig": 0,
+        "clean": 0,
+        "broken": 0,
+        "contrast": false
+      },
+      "FACE/Recognition/Spotlight": {
+        "state": "LEAN",
+        "q_hits": 4,
+        "fam_hits": 4,
+        "sig": 1,
+        "clean": 4,
+        "broken": 0,
+        "contrast": true
+      },
+      "FACE/Recognition/Diplomat": {
+        "state": "ABSENT",
+        "q_hits": 0,
+        "fam_hits": 0,
+        "sig": 0,
+        "clean": 0,
+        "broken": 0,
+        "contrast": false
+      },
+      "FACE/Bonding/Partner": {
+        "state": "COLD",
+        "q_hits": 2,
+        "fam_hits": 2,
+        "sig": 1,
+        "clean": 2,
+        "broken": 0,
+        "contrast": true
+      },
+      "FACE/Bonding/Provider": {
+        "state": "ABSENT",
+        "q_hits": 0,
+        "fam_hits": 0,
+        "sig": 0,
+        "clean": 0,
+        "broken": 0,
+        "contrast": false
+      },
+      "FACE/Stress/Catalyst": {
+        "state": "GHOST",
+        "q_hits": 3,
+        "fam_hits": 3,
+        "sig": 1,
+        "clean": 3,
+        "broken": 0,
+        "contrast": true
+      },
+      "FACE/Stress/Artisan": {
+        "state": "COLD",
+        "q_hits": 1,
+        "fam_hits": 1,
+        "sig": 1,
+        "clean": 1,
+        "broken": 0,
+        "contrast": true
+      }
+    },
+    "family_reps": {
+      "Control": 0.16666666666666666,
+      "Pace": 0.16666666666666666,
+      "Boundary": 0.16666666666666666,
+      "Truth": 0.16666666666666666,
+      "Recognition": 0.16666666666666666,
+      "Bonding": 0.16666666666666666,
+      "Stress": 0.16666666666666666
+    },
+    "anchor_family": "Recognition"
+  }
+}

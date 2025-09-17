@@ -1,0 +1,6 @@
+{
+  "schema": "i18n.stems.v1",
+  "stems": [
+    { "qid": "CONTROL_Q1", "text_key": "stem.control.q1" }
+  ]
+}

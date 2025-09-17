@@ -1,0 +1,88 @@
+{
+  "schema": "family_block_template.v1",
+  "description": "Template for authoring family question blocks",
+  "family": "FAMILY_NAME",
+  "questions": [
+    {
+      "qid": "FAMILY_Q1",
+      "familyScreen": 1,
+      "order_in_family": "C",
+      "options": [
+        {
+          "id": "A",
+          "lineCOF": "C",
+          "tells": [
+            "TELL/FAMILY/FACE1/primary-tell",
+            "TELL/FAMILY/FACE2/primary-tell"
+          ],
+          "text": "Clean option text here"
+        },
+        {
+          "id": "B",
+          "lineCOF": "O",
+          "tells": [
+            "TELL/FAMILY/FACE1/secondary-tell",
+            "TELL/FAMILY/FACE2/secondary-tell"
+          ],
+          "text": "Bent option text here"
+        }
+      ]
+    },
+    {
+      "qid": "FAMILY_Q2",
+      "familyScreen": 1,
+      "order_in_family": "O",
+      "options": [
+        {
+          "id": "A",
+          "lineCOF": "C",
+          "tells": [
+            "TELL/FAMILY/FACE1/tertiary-tell",
+            "TELL/FAMILY/FACE2/tertiary-tell"
+          ],
+          "text": "Clean option text here"
+        },
+        {
+          "id": "B",
+          "lineCOF": "O",
+          "tells": [
+            "TELL/FAMILY/FACE1/quaternary-tell",
+            "TELL/FAMILY/FACE2/quaternary-tell"
+          ],
+          "text": "Bent option text here"
+        }
+      ]
+    },
+    {
+      "qid": "FAMILY_Q3",
+      "familyScreen": 1,
+      "order_in_family": "F",
+      "options": [
+        {
+          "id": "A",
+          "lineCOF": "C",
+          "tells": [
+            "TELL/FAMILY/FACE1/clean-tell",
+            "TELL/FAMILY/FACE2/clean-tell"
+          ],
+          "text": "Clean option text here"
+        },
+        {
+          "id": "B",
+          "lineCOF": "F",
+          "tells": [
+            "TELL/FAMILY/FACE1/broken-tell",
+            "TELL/FAMILY/FACE2/broken-tell"
+          ],
+          "text": "Broken option text here"
+        }
+      ]
+    }
+  ],
+  "authoring_notes": {
+    "tell_distribution": "Each face should have 6 total tells (2 signature, 4 adjacent)",
+    "contrast_tells": "Primary tells should be marked as contrast: true",
+    "explicit_tells": "Secondary tells should be marked as explicit: true",
+    "priority_order": "Priority 1 = contrast+explicit, Priority 2 = explicit only, Priority 3 = neither"
+  }
+}

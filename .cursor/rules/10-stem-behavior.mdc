@@ -1,0 +1,86 @@
+---
+alwaysApply: true
+description: STEM deterministic build behavior for Ground Zero engine
+---
+
+# STEM: Ground Zero Engine Behavior Spec
+
+> **REFERENCE**: See [18-system-behavior-spec.mdc](mdc:18-system-behavior-spec.mdc) for the complete authoritative specification.
+
+## Core Behavior Flow
+1. **Screen1 Picks**: Add +1 C to picked families
+2. **7 Family Screens**: 
+   - Picked families: 2 questions each
+   - Not-picked families: 3 questions each (C→O→F order)
+3. **Answer Processing**: Handle `AnswerEvent {qid, familyScreen, picked_key, lineCOF, tells[], ts, latency_ms}`
+4. **State Updates**:
+   - `line_state`: C+=1 / O_seen / F_seen
+   - `face_ledger`: questions_hit, families_hit, signature_qids, context_counts, per_family_counts, contrast_seen
+5. **Finalization**: Compute face states (LIT/LEAN/GHOST/COLD/ABSENT) per thresholds and family reps deterministically
+
+## AnswerEvent Processing
+```typescript
+interface AnswerEvent {
+  qid: string;
+  familyScreen: number;
+  picked_key: boolean;
+  lineCOF: 'C' | 'O' | 'F';
+  tells: string[];
+  ts: number;
+  latency_ms: number;
+}
+
+// Update line_state
+if (event.lineCOF === 'C') line_state[family].C += 1;
+if (event.lineCOF === 'O') line_state[family].O_seen = true;
+if (event.lineCOF === 'F') line_state[family].F_seen = true;
+```
+
+## Face Ledger Updates
+```typescript
+// Update face_ledger for each tell
+event.tells.forEach(tell => {
+  const face = getFaceFromTell(tell);
+  face_ledger[face].questions_hit.add(event.qid);
+  face_ledger[face].families_hit.add(event.familyScreen);
+  
+  if (isSignatureFamily(face, event.familyScreen)) {
+    face_ledger[face].signature_qids.add(event.qid);
+  }
+  
+  // Context tracking
+  const context = event.lineCOF === 'C' ? 'Clean' : 
+                  event.lineCOF === 'O' ? 'Bent' : 'Broken';
+  face_ledger[face].context_counts[context]++;
+  face_ledger[face].per_family_counts[event.familyScreen]++;
+});
+```
+
+## Face State Computation
+```typescript
+function computeFaceState(face: string, ledger: FaceLedger): FaceState {
+  const { questions_hit, families_hit, signature_qids, context_counts, per_family_counts, contrast_seen } = ledger[face];
+  
+  // Apply thresholds and gates
+  if (meetsLITCriteria(face, ledger)) return 'LIT';
+  if (meetsLEANCriteria(face, ledger)) return 'LEAN';
+  if (meetsGHOSTCriteria(face, ledger)) return 'GHOST';
+  if (meetsCOLDCriteria(face, ledger)) return 'COLD';
+  return 'ABSENT';
+}
+```
+
+## Critical Constraints
+- ❌ **NO UI telemetry** in decision logic
+- ❌ **NO background network calls** in core
+- ❌ **NO non-seeded randomness**
+- ✅ **Fail loudly** on bank validator failures
+- ✅ **Unit test everything** with golden replay tests
+- ✅ **Deterministic replay** must produce identical results
+
+## Testing Requirements
+- Golden replay tests for all state transitions
+- Property tests for deterministic behavior
+- Edge case testing for picks=7 and picks=1
+- Bank validation failure testing
+- Face state computation verification

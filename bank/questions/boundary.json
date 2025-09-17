@@ -1,0 +1,63 @@
+{
+  "schema": "question_bank.v1",
+  "family": "Boundary",
+  "questions": [
+    {
+      "qid": "BOUNDARY_Q1",
+      "familyScreen": 3,
+      "order_in_family": "C",
+      "options": [
+        {
+          "id": "A",
+          "text": "Keep the rule, show a path that still fits.",
+          "lineCOF": "C",
+          "tells": ["TELL/Boundary/Guardian/enforce-check", "TELL/Pace/Visionary/jump-first"]
+        },
+        {
+          "id": "B",
+          "text": "Allow a one-time pass, log it, expire tonight.",
+          "lineCOF": "O",
+          "tells": ["TELL/Boundary/Equalizer/redraw-edge", "TELL/Control/Sovereign/locks-scope"]
+        }
+      ]
+    },
+    {
+      "qid": "BOUNDARY_Q2",
+      "familyScreen": 3,
+      "order_in_family": "O",
+      "options": [
+        {
+          "id": "A",
+          "text": "Hold the checklist, refuse extras now.",
+          "lineCOF": "C",
+          "tells": ["TELL/Boundary/Guardian/gate-criteria", "TELL/Stress/Catalyst/raise-stakes"]
+        },
+        {
+          "id": "B",
+          "text": "Allow two extras, record them, end by tonight.",
+          "lineCOF": "O",
+          "tells": ["TELL/Boundary/Equalizer/call-foul", "TELL/Bonding/Partner/share-context"]
+        }
+      ]
+    },
+    {
+      "qid": "BOUNDARY_Q3",
+      "familyScreen": 3,
+      "order_in_family": "F",
+      "options": [
+        {
+          "id": "A",
+          "text": "Keep current rules until the end, review after.",
+          "lineCOF": "C",
+          "tells": ["TELL/Pace/Navigator/sequence-path", "TELL/Control/Rebel/breaks-deadlock"]
+        },
+        {
+          "id": "B",
+          "text": "Change rules now, sort roles later.",
+          "lineCOF": "F",
+          "tells": ["TELL/Stress/Artisan/polish-edge", "TELL/Bonding/Provider/shield-team"]
+        }
+      ]
+    }
+  ]
+}

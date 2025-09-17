@@ -1,0 +1,326 @@
+{
+  "session": {
+    "session_id": "046878bb28eb5700",
+    "session_seed": "clean-session-001",
+    "picked_families": [
+      "Control",
+      "Pace",
+      "Boundary"
+    ],
+    "bank_hash": "f3b83f5647111864456d1d73accf7fd4936139e95381c827b0c4d2353749c6df",
+    "constants_profile": "DEFAULT"
+  },
+  "answers": [
+    {
+      "qid": "CONTROL_Q1",
+      "familyScreen": 1,
+      "picked_key": true,
+      "lineCOF": "C",
+      "tells": [],
+      "ts": 1758070480722,
+      "latency_ms": 1666.4697528329739
+    },
+    {
+      "qid": "CONTROL_Q2",
+      "familyScreen": 1,
+      "picked_key": true,
+      "lineCOF": "C",
+      "tells": [],
+      "ts": 1758070481723,
+      "latency_ms": 1176.5062721792901
+    },
+    {
+      "qid": "PACE_Q1",
+      "familyScreen": 2,
+      "picked_key": true,
+      "lineCOF": "C",
+      "tells": [],
+      "ts": 1758070482723,
+      "latency_ms": 1766.0540657491135
+    },
+    {
+      "qid": "PACE_Q2",
+      "familyScreen": 2,
+      "picked_key": true,
+      "lineCOF": "C",
+      "tells": [],
+      "ts": 1758070483723,
+      "latency_ms": 1004.742253581072
+    },
+    {
+      "qid": "BOUNDARY_Q1",
+      "familyScreen": 3,
+      "picked_key": true,
+      "lineCOF": "C",
+      "tells": [],
+      "ts": 1758070484723,
+      "latency_ms": 1142.3054790440403
+    },
+    {
+      "qid": "BOUNDARY_Q2",
+      "familyScreen": 3,
+      "picked_key": true,
+      "lineCOF": "C",
+      "tells": [],
+      "ts": 1758070485723,
+      "latency_ms": 1549.8871401025403
+    },
+    {
+      "qid": "TRUTH_Q1",
+      "familyScreen": 4,
+      "picked_key": true,
+      "lineCOF": "C",
+      "tells": [],
+      "ts": 1758070486723,
+      "latency_ms": 1739.5295007060895
+    },
+    {
+      "qid": "TRUTH_Q2",
+      "familyScreen": 4,
+      "picked_key": true,
+      "lineCOF": "C",
+      "tells": [],
+      "ts": 1758070487723,
+      "latency_ms": 1193.8122511075987
+    },
+    {
+      "qid": "TRUTH_Q3",
+      "familyScreen": 4,
+      "picked_key": true,
+      "lineCOF": "C",
+      "tells": [],
+      "ts": 1758070488723,
+      "latency_ms": 1839.51572801498
+    },
+    {
+      "qid": "RECOGNITION_Q1",
+      "familyScreen": 5,
+      "picked_key": true,
+      "lineCOF": "C",
+      "tells": [],
+      "ts": 1758070489723,
+      "latency_ms": 1548.7171910061186
+    },
+    {
+      "qid": "RECOGNITION_Q2",
+      "familyScreen": 5,
+      "picked_key": true,
+      "lineCOF": "C",
+      "tells": [],
+      "ts": 1758070490723,
+      "latency_ms": 1968.509874019818
+    },
+    {
+      "qid": "RECOGNITION_Q3",
+      "familyScreen": 5,
+      "picked_key": true,
+      "lineCOF": "C",
+      "tells": [],
+      "ts": 1758070491723,
+      "latency_ms": 1012.7584304662385
+    },
+    {
+      "qid": "BONDING_Q1",
+      "familyScreen": 6,
+      "picked_key": true,
+      "lineCOF": "C",
+      "tells": [],
+      "ts": 1758070492723,
+      "latency_ms": 1470.4638182962165
+    },
+    {
+      "qid": "BONDING_Q2",
+      "familyScreen": 6,
+      "picked_key": true,
+      "lineCOF": "C",
+      "tells": [],
+      "ts": 1758070493723,
+      "latency_ms": 1935.9809852471503
+    },
+    {
+      "qid": "BONDING_Q3",
+      "familyScreen": 6,
+      "picked_key": true,
+      "lineCOF": "C",
+      "tells": [],
+      "ts": 1758070494723,
+      "latency_ms": 1172.438589755121
+    },
+    {
+      "qid": "STRESS_Q1",
+      "familyScreen": 7,
+      "picked_key": true,
+      "lineCOF": "C",
+      "tells": [],
+      "ts": 1758070495723,
+      "latency_ms": 1129.81759128755
+    },
+    {
+      "qid": "STRESS_Q2",
+      "familyScreen": 7,
+      "picked_key": true,
+      "lineCOF": "C",
+      "tells": [],
+      "ts": 1758070496723,
+      "latency_ms": 1276.5603418592423
+    },
+    {
+      "qid": "STRESS_Q3",
+      "familyScreen": 7,
+      "picked_key": true,
+      "lineCOF": "C",
+      "tells": [],
+      "ts": 1758070497723,
+      "latency_ms": 1834.448182215566
+    }
+  ],
+  "expected_result": {
+    "line_verdicts": {
+      "Control": "C",
+      "Pace": "C",
+      "Boundary": "C",
+      "Truth": "C",
+      "Recognition": "C",
+      "Bonding": "C",
+      "Stress": "C"
+    },
+    "face_states": {
+      "FACE/Control/Sovereign": {
+        "state": "GHOST",
+        "q_hits": 3,
+        "fam_hits": 3,
+        "sig": 1,
+        "clean": 3,
+        "broken": 0,
+        "contrast": true
+      },
+      "FACE/Control/Rebel": {
+        "state": "COLD",
+        "q_hits": 1,
+        "fam_hits": 1,
+        "sig": 0,
+        "clean": 1,
+        "broken": 0,
+        "contrast": false
+      },
+      "FACE/Pace/Visionary": {
+        "state": "GHOST",
+        "q_hits": 3,
+        "fam_hits": 3,
+        "sig": 1,
+        "clean": 3,
+        "broken": 0,
+        "contrast": true
+      },
+      "FACE/Pace/Navigator": {
+        "state": "GHOST",
+        "q_hits": 3,
+        "fam_hits": 3,
+        "sig": 1,
+        "clean": 3,
+        "broken": 0,
+        "contrast": true
+      },
+      "FACE/Boundary/Equalizer": {
+        "state": "GHOST",
+        "q_hits": 3,
+        "fam_hits": 3,
+        "sig": 0,
+        "clean": 3,
+        "broken": 0,
+        "contrast": true
+      },
+      "FACE/Boundary/Guardian": {
+        "state": "COLD",
+        "q_hits": 2,
+        "fam_hits": 2,
+        "sig": 1,
+        "clean": 2,
+        "broken": 0,
+        "contrast": true
+      },
+      "FACE/Truth/Seeker": {
+        "state": "COLD",
+        "q_hits": 3,
+        "fam_hits": 2,
+        "sig": 2,
+        "clean": 3,
+        "broken": 0,
+        "contrast": true
+      },
+      "FACE/Truth/Architect": {
+        "state": "COLD",
+        "q_hits": 1,
+        "fam_hits": 1,
+        "sig": 0,
+        "clean": 1,
+        "broken": 0,
+        "contrast": true
+      },
+      "FACE/Recognition/Spotlight": {
+        "state": "LEAN",
+        "q_hits": 5,
+        "fam_hits": 4,
+        "sig": 2,
+        "clean": 5,
+        "broken": 0,
+        "contrast": true
+      },
+      "FACE/Recognition/Diplomat": {
+        "state": "COLD",
+        "q_hits": 2,
+        "fam_hits": 2,
+        "sig": 0,
+        "clean": 2,
+        "broken": 0,
+        "contrast": true
+      },
+      "FACE/Bonding/Partner": {
+        "state": "COLD",
+        "q_hits": 3,
+        "fam_hits": 2,
+        "sig": 2,
+        "clean": 3,
+        "broken": 0,
+        "contrast": true
+      },
+      "FACE/Bonding/Provider": {
+        "state": "COLD",
+        "q_hits": 1,
+        "fam_hits": 1,
+        "sig": 0,
+        "clean": 1,
+        "broken": 0,
+        "contrast": true
+      },
+      "FACE/Stress/Catalyst": {
+        "state": "GHOST",
+        "q_hits": 3,
+        "fam_hits": 3,
+        "sig": 1,
+        "clean": 3,
+        "broken": 0,
+        "contrast": true
+      },
+      "FACE/Stress/Artisan": {
+        "state": "COLD",
+        "q_hits": 1,
+        "fam_hits": 1,
+        "sig": 1,
+        "clean": 1,
+        "broken": 0,
+        "contrast": true
+      }
+    },
+    "family_reps": {
+      "Control": 0.16666666666666666,
+      "Pace": 0.16666666666666666,
+      "Boundary": 0.16666666666666666,
+      "Truth": 0.16666666666666666,
+      "Recognition": 0.16666666666666666,
+      "Bonding": 0.16666666666666666,
+      "Stress": 0.16666666666666666
+    },
+    "anchor_family": "Recognition"
+  }
+}

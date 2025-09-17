@@ -1,0 +1,92 @@
+---
+globs: *.ts,*.js
+description: API contract specifications for core endpoints
+---
+
+# API Contract (Core Endpoints)
+
+## POST /api/session/create
+```typescript
+// Request
+interface CreateSessionRequest {
+  session_id: string;
+  picked_families: string[]; // ["Control", "Pace", ...]
+}
+
+// Response
+interface CreateSessionResponse {
+  session_id: string;
+  question_queue: QuestionQueueItem[];
+}
+
+interface QuestionQueueItem {
+  qid: string;
+  familyScreen: number;
+  order_in_family: 'C' | 'O' | 'F';
+}
+```
+
+## POST /api/session/answer
+```typescript
+// Request (AnswerEvent exact shape from §5)
+interface AnswerEvent {
+  qid: string;
+  familyScreen: number;
+  picked_key: boolean;
+  lineCOF: 'C' | 'O' | 'F';
+  tells: string[];
+  ts: number;
+  latency_ms: number;
+}
+
+// Response
+interface AnswerResponse {
+  ok: boolean;
+  next_question: QuestionQueueItem | null;
+  error?: string;
+}
+```
+
+## POST /api/session/finalize (Idempotent)
+```typescript
+// Request
+interface FinalizeRequest {
+  session_id: string;
+}
+
+// Response
+interface FinalizeResponse {
+  line_verdicts: Record<string, 'C' | 'O' | 'F'>;
+  face_states: Record<string, 'LIT' | 'LEAN' | 'GHOST' | 'COLD' | 'ABSENT'>;
+  family_reps: Record<string, number>;
+  anchor_family?: string;
+}
+```
+
+## POST /api/bank/validate
+```typescript
+// Request
+interface ValidateBankRequest {
+  bank: BankPackage;
+}
+
+// Response
+interface ValidateBankResponse {
+  valid: boolean;
+  errors: ValidationError[];
+}
+
+interface ValidationError {
+  path: string;
+  message: string;
+  code: string;
+}
+```
+
+## Implementation Requirements
+- All endpoints must validate input schemas
+- Return structured error responses
+- Use proper HTTP status codes
+- Implement idempotency where specified
+- Log all operations for debugging
+- Rate limiting on public endpoints

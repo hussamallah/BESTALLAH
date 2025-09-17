@@ -1,0 +1,32 @@
+---
+alwaysApply: true
+description: Core architecture principles for PFF Quiz Engine
+---
+
+# PFF Quiz Engine Architecture Rules
+
+## Core Principles
+- **Deterministic Engine**: All APIs must be pure and deterministic
+- **String-Blind Core**: No UI copy, colors, or layouts in engine logic
+- **Untrusted Input**: Treat question bank as untrusted - validate all schemas
+- **Read-Only Bank**: Question bank is immutable at runtime
+
+## API Design
+All public APIs must be pure functions:
+- `init_session(session_seed, bank_package)`
+- `set_picks(session_state, family_picks)`
+- `get_next_question(session_state)`
+- `submit_answer(session_state, qid, option)`
+- `finalize_session(session_state)`
+
+## Data Contracts
+- Question bank: 7 files, exactly 3 questions each (C/O/F probes)
+- Each question: exactly 2 options (A, B)
+- Each option: `lineCOF ∈ {C,O,F}` and `tells[]` (0-3 tells, ≤1 per face)
+- Always exactly 18 questions total
+- Constants profile: thresholds for LIT/LEAN/GHOST, `PER_SCREEN_CAP=0.40`
+
+## File Organization
+- `/engine/**`: State machine, schedule, ledger, finalize, APIs
+- `/bank/**`: Registries, constants, questions, packer/linter
+- `/tests/**`: Replay harness, golden vectors, fuzzers

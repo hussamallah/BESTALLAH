@@ -1,0 +1,137 @@
+---
+alwaysApply: true
+description: Engine implementation requirements and validation
+---
+
+# ENGINE IMPLEMENTATION REQUIREMENTS
+
+## Core Implementation Checklist
+
+When implementing or modifying the PFF Quiz Engine, ensure:
+
+### ✅ Bank Integration
+- [ ] Engine loads **only** from `bank_package.json` (signed)
+- [ ] All bank validation passes before engine initialization
+- [ ] Fast indices built for: `byQid`, `questionsByFamily`, `tellsByOption`, `faceMeta`, `contrastIndex`
+- [ ] Constants profile loaded from bank package
+
+### ✅ Session State Management
+- [ ] Session state matches exact JSON schema from [18-system-behavior-spec.mdc](mdc:18-system-behavior-spec.mdc)
+- [ ] Screen 1 picks apply +1 C seed to `line_state[family].C`
+- [ ] Face ledger initialized for all 14 faces with correct structure
+- [ ] Answer events appended to `session.answers` array
+
+### ✅ Question Scheduling
+- [ ] **picks=7**: 14 questions (2 per family)
+- [ ] **picks=1**: 20 questions (2 for picked + 3×6 for not-picked)
+- [ ] **picks=2-6**: 18 questions (2 for picked + 3 for not-picked)
+- [ ] Picked families: 2 questions each (C, O)
+- [ ] Not-picked families: 3 questions each (C, O, F)
+- [ ] Deterministic PRNG: `seed = hash(session_seed + bank_hash + constants_profile)`
+
+### ✅ Answer Processing
+- [ ] AnswerEvent structure matches specification exactly
+- [ ] Line state updates: C+=1, O_seen=true, F_seen=true
+- [ ] Face ledger updates: questions_hit, families_hit, signature_qids, context_counts, per_family_counts
+- [ ] Per-screen concentration cap: `PER_SCREEN_CAP = 0.40`
+- [ ] Burst guard: deduplicate same tell_id per family screen
+
+### ✅ Face State Computation
+- [ ] LIT criteria: Q≥6, FAM≥4, SIG≥2, CLEAN≥4, BROKEN≤1, MAX_FAM_SHARE≤0.40, contrast_seen=true
+- [ ] LEAN criteria: Q≥4, FAM≥3, SIG≥1, CLEAN≥2, BROKEN<CLEAN
+- [ ] GHOST criteria: Q≥6&FAM≤2 OR BROKEN≥CLEAN OR MAX_FAM_SHARE>0.40
+- [ ] COLD criteria: 2≤Q≤3, FAM≥2, not GHOST
+- [ ] ABSENT criteria: Q≤1
+- [ ] Clean override: CLEAN≥6, FAM≥5, BROKEN≤2, SIG≥2
+
+### ✅ Line Verdict Computation
+- [ ] F > O > C precedence
+- [ ] Seeds from Screen 1 count toward C
+- [ ] No external factors influence verdicts
+
+### ✅ Family Representative Resolution
+- [ ] Prefer LIT over other states
+- [ ] Tiebreakers: FAM → SIG → CLEAN
+- [ ] Handle co-presence correctly
+
+### ✅ Output Format
+- [ ] Exact JSON structure from specification
+- [ ] No prose, no hidden weights
+- [ ] All required fields present
+- [ ] Optional fields clearly marked
+
+## Implementation Validation
+
+### Before Any Code Changes
+1. **Read** [18-system-behavior-spec.mdc](mdc:18-system-behavior-spec.mdc) completely
+2. **Verify** current implementation matches specification
+3. **Identify** specific sections that need changes
+4. **Plan** changes to maintain determinism
+
+### During Implementation
+1. **Follow** exact data structures from specification
+2. **Implement** all validation rules
+3. **Test** with edge cases (picks=1, picks=7)
+4. **Verify** deterministic behavior
+
+### After Implementation
+1. **Run** all tests: lint, pack, sign, engine, edge-policies, replay
+2. **Verify** outputs match specification exactly
+3. **Check** no regressions in existing functionality
+4. **Validate** bank integration still works
+
+## Critical Constraints
+
+### ❌ NEVER DO
+- Alter constants at runtime
+- Mutate bank data after loading
+- Use non-seeded randomness
+- Make background network calls in core
+- Infer face presence from text
+- Let single family contribute >40% of face evidence
+- Skip validation steps
+- Return prose in core outputs
+
+### ✅ ALWAYS DO
+- Validate all inputs
+- Use exact JSON schemas
+- Maintain determinism
+- Fail loudly on errors
+- Test edge cases
+- Follow specification exactly
+
+## Testing Requirements
+
+### Unit Tests
+- [ ] Line state updates
+- [ ] Face ledger updates
+- [ ] Face state computation
+- [ ] Family representative resolution
+- [ ] Edge policies (picks=1, picks=7)
+- [ ] Per-screen concentration cap
+- [ ] Contrast detection
+
+### Integration Tests
+- [ ] Full session flow
+- [ ] Bank loading and validation
+- [ ] Deterministic replay
+- [ ] Error handling
+
+### Regression Tests
+- [ ] Golden replay tests
+- [ ] Edge case coverage
+- [ ] Performance benchmarks
+
+## Success Criteria
+
+The implementation is correct when:
+1. **All tests pass** (lint, pack, sign, engine, edge-policies, replay)
+2. **Deterministic behavior** confirmed across multiple runs
+3. **Exact specification compliance** verified
+4. **No regressions** in existing functionality
+5. **Performance** meets requirements
+6. **Error handling** works correctly
+
+## Reference Implementation
+
+The current implementation in [engine/index.js](mdc:engine/index.js) and [engine/bankLoader.js](mdc:engine/bankLoader.js) follows this specification. Use it as a reference for correct patterns and structures.

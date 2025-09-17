@@ -1,0 +1,60 @@
+{
+  "schema": "tell_registry.v2",
+  "tells": [
+    { "id": "TELL/Control/Sovereign/sets-call",        "face_id": "FACE/Control/Sovereign",        "contrast": true,  "explicit": true,  "priority": 1 },
+    { "id": "TELL/Control/Sovereign/locks-scope",      "face_id": "FACE/Control/Sovereign",        "contrast": true,  "explicit": true,  "priority": 2 },
+    { "id": "TELL/Control/Sovereign/decides-now",      "face_id": "FACE/Control/Sovereign",        "contrast": true,  "explicit": false, "priority": 3 },
+
+    { "id": "TELL/Control/Rebel/challenges-frame",     "face_id": "FACE/Control/Rebel",            "contrast": true,  "explicit": true,  "priority": 1 },
+    { "id": "TELL/Control/Rebel/breaks-deadlock",      "face_id": "FACE/Control/Rebel",            "contrast": true,  "explicit": true,  "priority": 2 },
+    { "id": "TELL/Control/Rebel/escapes-constraint",   "face_id": "FACE/Control/Rebel",            "contrast": true,  "explicit": false, "priority": 3 },
+
+    { "id": "TELL/Pace/Navigator/one-clean-block",     "face_id": "FACE/Pace/Navigator",           "contrast": true,  "explicit": true,  "priority": 1 },
+    { "id": "TELL/Pace/Navigator/timebox-step",        "face_id": "FACE/Pace/Navigator",           "contrast": true,  "explicit": true,  "priority": 2 },
+    { "id": "TELL/Pace/Navigator/sequence-path",       "face_id": "FACE/Pace/Navigator",           "contrast": true,  "explicit": false, "priority": 3 },
+
+    { "id": "TELL/Pace/Visionary/start-now",           "face_id": "FACE/Pace/Visionary",           "contrast": true,  "explicit": true,  "priority": 1 },
+    { "id": "TELL/Pace/Visionary/raise-ambition",      "face_id": "FACE/Pace/Visionary",           "contrast": true,  "explicit": true,  "priority": 2 },
+    { "id": "TELL/Pace/Visionary/jump-first",          "face_id": "FACE/Pace/Visionary",           "contrast": true,  "explicit": false, "priority": 3 },
+
+    { "id": "TELL/Boundary/Guardian/enforce-check",    "face_id": "FACE/Boundary/Guardian",        "contrast": true,  "explicit": true,  "priority": 1 },
+    { "id": "TELL/Boundary/Guardian/gate-criteria",    "face_id": "FACE/Boundary/Guardian",        "contrast": true,  "explicit": true,  "priority": 2 },
+    { "id": "TELL/Boundary/Guardian/stop-scope-creep", "face_id": "FACE/Boundary/Guardian",        "contrast": true,  "explicit": false, "priority": 3 },
+
+    { "id": "TELL/Boundary/Equalizer/redraw-edge",     "face_id": "FACE/Boundary/Equalizer",       "contrast": true,  "explicit": true,  "priority": 1 },
+    { "id": "TELL/Boundary/Equalizer/call-foul",       "face_id": "FACE/Boundary/Equalizer",       "contrast": true,  "explicit": true,  "priority": 2 },
+    { "id": "TELL/Boundary/Equalizer/level-field",     "face_id": "FACE/Boundary/Equalizer",       "contrast": true,  "explicit": false, "priority": 3 },
+
+    { "id": "TELL/Truth/Seeker/check-source",          "face_id": "FACE/Truth/Seeker",             "contrast": true,  "explicit": true,  "priority": 1 },
+    { "id": "TELL/Truth/Seeker/request-evidence",      "face_id": "FACE/Truth/Seeker",             "contrast": true,  "explicit": true,  "priority": 2 },
+    { "id": "TELL/Truth/Seeker/correct-live",          "face_id": "FACE/Truth/Seeker",             "contrast": true,  "explicit": false, "priority": 3 },
+
+    { "id": "TELL/Truth/Architect/structure-proof",    "face_id": "FACE/Truth/Architect",          "contrast": true,  "explicit": true,  "priority": 1 },
+    { "id": "TELL/Truth/Architect/define-terms",       "face_id": "FACE/Truth/Architect",          "contrast": true,  "explicit": true,  "priority": 2 },
+    { "id": "TELL/Truth/Architect/trace-assumptions",  "face_id": "FACE/Truth/Architect",          "contrast": true,  "explicit": false, "priority": 3 },
+
+    { "id": "TELL/Recognition/Spotlight/make-visible", "face_id": "FACE/Recognition/Spotlight",    "contrast": true,  "explicit": true,  "priority": 1 },
+    { "id": "TELL/Recognition/Spotlight/claim-credit", "face_id": "FACE/Recognition/Spotlight",    "contrast": true,  "explicit": true,  "priority": 2 },
+    { "id": "TELL/Recognition/Spotlight/broadcast-win","face_id": "FACE/Recognition/Spotlight",    "contrast": true,  "explicit": false, "priority": 3 },
+
+    { "id": "TELL/Recognition/Diplomat/balance-sides", "face_id": "FACE/Recognition/Diplomat",     "contrast": true,  "explicit": true,  "priority": 1 },
+    { "id": "TELL/Recognition/Diplomat/adjust-in-public","face_id": "FACE/Recognition/Diplomat",   "contrast": true,  "explicit": true,  "priority": 2 },
+    { "id": "TELL/Recognition/Diplomat/smooth-conflict","face_id": "FACE/Recognition/Diplomat",    "contrast": true,  "explicit": false, "priority": 3 },
+
+    { "id": "TELL/Bonding/Partner/ask-prefer",         "face_id": "FACE/Bonding/Partner",          "contrast": true,  "explicit": true,  "priority": 1 },
+    { "id": "TELL/Bonding/Partner/pair-through",       "face_id": "FACE/Bonding/Partner",          "contrast": true,  "explicit": true,  "priority": 2 },
+    { "id": "TELL/Bonding/Partner/share-context",      "face_id": "FACE/Bonding/Partner",          "contrast": true,  "explicit": false, "priority": 3 },
+
+    { "id": "TELL/Bonding/Provider/cover-gap",         "face_id": "FACE/Bonding/Provider",         "contrast": true,  "explicit": true,  "priority": 1 },
+    { "id": "TELL/Bonding/Provider/shield-team",       "face_id": "FACE/Bonding/Provider",         "contrast": true,  "explicit": true,  "priority": 2 },
+    { "id": "TELL/Bonding/Provider/quiet-help",        "face_id": "FACE/Bonding/Provider",         "contrast": true,  "explicit": false, "priority": 3 },
+
+    { "id": "TELL/Stress/Catalyst/apply-pressure",     "face_id": "FACE/Stress/Catalyst",          "contrast": true,  "explicit": true,  "priority": 1 },
+    { "id": "TELL/Stress/Catalyst/raise-stakes",       "face_id": "FACE/Stress/Catalyst",          "contrast": true,  "explicit": true,  "priority": 2 },
+    { "id": "TELL/Stress/Catalyst/force-move",         "face_id": "FACE/Stress/Catalyst",          "contrast": true,  "explicit": false, "priority": 3 },
+
+    { "id": "TELL/Stress/Artisan/refine-quietly",      "face_id": "FACE/Stress/Artisan",           "contrast": true,  "explicit": true,  "priority": 1 },
+    { "id": "TELL/Stress/Artisan/fix-by-hand",         "face_id": "FACE/Stress/Artisan",           "contrast": true,  "explicit": true,  "priority": 2 },
+    { "id": "TELL/Stress/Artisan/polish-edge",         "face_id": "FACE/Stress/Artisan",           "contrast": true,  "explicit": false, "priority": 3 }
+  ]
+}

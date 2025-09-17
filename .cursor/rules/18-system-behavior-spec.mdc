@@ -1,0 +1,339 @@
+---
+alwaysApply: true
+description: Authoritative system behavior specification for PFF Quiz Engine
+---
+
+# SYSTEM BEHAVIOR SPECIFICATION - BATCH 1
+
+## 0) Scope and Guarantees
+
+The engine runs two **independent** layers:
+1. **Line Verdicts (COF)** per family (Control, Pace, Boundary, Truth, Recognition, Bonding, Stress)
+2. **Face Presence** via **behavioral tells** (14 faces; portable across families)
+
+The quiz always uses **7 screens of questions** (one per family):
+- For **picked families** (from Screen 1) there are **2 questions** each
+- For **not-picked families** there are **3 questions** each in **C → O → F** order
+- Total questions = **18**
+
+**Screen 1** seeds **+1 C** to each family the user picks. This seed is **family-level only** and does not touch faces.
+
+Face tells are **non-numeric** hits; they do not alter line COF. They create a per-face ledger used to classify face presence states.
+
+All logic is **deterministic** and does not depend on any analytics or UI telemetry.
+
+## 1) Canonical IDs
+
+**Families (7):** `Control | Pace | Boundary | Truth | Recognition | Bonding | Stress`
+- ID form: `FAM/<name>` e.g., `FAM/Control`
+
+**Faces (14):** each family has two:
+- Control: `Sovereign`, `Rebel`
+- Pace: `Visionary`, `Navigator`
+- Boundary: `Equalizer`, `Guardian`
+- Truth: `Seeker`, `Architect`
+- Recognition: `Spotlight`, `Diplomat`
+- Bonding: `Partner`, `Provider`
+- Stress: `Catalyst`, `Artisan`
+- ID form: `FACE/<family>/<name>` e.g., `FACE/Control/Sovereign`
+
+**Tells:** portable verb-first tokens keyed to a **single** face
+- ID form: `TELL/<face>/<slug>` e.g., `TELL/Control/Sovereign/sets-call`
+
+## 2) Session State Object (what must exist in memory)
+
+```json
+{
+  "session_id": "string",
+  "started_at": "ISO-8601",
+  "picked_families": ["Control", "..."],
+
+  "line_state": {
+    "Control": { "C": 0, "O_seen": false, "F_seen": false },
+    "Pace":    { "C": 0, "O_seen": false, "F_seen": false },
+    "Boundary":{ "C": 0, "O_seen": false, "F_seen": false },
+    "Truth":   { "C": 0, "O_seen": false, "F_seen": false },
+    "Recognition":{ "C": 0, "O_seen": false, "F_seen": false },
+    "Bonding": { "C": 0, "O_seen": false, "F_seen": false },
+    "Stress":  { "C": 0, "O_seen": false, "F_seen": false }
+  },
+
+  "face_ledger": {
+    "FACE/Control/Sovereign": {
+      "questions_hit": [],        // array of qids
+      "families_hit": [],         // array of family names
+      "signature_qids": [],       // subset of questions_hit
+      "context_counts": { "Clean": 0, "Bent": 0, "Broken": 0 },
+      "per_family_counts": { "Control": 0, "Pace": 0, "Boundary": 0, "Truth": 0, "Recognition": 0, "Bonding": 0, "Stress": 0 },
+      "contrast_seen": false
+    }
+  },
+
+  "answers": [],                 // array of AnswerEvent
+  "finalized": false
+}
+```
+
+**Initialization:** After Screen 1, set `picked_families` and apply **+1 C** into `line_state[family].C` for each picked family. Everything else starts at zero/false.
+
+## 3) Question Bank Contract (minimum viable fields)
+
+```json
+{
+  "qid": "string",                          // unique
+  "familyScreen": "Control|Pace|Boundary|Truth|Recognition|Bonding|Stress",
+  "order_in_family": 1,                     // 1..3
+  "phase": "picked|not_picked",             // derived at runtime from Screen 1
+  "options": [
+    {
+      "key": "A",
+      "lineCOF": "C|O|F",                   // how this option affects the family on this screen
+      "tells": [                            // 0..3 tells, max 1 per face per option
+        { "face_id": "FACE/Control/Sovereign", "tell_id": "TELL/Control/Sovereign/sets-call" },
+        { "face_id": "FACE/Pace/Navigator", "tell_id": "TELL/Pace/Navigator/one-clean-block" }
+      ]
+    }
+  ]
+}
+```
+
+**Rules:**
+- **Picked families** provide 2 questions (writers still author 3 in the bank; runtime only serves the first two)
+- **Not-picked families** serve the full C→O→F sequence (3 questions)
+- Options carry the **lineCOF** mapping for this *familyScreen only*
+- Options carry 0–3 **tells**, each assigned to a **specific face**; never duplicate faces within a single option
+
+## 4) Screen 1 Behavior (Pick Families 1..7)
+
+**Input:** array of selected families size 1..7
+**Engine effect:** for each selected family `f`: `line_state[f].C += 1`
+No effect on faces. No other state changes.
+
+## 5) Answer Event (what we append on every click)
+
+```json
+{
+  "qid": "string",
+  "familyScreen": "Control|Pace|Boundary|Truth|Recognition|Bonding|Stress",
+  "picked_key": "A|B",
+  "lineCOF": "C|O|F",            // copy from option at time of click
+  "tells": [                     // deduped per face per option
+    { "face_id": "FACE/.../...", "tell_id": "TELL/.../..."},
+    { "face_id": "FACE/.../...", "tell_id": "TELL/.../..."}
+  ],
+  "ts": "ISO-8601",
+  "latency_ms": 0                // optional; unused by core math
+}
+```
+
+**Core math only needs:** `qid`, `familyScreen`, `lineCOF`, `tells[].face_id`
+
+Append this event to `session.answers`, then call **Update Line State** and **Update Face Ledger**.
+
+## 6) Update Line State (per event)
+
+Given `{familyScreen, lineCOF}`:
+- If `lineCOF === "C"` → `line_state[familyScreen].C += 1`
+- If `lineCOF === "O"` → `line_state[familyScreen].O_seen = true`
+- If `lineCOF === "F"` → `line_state[familyScreen].F_seen = true`
+
+No other mutation. Seeds from Screen 1 are already in `C`.
+
+## 7) Update Face Ledger (per event)
+
+Input: `familyScreen`, `lineCOF` mapped to **context**:
+- `context = "Clean"` if `lineCOF = "C"`
+- `context = "Bent"`  if `lineCOF = "O"`
+- `context = "Broken"`if `lineCOF = "F"`
+
+For each unique `face_id` in `tells`:
+- If `qid` not in `face_ledger[face_id].questions_hit`, push it
+- If `familyScreen` not in `families_hit`, push it
+- If `familyScreen` equals the **home family** of `face_id`, then push `qid` into `signature_qids`
+- Increment `context_counts[context]` by 1
+- Increment `per_family_counts[familyScreen]` by 1
+
+**Burst guard:** if the **previous question for the same familyScreen** also granted this face a hit with the **same tell_id**, treat the second as coverage-neutral
+
+## 8) Face Decision Logic (states)
+
+At end of quiz (after all 18 answers), compute for each face:
+
+**Computed values:**
+- `Q = face_ledger[face].questions_hit.length`
+- `FAM = face_ledger[face].families_hit.length`
+- `SIG = face_ledger[face].signature_qids.length`
+- `CLEAN = context_counts.Clean`
+- `BENT  = context_counts.Bent`
+- `BROKEN= context_counts.Broken`
+- `MAX_FAM_SHARE = max(per_family_counts[family]) / (CLEAN + BENT + BROKEN)`
+
+### A) States and thresholds
+
+**LIT (stable presence)** if **all**:
+- `Q ≥ 6`
+- `FAM ≥ 4`
+- `SIG ≥ 2`
+- `CLEAN ≥ 4`
+- `BROKEN ≤ 1` and `BROKEN < CLEAN`
+- `MAX_FAM_SHARE ≤ 0.40`
+- `contrast_seen = true`
+
+**LEAN (present, less stable)** if **all**:
+- `Q ≥ 4`
+- `FAM ≥ 3`
+- `SIG ≥ 1`
+- `CLEAN ≥ 2`
+- `BROKEN < CLEAN`
+
+**GHOST (volume without reliability)** if **any**:
+- `Q ≥ 6` and `FAM ≤ 2`, or
+- `BROKEN ≥ CLEAN`, or
+- `MAX_FAM_SHARE > 0.40`
+
+**COLD** if:
+- `2 ≤ Q ≤ 3` and `FAM ≥ 2` and not GHOST
+
+**ABSENT** if:
+- `Q ≤ 1`
+
+**Conflict rule:** If a face qualifies for both **LEAN** and **GHOST**, pick **GHOST**
+
+### B) Broken-context cap
+If `BROKEN > 0` and `BROKEN ≥ CLEAN`, cap state at **GHOST** regardless of other metrics
+
+### C) Clean override
+If `CLEAN ≥ 6` and `FAM ≥ 5`, allow **LIT** even with `BROKEN = 2`, provided `BROKEN < CLEAN` and `SIG ≥ 2`
+
+### D) Contrast detection
+For each family pair, define **contrast tells** that separate siblings
+Mark `contrast_seen = true` if the face has **at least 1 hit** on any of its contrast tells
+
+## 9) Family Pair Resolution (representative per family)
+
+For each family's two faces:
+1. If one is **LIT** and the other is not, representative = LIT
+2. If both **LIT**: prefer higher `FAM`; then higher `SIG`; then higher `CLEAN`
+3. If neither **LIT**: if one **LEAN** and the other **COLD/ABSENT/GHOST**, representative = LEAN
+4. If both **LEAN**, same tiebreaker chain (`FAM` → `SIG` → `CLEAN`)
+5. If one is **GHOST** and other **LEAN/COLD**, prefer the non-GHOST
+
+## 10) Line Verdict Computation (COF) per family
+
+At the end, derive each family's final letter using only `line_state`:
+- If `F_seen === true` → line verdict = **F**
+- Else if `O_seen === true` → line verdict = **O**
+- Else if `C > 0` → line verdict = **C**
+- Else → **C** by default
+
+Note: seeds from Screen 1 are already added to `C`
+
+## 11) Anchor Selection (if needed downstream)
+
+Eligible families: those **not in** `picked_families`
+Rank by:
+1. verdict = C preferred over O over F
+2. higher `C` count
+3. absence of `O_seen` then `F_seen`
+4. deterministic tiebreaker: earlier family in canonical order
+
+## 12) Constants (tuning knobs; do not expose to users)
+
+```json
+{
+  "FACE_LIT": {
+    "MIN_Q": 6, "MIN_FAM": 4, "MIN_SIG": 2,
+    "MIN_CLEAN": 4, "MAX_BROKEN": 1, "MAX_FAM_SHARE": 0.40,
+    "REQUIRE_CONTRAST": true
+  },
+  "FACE_LEAN": {
+    "MIN_Q": 4, "MIN_FAM": 3, "MIN_SIG": 1, "MIN_CLEAN": 2
+  },
+  "BROKEN_CAP_LIT": { "BROKEN_LT_CLEAN": true },
+  "CLEAN_OVERRIDE": { "CLEAN": 6, "FAM": 5, "ALLOW_BROKEN": 2 },
+  "PER_SCREEN_CAP": 0.40
+}
+```
+
+## 13) Minimal Outputs (no prose, just machine objects)
+
+At finalize:
+```json
+{
+  "session_id": "string",
+  "line_verdicts": {
+    "Control": "C|O|F",
+    "Pace": "C|O|F",
+    "Boundary": "C|O|F",
+    "Truth": "C|O|F",
+    "Recognition": "C|O|F",
+    "Bonding": "C|O|F",
+    "Stress": "C|O|F"
+  },
+  "face_states": {
+    "FACE/Control/Sovereign": { 
+      "state": "LIT|LEAN|GHOST|COLD|ABSENT",
+      "familiesHit": 0, "signatureHits": 0, "clean": 0, "bent": 0, "broken": 0, "contrastSeen": false 
+    }
+  },
+  "family_reps": [
+    { "family": "Control", "rep": "FACE/Control/Sovereign", "rep_state": "LIT", "co_present": false }
+  ],
+  "anchor_family": "Boundary"
+}
+```
+
+## 14) Engine Order of Operations (per click)
+
+1. Validate `qid` and `picked_key`
+2. Append **AnswerEvent**
+3. **Update Line State** (§6)
+4. **Update Face Ledger** (§7)
+5. Proceed to next question per the family schedule
+
+Finalize after all 18 answers:
+- Compute **line verdicts** (§10)
+- Compute **face states** (§8)
+- Resolve **family reps** (§9)
+- Optionally select **anchor** (§11)
+- Mark `finalized = true` and freeze session
+
+## 15) Validation Rules (bank and runtime)
+
+**Bank validators (offline):**
+- Every family has at least 3 authored questions in C→O→F order
+- Every option has `lineCOF`
+- Every option has **0–3 tells**, with **≤1 tell per face**
+- Each face appears as a tell on **≥6** total options across the full bank with **≥2** signature opportunities
+- Define contrast tells per family pair
+
+**Runtime guards:**
+- Deduplicate faces within a single option's tells list
+- If an option ships with 4+ tells, keep the first 3 by author priority and warn
+- If an option ships two tells for the same face, keep the stronger and warn
+- If a family that was picked attempts to show a 3rd question, suppress it
+
+## 16) Contract Stability
+
+- If you add or retire tells, nothing breaks as long as each option still respects the **1–3 tells** and **≤1 per face per option** rules
+- Thresholds for LIT/LEAN/GHOST can be tuned via constants; session objects remain the same
+- You can add new families/faces in future versions by simply extending registries; the algorithms are family-agnostic
+
+## 17) Hand-off "Prompt" (single source of truth)
+
+**SYSTEM BEHAVIOR (authoritative):**
+
+1. Screen 1 lets the user pick 1..7 families. For every pick, add **+1 C** to that family's `line_state`. No face effects.
+2. Serve 7 family screens. For **picked** families, serve **2 questions** each. For **not-picked**, serve **3 questions** in **C→O→F** order.
+3. Each option defines a **lineCOF** for the current family and **0–3 face tells** (max 1 tell per face in that option).
+4. On click, append an **AnswerEvent** `{qid, familyScreen, lineCOF, tells[]}`.
+5. Update line state: increment `C` on C, set `O_seen` on O, set `F_seen` on F.
+6. Update face ledger per tell: mark question hit, family hit, signature if home family, and increment context `Clean|Bent|Broken` based on the option's lineCOF.
+7. After 18 answers, finalize:
+   a) Line verdict per family: **F** if any `F_seen`; else **O** if any `O_seen`; else **C** if `C>0`.
+   b) Face state per face using thresholds: **LIT/LEAN/GHOST/COLD/ABSENT** with coverage, signature, clean/broken, and per-screen cap.
+   c) Resolve family representatives (prefer LIT; then coverage/signature/clean tiebreakers).
+   d) Optionally compute an anchor from non-picked families by C-first ranking.
+8. Output only: `{line_verdicts, face_states, family_reps, anchor_family}` plus session id. No scores, no prose. Everything else is optional QA.
+
+That is the exact behavioral contract. Wire your bank and UI to emit the **AnswerEvent** shape and this engine will produce the same outputs every time.

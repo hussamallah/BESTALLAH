@@ -1,0 +1,7 @@
+{
+  "schema": "i18n.options.v1",
+  "options": [
+    { "qid": "CONTROL_Q1", "key": "A", "text_key": "opt.control.q1.a" },
+    { "qid": "CONTROL_Q1", "key": "B", "text_key": "opt.control.q1.b" }
+  ]
+}

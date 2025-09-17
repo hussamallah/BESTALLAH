@@ -1,0 +1,59 @@
+---
+globs: *.ts,*.js
+description: API design patterns for Next.js and Fastify implementations
+---
+
+# API Design Rules
+
+## Next.js Serverless Routes
+```typescript
+// /api/session/init
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  if (req.method !== 'POST') return res.status(405).end();
+  
+  const { sessionSeed, bankPackage } = req.body;
+  const result = initSession(sessionSeed, bankPackage);
+  
+  // Store in Redis with TTL
+  await redis.setex(`session:${result.sessionId}`, 3600, JSON.stringify(result));
+  
+  res.status(200).json(result);
+}
+```
+
+## Fastify Microservice
+```typescript
+// Session management with Redis
+fastify.post('/session/init', async (request, reply) => {
+  const { sessionSeed, bankPackage } = request.body;
+  const session = initSession(sessionSeed, bankPackage);
+  
+  await redis.setex(`session:${session.sessionId}`, 3600, JSON.stringify(session));
+  
+  return session;
+});
+```
+
+## Data Storage Patterns
+- **Redis**: Session state with TTL (1 hour default)
+- **Postgres JSONB**: Finalized sessions for analytics
+- **Bank Storage**: Git + S3 for versioning, Postgres for runtime
+
+## API Response Format
+```typescript
+interface ApiResponse<T> {
+  success: boolean;
+  data?: T;
+  error?: {
+    code: string;
+    message: string;
+    details?: unknown;
+  };
+}
+```
+
+## Validation
+- Use ajv for JSON schema validation
+- Validate bank packages before processing
+- Sanitize all inputs
+- Return structured error responses

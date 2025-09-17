@@ -1,0 +1,34 @@
+{
+  "schema": "replay.v1",
+  "description": "Replay format for deterministic testing of PFF Quiz Engine",
+  "session": {
+    "session_id": "string",
+    "session_seed": "string",
+    "picked_families": ["string"],
+    "bank_hash": "string",
+    "constants_profile": "string"
+  },
+  "answers": [
+    {
+      "qid": "string",
+      "familyScreen": "number",
+      "picked_key": "boolean",
+      "lineCOF": "C|O|F",
+      "tells": ["string"],
+      "ts": "number",
+      "latency_ms": "number"
+    }
+  ],
+  "expected_result": {
+    "line_verdicts": {
+      "family_name": "C|O|F"
+    },
+    "face_states": {
+      "face_id": "LIT|LEAN|GHOST|COLD|ABSENT"
+    },
+    "family_reps": {
+      "family_name": "number"
+    },
+    "anchor_family": "string|null"
+  }
+}

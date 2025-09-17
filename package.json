@@ -1,0 +1,22 @@
+{
+  "name": "pff-quiz-engine",
+  "version": "1.0.0",
+  "description": "PFF Quiz Engine - Deterministic quiz engine with 7 lines and 14 faces",
+  "main": "index.js",
+  "scripts": {
+    "pack": "node scripts/pack-bank.js",
+    "lint": "node scripts/lint-bank.js",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
+  },
+  "keywords": ["quiz", "engine", "deterministic", "pff"],
+  "author": "PFF Quiz Engine Team",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

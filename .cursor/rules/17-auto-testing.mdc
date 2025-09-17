@@ -1,0 +1,108 @@
+---
+alwaysApply: true
+description: Automatic test execution for PFF Quiz Engine
+---
+
+# Auto-Testing Rule - Always Run Tests
+
+## When User Asks to Test Anything
+
+**Automatically execute ALL relevant tests** whenever the user mentions testing, validation, or verification.
+
+### Test Execution Order
+
+1. **Bank Validation Tests**
+   ```bash
+   node scripts/lint-bank.js
+   ```
+
+2. **Bank Packaging Tests**
+   ```bash
+   node scripts/pack-bank.js
+   node scripts/sign-bank.js sign
+   node scripts/sign-bank.js verify
+   ```
+
+3. **Core Engine API Tests**
+   ```bash
+   node scripts/test-engine.js
+   ```
+
+4. **Edge Policy Tests**
+   ```bash
+   node scripts/test-edge-policies.js
+   ```
+
+5. **Replay Tests**
+   ```bash
+   node scripts/run-replay.js
+   ```
+
+6. **Mathematical Verification**
+   ```bash
+   node scripts/verify-counts.js
+   ```
+
+## PowerShell-Compatible Command Chaining
+
+For Windows PowerShell, use semicolon separation and `$?` checks:
+```powershell
+node scripts/lint-bank.js; if ($?) { node scripts/pack-bank.js; if ($?) { node scripts/sign-bank.js sign; if ($?) { node scripts/sign-bank.js verify; if ($?) { node scripts/test-engine.js; if ($?) { node scripts/test-edge-policies.js; if ($?) { node scripts/run-replay.js; if ($?) { node scripts/verify-counts.js } } } } } } }
+```
+
+### Test Triggers
+
+Run tests when user says:
+- "test" / "testing" / "test this"
+- "validate" / "validation" / "verify"
+- "check" / "check this" / "run tests"
+- "make sure" / "ensure" / "confirm"
+- "debug" / "troubleshoot" / "fix"
+
+### Test Results
+
+- ✅ **PASS** - Continue with user's request
+- ❌ **FAIL** - Fix issues first, then continue
+- ⚠️ **WARN** - Report warnings, continue with caution
+
+### Always Include
+
+- Run tests in parallel when possible
+- Show test output clearly
+- Report any failures immediately
+- Fix issues before proceeding
+- Confirm all tests pass before completing task
+
+## Example Usage
+
+**User**: "Test the bank validation"
+**Auto-Response**: 
+1. Run `node scripts/lint-bank.js`
+2. Show results
+3. Fix any issues found
+4. Confirm validation passes
+
+**User**: "Make sure the engine works"
+**Auto-Response**:
+1. Run all test suites
+2. Show comprehensive results
+3. Fix any failures
+4. Confirm everything works
+
+## Test Coverage
+
+- **Bank Structure**: Masks, tells, counts, unique qids
+- **Bank Processing**: Packing, signing, verification
+- **Engine API**: All 5 core functions
+- **Edge Policies**: Picks=1, picks=7, picks=3
+- **Deterministic Behavior**: Replay consistency
+
+## Success Criteria
+
+All tests must pass before considering any task complete:
+- Bank linter: ✅ All checks passed
+- Bank packer: ✅ Package created successfully  
+- Signing system: ✅ Signature valid
+- Engine API: ✅ All functions working
+- Edge policies: ✅ All test cases passed
+- Replay tests: ✅ Deterministic behavior confirmed

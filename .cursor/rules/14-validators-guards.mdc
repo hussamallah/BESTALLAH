@@ -1,0 +1,203 @@
+---
+globs: *.ts,*.js
+description: Validators and guards for bank and runtime validation
+---
+
+# Validators & Guards (Bank + Runtime)
+
+## Bank-Level Validators (Run in CI)
+
+### Family Validation
+```typescript
+function validateFamilies(bank: BankPackage): ValidationError[] {
+  const errors: ValidationError[] = [];
+  
+  // Every family has ≥3 questions authored
+  bank.families.forEach(family => {
+    const familyQuestions = bank.questions[family.id];
+    if (!familyQuestions || familyQuestions.length < 3) {
+      errors.push({
+        path: `families.${family.id}`,
+        message: `Family ${family.id} must have at least 3 questions`,
+        code: 'INSUFFICIENT_QUESTIONS'
+      });
+    }
+  });
+  
+  return errors;
+}
+```
+
+### Question Validation
+```typescript
+function validateQuestions(bank: BankPackage): ValidationError[] {
+  const errors: ValidationError[] = [];
+  
+  Object.entries(bank.questions).forEach(([familyId, questions]) => {
+    questions.forEach((question, index) => {
+      // Each option has lineCOF
+      question.options.forEach((option, optIndex) => {
+        if (!['C', 'O', 'F'].includes(option.lineCOF)) {
+          errors.push({
+            path: `questions.${familyId}[${index}].options[${optIndex}].lineCOF`,
+            message: `Invalid lineCOF value: ${option.lineCOF}`,
+            code: 'INVALID_LINECOF'
+          });
+        }
+      });
+      
+      // Option tells: 0–3 tells, ≤1 tell per face per option
+      question.options.forEach((option, optIndex) => {
+        if (option.tells.length > 3) {
+          errors.push({
+            path: `questions.${familyId}[${index}].options[${optIndex}].tells`,
+            message: `Option has too many tells: ${option.tells.length}`,
+            code: 'TOO_MANY_TELLS'
+          });
+        }
+        
+        // Check for duplicate faces in tells
+        const faceCounts = new Map<string, number>();
+        option.tells.forEach(tell => {
+          const face = getFaceFromTell(tell);
+          faceCounts.set(face, (faceCounts.get(face) || 0) + 1);
+        });
+        
+        faceCounts.forEach((count, face) => {
+          if (count > 1) {
+            errors.push({
+              path: `questions.${familyId}[${index}].options[${optIndex}].tells`,
+              message: `Face ${face} appears ${count} times in single option`,
+              code: 'DUPLICATE_FACE_TELLS'
+            });
+          }
+        });
+      });
+    });
+  });
+  
+  return errors;
+}
+```
+
+### Face Validation
+```typescript
+function validateFaces(bank: BankPackage): ValidationError[] {
+  const errors: ValidationError[] = [];
+  
+  // Each face appears as tell ≥6 times overall with ≥2 signature opportunities
+  bank.faces.forEach(face => {
+    const tellCount = countTellsForFace(bank, face.id);
+    if (tellCount < 6) {
+      errors.push({
+        path: `faces.${face.id}`,
+        message: `Face ${face.id} appears only ${tellCount} times, minimum 6 required`,
+        code: 'INSUFFICIENT_TELLS'
+      });
+    }
+    
+    const signatureCount = countSignatureTellsForFace(bank, face.id);
+    if (signatureCount < 2) {
+      errors.push({
+        path: `faces.${face.id}`,
+        message: `Face ${face.id} has only ${signatureCount} signature opportunities, minimum 2 required`,
+        code: 'INSUFFICIENT_SIGNATURE_OPPORTUNITIES'
+      });
+    }
+    
+    // Contrast tells defined for each face
+    if (!face.contrast_tells || face.contrast_tells.length === 0) {
+      errors.push({
+        path: `faces.${face.id}.contrast_tells`,
+        message: `Face ${face.id} must have contrast tells defined`,
+        code: 'MISSING_CONTRAST_TELLS'
+      });
+    }
+  });
+  
+  return errors;
+}
+```
+
+## Runtime Guards (Engine)
+
+### Tell Deduplication
+```typescript
+function dedupeTellsPerOption(option: Option): Option {
+  const seenFaces = new Set<string>();
+  const dedupedTells: string[] = [];
+  
+  option.tells.forEach(tell => {
+    const face = getFaceFromTell(tell);
+    if (!seenFaces.has(face)) {
+      seenFaces.add(face);
+      dedupedTells.push(tell);
+    } else {
+      console.warn(`Duplicate tell for face ${face} in option ${option.id}`);
+    }
+  });
+  
+  return {
+    ...option,
+    tells: dedupedTells
+  };
+}
+```
+
+### Tell Trimming
+```typescript
+function trimTellsByPriority(option: Option, authorPriority: string[]): Option {
+  if (option.tells.length <= 3) return option;
+  
+  // Sort tells by author priority
+  const sortedTells = option.tells.sort((a, b) => {
+    const aPriority = authorPriority.indexOf(getAuthorFromTell(a));
+    const bPriority = authorPriority.indexOf(getAuthorFromTell(b));
+    return aPriority - bPriority;
+  });
+  
+  const trimmedTells = sortedTells.slice(0, 3);
+  
+  console.warn(`Trimmed tells for option ${option.id}: ${option.tells.length} → ${trimmedTells.length}`);
+  
+  return {
+    ...option,
+    tells: trimmedTells
+  };
+}
+```
+
+### Per-Family Burst Guard
+```typescript
+function checkPerFamilyBurst(faceLedger: Map<string, FaceLedger>, familyScreen: number): void {
+  faceLedger.forEach((ledger, face) => {
+    const familyCount = ledger.per_family_counts[familyScreen] || 0;
+    const totalCount = Object.values(ledger.per_family_counts).reduce((sum, count) => sum + count, 0);
+    
+    if (totalCount > 0) {
+      const percentage = familyCount / totalCount;
+      if (percentage > 0.4) {
+        console.warn(`Face ${face} has ${(percentage * 100).toFixed(1)}% evidence from family ${familyScreen}, exceeds 40% cap`);
+      }
+    }
+  });
+}
+```
+
+## Validation Pipeline
+```typescript
+function validateBank(bank: BankPackage): ValidationResult {
+  const errors: ValidationError[] = [
+    ...validateFamilies(bank),
+    ...validateQuestions(bank),
+    ...validateFaces(bank),
+    ...validateConstants(bank),
+    ...validateTells(bank)
+  ];
+  
+  return {
+    valid: errors.length === 0,
+    errors
+  };
+}
+```

@@ -1,0 +1,183 @@
+---
+globs: *.sql,*.ts,*.js
+description: Explicit data models and database schemas
+---
+
+# Data Models (Copy-Paste Ready)
+
+## Session Table (Postgres JSONB)
+```sql
+CREATE TABLE sessions (
+  id TEXT PRIMARY KEY,
+  started_at TIMESTAMP WITH TIME ZONE,
+  status TEXT, -- running | finalized
+  session_state JSONB, -- entire session object per spec §2
+  finalized_at TIMESTAMP WITH TIME ZONE NULL
+);
+
+-- Indexes for performance
+CREATE INDEX idx_sessions_status ON sessions(status);
+CREATE INDEX idx_sessions_started_at ON sessions(started_at);
+CREATE INDEX idx_sessions_finalized_at ON sessions(finalized_at);
+```
+
+## Bank Schema (JSON Schema)
+```json
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "hash": { "type": "string" },
+    "families": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/family" },
+      "minItems": 7,
+      "maxItems": 7
+    },
+    "faces": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/face" },
+      "minItems": 14,
+      "maxItems": 14
+    },
+    "tells": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/tell" }
+    },
+    "questions": {
+      "type": "object",
+      "patternProperties": {
+        "^[A-Za-z]+$": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/question" },
+          "minItems": 3,
+          "maxItems": 3
+        }
+      },
+      "minProperties": 7,
+      "maxProperties": 7
+    },
+    "constants": { "$ref": "#/definitions/constants" }
+  },
+  "required": ["hash", "families", "faces", "tells", "questions", "constants"],
+  "definitions": {
+    "family": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "faces": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 2,
+          "maxItems": 2
+        }
+      },
+      "required": ["id", "name", "faces"]
+    },
+    "face": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "family": { "type": "string" },
+        "contrast_tells": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "required": ["id", "name", "family", "contrast_tells"]
+    },
+    "tell": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "text": { "type": "string" },
+        "face": { "type": "string" }
+      },
+      "required": ["id", "text", "face"]
+    },
+    "question": {
+      "type": "object",
+      "properties": {
+        "qid": { "type": "string" },
+        "familyScreen": { "type": "integer", "minimum": 1, "maximum": 7 },
+        "order_in_family": { "type": "string", "enum": ["C", "O", "F"] },
+        "options": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/option" },
+          "minItems": 2,
+          "maxItems": 2
+        }
+      },
+      "required": ["qid", "familyScreen", "order_in_family", "options"]
+    },
+    "option": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "text": { "type": "string" },
+        "lineCOF": { "type": "string", "enum": ["C", "O", "F"] },
+        "tells": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 0,
+          "maxItems": 3
+        }
+      },
+      "required": ["id", "text", "lineCOF", "tells"]
+    },
+    "constants": {
+      "type": "object",
+      "properties": {
+        "PER_SCREEN_CAP": { "type": "number", "minimum": 0, "maximum": 1 },
+        "LIT_THRESHOLDS": { "$ref": "#/definitions/thresholds" },
+        "LEAN_THRESHOLDS": { "$ref": "#/definitions/thresholds" },
+        "GHOST_THRESHOLDS": { "$ref": "#/definitions/thresholds" }
+      },
+      "required": ["PER_SCREEN_CAP", "LIT_THRESHOLDS", "LEAN_THRESHOLDS", "GHOST_THRESHOLDS"]
+    },
+    "thresholds": {
+      "type": "object",
+      "properties": {
+        "min_questions": { "type": "integer", "minimum": 0 },
+        "min_families": { "type": "integer", "minimum": 0 },
+        "min_signature": { "type": "integer", "minimum": 0 },
+        "min_clean_context": { "type": "integer", "minimum": 0 },
+        "require_contrast": { "type": "boolean" }
+      },
+      "required": ["min_questions", "min_families", "min_signature", "min_clean_context", "require_contrast"]
+    }
+  }
+}
+```
+
+## TypeScript Interfaces
+```typescript
+interface SessionState {
+  sessionId: string;
+  startedAt: Date;
+  status: 'running' | 'finalized';
+  picks: string[];
+  answers: Map<string, AnswerEvent>;
+  lineState: Map<string, LineState>;
+  faceLedger: Map<string, FaceLedger>;
+  questionQueue: Question[];
+  finalizedAt?: Date;
+}
+
+interface LineState {
+  C: number;
+  O_seen: boolean;
+  F_seen: boolean;
+}
+
+interface FaceLedger {
+  questions_hit: Set<string>;
+  families_hit: Set<number>;
+  signature_qids: Set<string>;
+  context_counts: Record<string, number>;
+  per_family_counts: Record<number, number>;
+  contrast_seen: boolean;
+}
+```

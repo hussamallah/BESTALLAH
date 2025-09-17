@@ -1,0 +1,13 @@
+{
+  "ok": true,
+  "timestamp": "2025-09-17T02:59:09.504Z",
+  "bank_id": "pff.v1.0",
+  "summary": {
+    "families": 7,
+    "questions": 21,
+    "options": 42,
+    "tells": 42
+  },
+  "errors": [],
+  "warnings": []
+}

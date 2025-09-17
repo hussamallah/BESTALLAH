@@ -1,0 +1,35 @@
+---
+alwaysApply: true
+description: Hard constraints and guardrails for PFF Quiz Engine
+---
+
+# Guardrails - Hard "Do Not" List
+
+## Runtime Constraints
+- ❌ Do not alter constants at runtime
+- ❌ Do not mutate registries or question bank shapes in code
+- ❌ Do not infer face presence from text or heuristics
+- ❌ Do not let single family contribute >40% of face evidence toward LIT
+
+## Data Integrity
+- ❌ Do not modify question bank after loading
+- ❌ Do not bypass schema validation
+- ❌ Do not allow invalid lineCOF values
+- ❌ Do not exceed tell limits per option
+
+## Logic Constraints
+- ❌ Do not use non-seeded randomness
+- ❌ Do not make background network calls in core
+- ❌ Do not store UI state in engine
+- ❌ Do not hardcode constants
+
+## API Constraints
+- ❌ Do not return prose or hidden weights
+- ❌ Do not allow multiple finalize calls
+- ❌ Do not process invalid session states
+- ❌ Do not skip required validation steps
+
+## When Contract Conflicts Appear
+- Emit diff of exact JSON shapes needing clarification
+- Prefer conservative assumptions preserving determinism
+- Complete tasks with contract preservation priority

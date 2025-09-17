@@ -1,0 +1,380 @@
+{
+  "session": {
+    "session_id": "090b44c6fed73aac",
+    "session_seed": "broken-session-proper",
+    "picked_families": [
+      "Control",
+      "Pace",
+      "Boundary"
+    ],
+    "bank_hash": "f3b83f5647111864456d1d73accf7fd4936139e95381c827b0c4d2353749c6df",
+    "constants_profile": "DEFAULT"
+  },
+  "answers": [
+    {
+      "qid": "CONTROL_Q1",
+      "familyScreen": 1,
+      "picked_key": true,
+      "lineCOF": "C",
+      "tells": [
+        "TELL/Control/Sovereign/sets-call",
+        "TELL/Stress/Catalyst/apply-pressure"
+      ],
+      "ts": 1758070524333,
+      "latency_ms": 1494.6047331831921
+    },
+    {
+      "qid": "CONTROL_Q2",
+      "familyScreen": 1,
+      "picked_key": true,
+      "lineCOF": "C",
+      "tells": [
+        "TELL/Control/Sovereign/locks-scope",
+        "TELL/Recognition/Spotlight/make-visible"
+      ],
+      "ts": 1758070525337,
+      "latency_ms": 1582.9770819714809
+    },
+    {
+      "qid": "PACE_Q1",
+      "familyScreen": 2,
+      "picked_key": false,
+      "lineCOF": "O",
+      "tells": [
+        "TELL/Pace/Navigator/timebox-step",
+        "TELL/Stress/Catalyst/force-move"
+      ],
+      "ts": 1758070526341,
+      "latency_ms": 1181.2261071885812
+    },
+    {
+      "qid": "PACE_Q2",
+      "familyScreen": 2,
+      "picked_key": false,
+      "lineCOF": "O",
+      "tells": [
+        "TELL/Pace/Visionary/raise-ambition",
+        "TELL/Bonding/Partner/pair-through"
+      ],
+      "ts": 1758070527344,
+      "latency_ms": 1969.5816354068593
+    },
+    {
+      "qid": "BOUNDARY_Q1",
+      "familyScreen": 3,
+      "picked_key": false,
+      "lineCOF": "O",
+      "tells": [
+        "TELL/Boundary/Equalizer/redraw-edge",
+        "TELL/Control/Sovereign/locks-scope"
+      ],
+      "ts": 1758070528346,
+      "latency_ms": 1786.6464998579952
+    },
+    {
+      "qid": "BOUNDARY_Q2",
+      "familyScreen": 3,
+      "picked_key": false,
+      "lineCOF": "O",
+      "tells": [
+        "TELL/Boundary/Equalizer/call-foul",
+        "TELL/Bonding/Partner/share-context"
+      ],
+      "ts": 1758070529349,
+      "latency_ms": 1861.830702968049
+    },
+    {
+      "qid": "TRUTH_Q1",
+      "familyScreen": 4,
+      "picked_key": true,
+      "lineCOF": "C",
+      "tells": [
+        "TELL/Truth/Seeker/check-source",
+        "TELL/Boundary/Equalizer/level-field"
+      ],
+      "ts": 1758070530352,
+      "latency_ms": 1870.1643697028817
+    },
+    {
+      "qid": "TRUTH_Q2",
+      "familyScreen": 4,
+      "picked_key": true,
+      "lineCOF": "C",
+      "tells": [
+        "TELL/Truth/Seeker/request-evidence",
+        "TELL/Control/Sovereign/decides-now"
+      ],
+      "ts": 1758070531356,
+      "latency_ms": 1021.355393845548
+    },
+    {
+      "qid": "TRUTH_Q3",
+      "familyScreen": 4,
+      "picked_key": false,
+      "lineCOF": "F",
+      "tells": [
+        "TELL/Recognition/Diplomat/adjust-in-public",
+        "TELL/Stress/Artisan/refine-quietly"
+      ],
+      "ts": 1758070532359,
+      "latency_ms": 1669.0403748994854
+    },
+    {
+      "qid": "RECOGNITION_Q1",
+      "familyScreen": 5,
+      "picked_key": true,
+      "lineCOF": "C",
+      "tells": [
+        "TELL/Recognition/Spotlight/make-visible",
+        "TELL/Truth/Seeker/check-source"
+      ],
+      "ts": 1758070533362,
+      "latency_ms": 1628.5958359263313
+    },
+    {
+      "qid": "RECOGNITION_Q2",
+      "familyScreen": 5,
+      "picked_key": true,
+      "lineCOF": "C",
+      "tells": [
+        "TELL/Recognition/Spotlight/broadcast-win",
+        "TELL/Pace/Visionary/raise-ambition"
+      ],
+      "ts": 1758070534364,
+      "latency_ms": 1931.4141151784324
+    },
+    {
+      "qid": "RECOGNITION_Q3",
+      "familyScreen": 5,
+      "picked_key": false,
+      "lineCOF": "F",
+      "tells": [
+        "TELL/Truth/Architect/structure-proof",
+        "TELL/Control/Rebel/challenges-frame"
+      ],
+      "ts": 1758070535366,
+      "latency_ms": 1993.627392113849
+    },
+    {
+      "qid": "BONDING_Q1",
+      "familyScreen": 6,
+      "picked_key": true,
+      "lineCOF": "C",
+      "tells": [
+        "TELL/Bonding/Partner/ask-prefer",
+        "TELL/Recognition/Spotlight/make-visible"
+      ],
+      "ts": 1758070536369,
+      "latency_ms": 1253.3243079500246
+    },
+    {
+      "qid": "BONDING_Q2",
+      "familyScreen": 6,
+      "picked_key": true,
+      "lineCOF": "C",
+      "tells": [
+        "TELL/Bonding/Partner/pair-through",
+        "TELL/Boundary/Equalizer/call-foul"
+      ],
+      "ts": 1758070537371,
+      "latency_ms": 1733.0528521825145
+    },
+    {
+      "qid": "BONDING_Q3",
+      "familyScreen": 6,
+      "picked_key": false,
+      "lineCOF": "F",
+      "tells": [
+        "TELL/Boundary/Guardian/stop-scope-creep",
+        "TELL/Pace/Navigator/one-clean-block"
+      ],
+      "ts": 1758070538374,
+      "latency_ms": 1237.2544742180387
+    },
+    {
+      "qid": "STRESS_Q1",
+      "familyScreen": 7,
+      "picked_key": true,
+      "lineCOF": "C",
+      "tells": [
+        "TELL/Stress/Catalyst/apply-pressure",
+        "TELL/Bonding/Partner/pair-through"
+      ],
+      "ts": 1758070539376,
+      "latency_ms": 1803.8740506728782
+    },
+    {
+      "qid": "STRESS_Q2",
+      "familyScreen": 7,
+      "picked_key": true,
+      "lineCOF": "C",
+      "tells": [
+        "TELL/Stress/Artisan/fix-by-hand",
+        "TELL/Boundary/Equalizer/call-foul"
+      ],
+      "ts": 1758070540380,
+      "latency_ms": 1436.982943982689
+    },
+    {
+      "qid": "STRESS_Q3",
+      "familyScreen": 7,
+      "picked_key": false,
+      "lineCOF": "F",
+      "tells": [
+        "TELL/Truth/Architect/trace-assumptions",
+        "TELL/Boundary/Guardian/enforce-check"
+      ],
+      "ts": 1758070541382,
+      "latency_ms": 1112.4638015727567
+    }
+  ],
+  "expected_result": {
+    "line_verdicts": {
+      "Control": "C",
+      "Pace": "O",
+      "Boundary": "O",
+      "Truth": "F",
+      "Recognition": "F",
+      "Bonding": "F",
+      "Stress": "F"
+    },
+    "face_states": {
+      "FACE/Control/Sovereign": {
+        "state": "GHOST",
+        "q_hits": 3,
+        "fam_hits": 3,
+        "sig": 1,
+        "clean": 2,
+        "broken": 0,
+        "contrast": true
+      },
+      "FACE/Control/Rebel": {
+        "state": "COLD",
+        "q_hits": 1,
+        "fam_hits": 1,
+        "sig": 0,
+        "clean": 0,
+        "broken": 1,
+        "contrast": true
+      },
+      "FACE/Pace/Visionary": {
+        "state": "COLD",
+        "q_hits": 2,
+        "fam_hits": 2,
+        "sig": 1,
+        "clean": 1,
+        "broken": 0,
+        "contrast": true
+      },
+      "FACE/Pace/Navigator": {
+        "state": "COLD",
+        "q_hits": 2,
+        "fam_hits": 2,
+        "sig": 1,
+        "clean": 0,
+        "broken": 1,
+        "contrast": true
+      },
+      "FACE/Boundary/Equalizer": {
+        "state": "LEAN",
+        "q_hits": 4,
+        "fam_hits": 4,
+        "sig": 1,
+        "clean": 3,
+        "broken": 0,
+        "contrast": true
+      },
+      "FACE/Boundary/Guardian": {
+        "state": "COLD",
+        "q_hits": 2,
+        "fam_hits": 2,
+        "sig": 0,
+        "clean": 0,
+        "broken": 2,
+        "contrast": true
+      },
+      "FACE/Truth/Seeker": {
+        "state": "COLD",
+        "q_hits": 3,
+        "fam_hits": 2,
+        "sig": 2,
+        "clean": 3,
+        "broken": 0,
+        "contrast": true
+      },
+      "FACE/Truth/Architect": {
+        "state": "COLD",
+        "q_hits": 2,
+        "fam_hits": 2,
+        "sig": 0,
+        "clean": 0,
+        "broken": 2,
+        "contrast": true
+      },
+      "FACE/Recognition/Spotlight": {
+        "state": "LEAN",
+        "q_hits": 4,
+        "fam_hits": 3,
+        "sig": 2,
+        "clean": 4,
+        "broken": 0,
+        "contrast": true
+      },
+      "FACE/Recognition/Diplomat": {
+        "state": "COLD",
+        "q_hits": 1,
+        "fam_hits": 1,
+        "sig": 0,
+        "clean": 0,
+        "broken": 1,
+        "contrast": true
+      },
+      "FACE/Bonding/Partner": {
+        "state": "LEAN",
+        "q_hits": 5,
+        "fam_hits": 4,
+        "sig": 2,
+        "clean": 3,
+        "broken": 0,
+        "contrast": true
+      },
+      "FACE/Bonding/Provider": {
+        "state": "ABSENT",
+        "q_hits": 0,
+        "fam_hits": 0,
+        "sig": 0,
+        "clean": 0,
+        "broken": 0,
+        "contrast": false
+      },
+      "FACE/Stress/Catalyst": {
+        "state": "GHOST",
+        "q_hits": 3,
+        "fam_hits": 3,
+        "sig": 1,
+        "clean": 2,
+        "broken": 0,
+        "contrast": true
+      },
+      "FACE/Stress/Artisan": {
+        "state": "COLD",
+        "q_hits": 2,
+        "fam_hits": 2,
+        "sig": 1,
+        "clean": 1,
+        "broken": 1,
+        "contrast": true
+      }
+    },
+    "family_reps": {
+      "Control": 0.16666666666666666,
+      "Pace": 0.05555555555555555,
+      "Boundary": 0.05555555555555555,
+      "Truth": 0.1111111111111111,
+      "Recognition": 0.1111111111111111,
+      "Bonding": 0.1111111111111111,
+      "Stress": 0.1111111111111111
+    },
+    "anchor_family": "Recognition"
+  }
+}

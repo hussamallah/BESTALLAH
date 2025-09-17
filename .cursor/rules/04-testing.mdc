@@ -1,0 +1,38 @@
+---
+globs: *.test.ts,*.test.js,*.spec.ts,*.spec.js
+description: Testing requirements and patterns for PFF Quiz Engine
+---
+
+# Testing Rules
+
+## Required Test Coverage
+- Line verdict fold logic
+- Face ledger updates
+- State gates (LIT/LEAN/GHOST)
+- Per-screen cap enforcement (≤0.40)
+- Contrast requirement validation
+- Edge policies: picks=7 and picks=1
+
+## Test Data Management
+- Keep fixtures small and explicit
+- Use deterministic test data
+- Test with various bank configurations
+- Validate schema enforcement
+
+## Replay Testing
+- Implement replay harness for deterministic verification
+- Golden vectors for expected outputs
+- Fuzzers for edge case discovery
+- Test identical results for same replay files
+
+## Unit Test Structure
+- Test each API function in isolation
+- Mock external dependencies
+- Verify pure function behavior
+- Test error conditions and edge cases
+
+## Integration Testing
+- Full session flow testing
+- Cross-family interaction validation
+- Face state transition verification
+- Output format validation

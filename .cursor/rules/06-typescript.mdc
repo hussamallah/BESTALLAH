@@ -1,0 +1,50 @@
+---
+globs: *.ts,*.tsx
+description: TypeScript-specific rules for PFF Quiz Engine
+---
+
+# TypeScript Rules
+
+## Type Safety
+- Use explicit types for all public APIs
+- Define interfaces for all data contracts
+- Use branded types for IDs and enums where appropriate
+- No `any` types in production code
+
+## Contract Definitions
+```typescript
+// Example contract interfaces
+interface BankPackage {
+  hash: string;
+  families: Family[];
+  faces: Face[];
+  tells: Tell[];
+  questions: QuestionBank;
+  constants: ConstantsProfile;
+}
+
+interface SessionState {
+  sessionId: string;
+  seed: string;
+  picks: FamilyId[];
+  answers: Map<QuestionId, OptionId>;
+  lineFlags: Map<FamilyId, LineCOF>;
+  faceLedger: FaceLedger;
+}
+```
+
+## API Types
+- All engine functions must have explicit return types
+- Use discriminated unions for state variants
+- Define strict types for lineCOF: `type LineCOF = 'C' | 'O' | 'F'`
+- Face states: `type FaceState = 'LIT' | 'LEAN' | 'GHOST' | 'COLD' | 'ABSENT'`
+
+## Error Handling
+- Use Result types for operations that can fail
+- Define specific error types for validation failures
+- Never throw in pure engine functions
+
+## Configuration
+- Use const assertions for immutable data
+- Define configuration types with strict validation
+- Use template literal types for ID patterns
