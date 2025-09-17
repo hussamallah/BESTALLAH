@@ -11,12 +11,9 @@ const API_BASE = '/api/engine';
 
 class ApiClient {
   private baseUrl: string;
-  private mockMode: boolean;
 
   constructor() {
     this.baseUrl = API_BASE;
-    // Use real engine API (Vercel serverless functions)
-    this.mockMode = false;
   }
 
   private async request<T>(
@@ -63,32 +60,6 @@ class ApiClient {
 
   // Initialize a new session
   async initSession(sessionSeed: string): Promise<ApiResponse<SessionState>> {
-    if (this.mockMode) {
-      // Mock session for development
-      const sessionId = `mock-${Date.now()}`;
-      const mockSession: SessionState = {
-        session_id: sessionId,
-        state: 'INIT',
-        started_at: new Date().toISOString(),
-        line_state: {},
-        face_ledger: {}
-      };
-      
-      // Initialize answer count in session storage
-      if (typeof window !== 'undefined') {
-        sessionStorage.setItem(`mock_answers_${sessionId}`, '0');
-      }
-      
-      return new Promise(resolve => {
-        setTimeout(() => {
-          resolve({
-            success: true,
-            data: mockSession
-          });
-        }, 500); // Simulate network delay
-      });
-    }
-
     return this.request<SessionState>('/session/init', {
       method: 'POST',
       body: JSON.stringify({ session_seed: sessionSeed })
@@ -97,30 +68,6 @@ class ApiClient {
 
   // Set family picks
   async setPicks(sessionId: string, pickedFamilies: string[]): Promise<ApiResponse<SessionState>> {
-    if (this.mockMode) {
-      const mockSession: SessionState = {
-        session_id: sessionId,
-        state: 'PICKED',
-        started_at: new Date().toISOString(),
-        picked_families: pickedFamilies,
-        line_state: {},
-        face_ledger: {},
-        schedule: {
-          family_order: ['Control', 'Pace', 'Boundary', 'Truth', 'Recognition', 'Bonding', 'Stress'],
-          per_family: {}
-        }
-      };
-      
-      return new Promise(resolve => {
-        setTimeout(() => {
-          resolve({
-            success: true,
-            data: mockSession
-          });
-        }, 300);
-      });
-    }
-
     return this.request<SessionState>('/session/picks', {
       method: 'POST',
       body: JSON.stringify({ 
@@ -132,50 +79,6 @@ class ApiClient {
 
   // Get next question
   async getNextQuestion(sessionId: string): Promise<ApiResponse<Question>> {
-    if (this.mockMode) {
-      // Get current answers count to determine question index
-      const currentAnswers = parseInt(sessionStorage.getItem(`mock_answers_${sessionId}`) || '0');
-      const questionIndex = currentAnswers + 1;
-      
-      // Mock different families and question types
-      const families = ['Control', 'Pace', 'Boundary', 'Truth', 'Recognition', 'Bonding', 'Stress'];
-      const orders = ['C', 'O', 'F'];
-      
-      const familyIndex = Math.floor((questionIndex - 1) / 3) % families.length;
-      const orderIndex = (questionIndex - 1) % 3;
-      
-      const mockQuestion: Question = {
-        qid: `mock-q-${questionIndex}`,
-        familyScreen: families[familyIndex],
-        order_in_family: orders[orderIndex] as 'C' | 'O' | 'F',
-        options: [
-          {
-            key: 'A',
-            text: `Option A - Question ${questionIndex} about ${families[familyIndex]} (${orders[orderIndex]})`,
-            lineCOF: 'C',
-            tells: []
-          },
-          {
-            key: 'B',
-            text: `Option B - Alternative for question ${questionIndex} about ${families[familyIndex]} (${orders[orderIndex]})`,
-            lineCOF: 'O',
-            tells: []
-          }
-        ],
-        index: questionIndex,
-        total: 18
-      };
-      
-      return new Promise(resolve => {
-        setTimeout(() => {
-          resolve({
-            success: true,
-            data: mockQuestion
-          });
-        }, 200);
-      });
-    }
-
     return this.request<Question>(`/session/next?session_id=${sessionId}`);
   }
 
@@ -187,33 +90,6 @@ class ApiClient {
     ts?: string,
     latencyMs?: number
   ): Promise<ApiResponse<SessionState>> {
-    if (this.mockMode) {
-      // Get current answers count from session storage or default to 0
-      const currentAnswers = parseInt(sessionStorage.getItem(`mock_answers_${sessionId}`) || '0');
-      const newAnswersCount = currentAnswers + 1;
-      const remaining = Math.max(0, 18 - newAnswersCount);
-      
-      // Store updated count
-      sessionStorage.setItem(`mock_answers_${sessionId}`, newAnswersCount.toString());
-      
-      const mockSession: SessionState = {
-        session_id: sessionId,
-        state: 'IN_PROGRESS',
-        started_at: new Date().toISOString(),
-        answers_count: newAnswersCount,
-        remaining: remaining
-      };
-      
-      return new Promise(resolve => {
-        setTimeout(() => {
-          resolve({
-            success: true,
-            data: mockSession
-          });
-        }, 200);
-      });
-    }
-
     const answerEvent: Partial<AnswerEvent> = {
       qid,
       picked_key: pickedKey,
@@ -232,60 +108,6 @@ class ApiClient {
 
   // Finalize session
   async finalizeSession(sessionId: string): Promise<ApiResponse<FinalizeResponse>> {
-    if (this.mockMode) {
-      const mockResults: FinalizeResponse = {
-        session_id: sessionId,
-        state: 'FINALIZED',
-        line_verdicts: {
-          Control: 'C',
-          Pace: 'O',
-          Boundary: 'C',
-          Truth: 'F',
-          Recognition: 'C',
-          Bonding: 'O',
-          Stress: 'C'
-        },
-        face_states: {
-          'FACE/Control/Sovereign': {
-            state: 'LIT',
-            familiesHit: 5,
-            signatureHits: 2,
-            clean: 4,
-            bent: 1,
-            broken: 0,
-            contrastSeen: true
-          },
-          'FACE/Control/Rebel': {
-            state: 'LEAN',
-            familiesHit: 3,
-            signatureHits: 1,
-            clean: 2,
-            bent: 1,
-            broken: 0,
-            contrastSeen: false
-          }
-        },
-        family_reps: [
-          {
-            family: 'Control',
-            rep: 'FACE/Control/Sovereign',
-            rep_state: 'LIT',
-            co_present: false
-          }
-        ],
-        anchor_family: 'Boundary'
-      };
-      
-      return new Promise(resolve => {
-        setTimeout(() => {
-          resolve({
-            success: true,
-            data: mockResults
-          });
-        }, 1000);
-      });
-    }
-
     return this.request<FinalizeResponse>('/session/finalize', {
       method: 'POST',
       body: JSON.stringify({ session_id: sessionId })
