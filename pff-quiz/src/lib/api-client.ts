@@ -15,9 +15,9 @@ class ApiClient {
 
   constructor() {
     this.baseUrl = API_BASE;
-    // Force real API mode by setting NEXT_PUBLIC_FORCE_REAL_API=true
-    this.mockMode = process.env.NODE_ENV === 'development' && 
-                   !process.env.NEXT_PUBLIC_ENGINE_URL?.includes('api.yourquiz.com') &&
+    // Use mock mode if no real engine URL is set or if explicitly disabled
+    this.mockMode = !process.env.NEXT_PUBLIC_ENGINE_URL || 
+                   process.env.NEXT_PUBLIC_ENGINE_URL.includes('api.yourquiz.com') ||
                    process.env.NEXT_PUBLIC_FORCE_REAL_API !== 'true';
   }
 

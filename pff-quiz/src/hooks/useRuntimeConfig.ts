@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { RuntimeConfig } from '@/types/api';
 
-const RUNTIME_CONFIG_URL = process.env.NEXT_PUBLIC_RUNTIME_CONFIG_URL || 'https://cdn.yoursite.com/runtime-config.json';
+// Disable CDN fetch - use environment variables directly
+const RUNTIME_CONFIG_URL = process.env.NEXT_PUBLIC_RUNTIME_CONFIG_URL || null;
 
 export function useRuntimeConfig() {
   const [config, setConfig] = useState<RuntimeConfig | null>(null);
@@ -10,6 +11,17 @@ export function useRuntimeConfig() {
 
   useEffect(() => {
     const loadConfig = async () => {
+      // Skip CDN fetch - use environment variables directly
+      if (!RUNTIME_CONFIG_URL) {
+        setConfig({
+          resultsEnabled: process.env.NEXT_PUBLIC_RESULTS_ENABLED === 'true',
+          allowedBankHashes: [process.env.NEXT_PUBLIC_BANK_HASH || ''],
+          picksPolicy: (process.env.NEXT_PUBLIC_PICKS_POLICY as 'at_least_one' | 'all_21_on_zero') || 'at_least_one'
+        });
+        setLoading(false);
+        return;
+      }
+
       try {
         // Try to fetch runtime config
         const response = await fetch(RUNTIME_CONFIG_URL);
