@@ -1,0 +1,63 @@
+{
+  "schema": "question_bank.v1",
+  "family": "Control",
+  "questions": [
+    {
+      "qid": "CONTROL_Q1",
+      "familyScreen": 1,
+      "order_in_family": "C",
+      "options": [
+        {
+          "id": "A",
+          "text": "Call one plan, set the rule, and tell everyone to move.",
+          "lineCOF": "C",
+          "tells": ["TELL/Control/Sovereign/sets-call", "TELL/Stress/Catalyst/apply-pressure"]
+        },
+        {
+          "id": "B",
+          "text": "Let people try their own paths, mark the risks, regroup later.",
+          "lineCOF": "O",
+          "tells": ["TELL/Control/Rebel/challenges-frame", "TELL/Bonding/Partner/ask-prefer"]
+        }
+      ]
+    },
+    {
+      "qid": "CONTROL_Q2",
+      "familyScreen": 1,
+      "order_in_family": "O",
+      "options": [
+        {
+          "id": "A",
+          "text": "Cut to one core option now and bind it as the plan.",
+          "lineCOF": "C",
+          "tells": ["TELL/Control/Sovereign/locks-scope", "TELL/Recognition/Spotlight/make-visible"]
+        },
+        {
+          "id": "B",
+          "text": "Carry two options forward, label them both, and narrow later.",
+          "lineCOF": "O",
+          "tells": ["TELL/Control/Rebel/breaks-deadlock", "TELL/Bonding/Provider/cover-gap"]
+        }
+      ]
+    },
+    {
+      "qid": "CONTROL_Q3",
+      "familyScreen": 1,
+      "order_in_family": "F",
+      "options": [
+        {
+          "id": "A",
+          "text": "Publish a correction now, show what changed, keep the record clear.",
+          "lineCOF": "C",
+          "tells": ["TELL/Truth/Seeker/check-source", "TELL/Boundary/Guardian/enforce-check"]
+        },
+        {
+          "id": "B",
+          "text": "Keep it live; reshape the story later so it looks steady.",
+          "lineCOF": "F",
+          "tells": ["TELL/Stress/Artisan/refine-quietly", "TELL/Truth/Architect/structure-proof"]
+        }
+      ]
+    }
+  ]
+}

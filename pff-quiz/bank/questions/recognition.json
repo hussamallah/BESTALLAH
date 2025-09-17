@@ -1,0 +1,63 @@
+{
+  "schema": "question_bank.v1",
+  "family": "Recognition",
+  "questions": [
+    {
+      "qid": "RECOGNITION_Q1",
+      "familyScreen": 5,
+      "order_in_family": "C",
+      "options": [
+        {
+          "id": "A",
+          "text": "Edit it now, add names, repost.",
+          "lineCOF": "C",
+          "tells": ["TELL/Recognition/Spotlight/make-visible", "TELL/Truth/Seeker/check-source"]
+        },
+        {
+          "id": "B",
+          "text": "Leave it, promise a credit thread tomorrow.",
+          "lineCOF": "O",
+          "tells": ["TELL/Recognition/Diplomat/balance-sides", "TELL/Boundary/Equalizer/redraw-edge"]
+        }
+      ]
+    },
+    {
+      "qid": "RECOGNITION_Q2",
+      "familyScreen": 5,
+      "order_in_family": "O",
+      "options": [
+        {
+          "id": "A",
+          "text": "Share exact progress now, name who did what.",
+          "lineCOF": "C",
+          "tells": ["TELL/Recognition/Spotlight/broadcast-win", "TELL/Pace/Visionary/raise-ambition"]
+        },
+        {
+          "id": "B",
+          "text": "Tease the result now, plan the full reveal later.",
+          "lineCOF": "O",
+          "tells": ["TELL/Recognition/Diplomat/adjust-in-public", "TELL/Control/Sovereign/locks-scope"]
+        }
+      ]
+    },
+    {
+      "qid": "RECOGNITION_Q3",
+      "familyScreen": 5,
+      "order_in_family": "F",
+      "options": [
+        {
+          "id": "A",
+          "text": "Correct it publicly now.",
+          "lineCOF": "C",
+          "tells": ["TELL/Boundary/Guardian/gate-criteria", "TELL/Pace/Navigator/sequence-path"]
+        },
+        {
+          "id": "B",
+          "text": "Let it slide, thank the right people in private.",
+          "lineCOF": "F",
+          "tells": ["TELL/Truth/Architect/structure-proof", "TELL/Control/Rebel/challenges-frame"]
+        }
+      ]
+    }
+  ]
+}

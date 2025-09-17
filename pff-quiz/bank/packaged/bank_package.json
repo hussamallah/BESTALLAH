@@ -1,0 +1,1097 @@
+{
+  "constants": {
+    "profiles": {
+      "DEFAULT": {
+        "ALLOW_CLEAN_OVERRIDE": true,
+        "BROKEN_CAP_LIT": {
+          "BROKEN_LT_CLEAN": true
+        },
+        "CLEAN_OVERRIDE": {
+          "ALLOW_BROKEN": 2,
+          "CLEAN": 6,
+          "FAM": 5
+        },
+        "LEAN_MIN_CLEAN": 2,
+        "LEAN_MIN_FAMILIES": 3,
+        "LEAN_MIN_QUESTIONS": 4,
+        "LEAN_MIN_SIGNATURE": 1,
+        "LIT_MAX_BROKEN": 1,
+        "LIT_MIN_CLEAN": 4,
+        "LIT_MIN_FAMILIES": 4,
+        "LIT_MIN_QUESTIONS": 6,
+        "LIT_MIN_SIGNATURE": 2,
+        "PER_SCREEN_CAP": 0.4,
+        "REQUIRE_CONTRAST": true
+      },
+      "LENIENT": {
+        "ALLOW_CLEAN_OVERRIDE": true,
+        "BROKEN_CAP_LIT": {
+          "BROKEN_LT_CLEAN": true
+        },
+        "CLEAN_OVERRIDE": {
+          "ALLOW_BROKEN": 2,
+          "CLEAN": 6,
+          "FAM": 5
+        },
+        "LEAN_MIN_CLEAN": 1,
+        "LEAN_MIN_FAMILIES": 2,
+        "LEAN_MIN_QUESTIONS": 3,
+        "LEAN_MIN_SIGNATURE": 1,
+        "LIT_MAX_BROKEN": 1,
+        "LIT_MIN_CLEAN": 3,
+        "LIT_MIN_FAMILIES": 3,
+        "LIT_MIN_QUESTIONS": 5,
+        "LIT_MIN_SIGNATURE": 1,
+        "PER_SCREEN_CAP": 0.4,
+        "REQUIRE_CONTRAST": true
+      },
+      "STRICT": {
+        "ALLOW_CLEAN_OVERRIDE": false,
+        "BROKEN_CAP_LIT": {
+          "BROKEN_LT_CLEAN": true
+        },
+        "LEAN_MIN_CLEAN": 3,
+        "LEAN_MIN_FAMILIES": 4,
+        "LEAN_MIN_QUESTIONS": 5,
+        "LEAN_MIN_SIGNATURE": 2,
+        "LIT_MAX_BROKEN": 1,
+        "LIT_MIN_CLEAN": 5,
+        "LIT_MIN_FAMILIES": 5,
+        "LIT_MIN_QUESTIONS": 7,
+        "LIT_MIN_SIGNATURE": 3,
+        "PER_SCREEN_CAP": 0.4,
+        "REQUIRE_CONTRAST": true
+      }
+    },
+    "schema": "constants.v2"
+  },
+  "meta": {
+    "bank_hash_sha256": "f92db9a2e22073c25313ed47a142b5750ecd206aefda6f5ef70f19de88f853be",
+    "bank_id": "pff.v1.0",
+    "constants_profile": "DEFAULT",
+    "created_at": "2025-09-16T00:00:00Z",
+    "packed_at": "2025-09-17T02:59:09.505Z",
+    "schema": "bank.meta.v1",
+    "signature": "0069d56e7f1bc79cea160e99a20a27405b91b65d85600c846597be124b2c3bcd",
+    "signed_at": "2025-09-17T02:59:09.506Z",
+    "signed_by": "development"
+  },
+  "questions": {
+    "bonding": {
+      "family": "Bonding",
+      "questions": [
+        {
+          "familyScreen": 6,
+          "options": [
+            {
+              "id": "A",
+              "lineCOF": "C",
+              "tells": [
+                "TELL/Bonding/Partner/ask-prefer"
+              ],
+              "text": "Ask \"A or B?\" Take quick votes, decide with them."
+            },
+            {
+              "id": "B",
+              "lineCOF": "O",
+              "tells": [
+                "TELL/Bonding/Provider/cover-gap"
+              ],
+              "text": "Make the call now, explain your reason after."
+            }
+          ],
+          "order_in_family": "C",
+          "qid": "BONDING_Q1"
+        },
+        {
+          "familyScreen": 6,
+          "options": [
+            {
+              "id": "A",
+              "lineCOF": "C",
+              "tells": [
+                "TELL/Bonding/Partner/pair-through"
+              ],
+              "text": "Pair them with a helper now, unblock together."
+            },
+            {
+              "id": "B",
+              "lineCOF": "O",
+              "tells": [
+                "TELL/Bonding/Provider/shield-team"
+              ],
+              "text": "Take the task yourself, review with them later."
+            }
+          ],
+          "order_in_family": "O",
+          "qid": "BONDING_Q2"
+        },
+        {
+          "familyScreen": 6,
+          "options": [
+            {
+              "id": "A",
+              "lineCOF": "C",
+              "tells": [
+                "TELL/Recognition/Diplomat/adjust-in-public"
+              ],
+              "text": "Comment and add their name publicly."
+            },
+            {
+              "id": "B",
+              "lineCOF": "F",
+              "tells": [
+                "TELL/Boundary/Guardian/stop-scope-creep"
+              ],
+              "text": "Fix it quietly in the file, skip the public note."
+            }
+          ],
+          "order_in_family": "F",
+          "qid": "BONDING_Q3"
+        }
+      ],
+      "schema": "question_bank.v1"
+    },
+    "boundary": {
+      "family": "Boundary",
+      "questions": [
+        {
+          "familyScreen": 3,
+          "options": [
+            {
+              "id": "A",
+              "lineCOF": "C",
+              "tells": [
+                "TELL/Boundary/Guardian/enforce-check"
+              ],
+              "text": "Keep the rule, show a path that still fits."
+            },
+            {
+              "id": "B",
+              "lineCOF": "O",
+              "tells": [
+                "TELL/Boundary/Equalizer/redraw-edge"
+              ],
+              "text": "Allow a one-time pass, log it, expire tonight."
+            }
+          ],
+          "order_in_family": "C",
+          "qid": "BOUNDARY_Q1"
+        },
+        {
+          "familyScreen": 3,
+          "options": [
+            {
+              "id": "A",
+              "lineCOF": "C",
+              "tells": [
+                "TELL/Boundary/Guardian/gate-criteria"
+              ],
+              "text": "Hold the checklist, refuse extras now."
+            },
+            {
+              "id": "B",
+              "lineCOF": "O",
+              "tells": [
+                "TELL/Boundary/Equalizer/call-foul"
+              ],
+              "text": "Allow two extras, record them, end by tonight."
+            }
+          ],
+          "order_in_family": "O",
+          "qid": "BOUNDARY_Q2"
+        },
+        {
+          "familyScreen": 3,
+          "options": [
+            {
+              "id": "A",
+              "lineCOF": "C",
+              "tells": [
+                "TELL/Pace/Navigator/sequence-path"
+              ],
+              "text": "Keep current rules until the end, review after."
+            },
+            {
+              "id": "B",
+              "lineCOF": "F",
+              "tells": [
+                "TELL/Stress/Artisan/polish-edge"
+              ],
+              "text": "Change rules now, sort roles later."
+            }
+          ],
+          "order_in_family": "F",
+          "qid": "BOUNDARY_Q3"
+        }
+      ],
+      "schema": "question_bank.v1"
+    },
+    "control": {
+      "family": "Control",
+      "questions": [
+        {
+          "familyScreen": 1,
+          "options": [
+            {
+              "id": "A",
+              "lineCOF": "C",
+              "tells": [
+                "TELL/Control/Sovereign/sets-call"
+              ],
+              "text": "Call one plan, set the rule, and tell everyone to move."
+            },
+            {
+              "id": "B",
+              "lineCOF": "O",
+              "tells": [
+                "TELL/Control/Rebel/challenges-frame"
+              ],
+              "text": "Let people try their own paths, mark the risks, regroup later."
+            }
+          ],
+          "order_in_family": "C",
+          "qid": "CONTROL_Q1"
+        },
+        {
+          "familyScreen": 1,
+          "options": [
+            {
+              "id": "A",
+              "lineCOF": "C",
+              "tells": [
+                "TELL/Control/Sovereign/locks-scope"
+              ],
+              "text": "Cut to one core option now and bind it as the plan."
+            },
+            {
+              "id": "B",
+              "lineCOF": "O",
+              "tells": [
+                "TELL/Control/Rebel/breaks-deadlock"
+              ],
+              "text": "Carry two options forward, label them both, and narrow later."
+            }
+          ],
+          "order_in_family": "O",
+          "qid": "CONTROL_Q2"
+        },
+        {
+          "familyScreen": 1,
+          "options": [
+            {
+              "id": "A",
+              "lineCOF": "C",
+              "tells": [
+                "TELL/Truth/Seeker/check-source"
+              ],
+              "text": "Publish a correction now, show what changed, keep the record clear."
+            },
+            {
+              "id": "B",
+              "lineCOF": "F",
+              "tells": [
+                "TELL/Stress/Artisan/refine-quietly"
+              ],
+              "text": "Keep it live; reshape the story later so it looks steady."
+            }
+          ],
+          "order_in_family": "F",
+          "qid": "CONTROL_Q3"
+        }
+      ],
+      "schema": "question_bank.v1"
+    },
+    "pace": {
+      "family": "Pace",
+      "questions": [
+        {
+          "familyScreen": 2,
+          "options": [
+            {
+              "id": "A",
+              "lineCOF": "C",
+              "tells": [
+                "TELL/Pace/Visionary/start-now"
+              ],
+              "text": "Complete one solid step now, finish and mark it done."
+            },
+            {
+              "id": "B",
+              "lineCOF": "O",
+              "tells": [
+                "TELL/Pace/Navigator/timebox-step"
+              ],
+              "text": "Build a quick sample now, note what's missing."
+            }
+          ],
+          "order_in_family": "C",
+          "qid": "PACE_Q1"
+        },
+        {
+          "familyScreen": 2,
+          "options": [
+            {
+              "id": "A",
+              "lineCOF": "C",
+              "tells": [
+                "TELL/Pace/Navigator/one-clean-block"
+              ],
+              "text": "Finish the more important one fully, delay the other."
+            },
+            {
+              "id": "B",
+              "lineCOF": "O",
+              "tells": [
+                "TELL/Pace/Visionary/raise-ambition"
+              ],
+              "text": "Deliver lighter versions of both, with limits marked."
+            }
+          ],
+          "order_in_family": "O",
+          "qid": "PACE_Q2"
+        },
+        {
+          "familyScreen": 2,
+          "options": [
+            {
+              "id": "A",
+              "lineCOF": "C",
+              "tells": [
+                "TELL/Control/Rebel/escapes-constraint"
+              ],
+              "text": "Delay one task, keep the other clean."
+            },
+            {
+              "id": "B",
+              "lineCOF": "F",
+              "tells": [
+                "TELL/Bonding/Provider/quiet-help"
+              ],
+              "text": "Push both now, accept cracks, fix later."
+            }
+          ],
+          "order_in_family": "F",
+          "qid": "PACE_Q3"
+        }
+      ],
+      "schema": "question_bank.v1"
+    },
+    "recognition": {
+      "family": "Recognition",
+      "questions": [
+        {
+          "familyScreen": 5,
+          "options": [
+            {
+              "id": "A",
+              "lineCOF": "C",
+              "tells": [
+                "TELL/Recognition/Spotlight/make-visible"
+              ],
+              "text": "Edit it now, add names, repost."
+            },
+            {
+              "id": "B",
+              "lineCOF": "O",
+              "tells": [
+                "TELL/Recognition/Diplomat/balance-sides"
+              ],
+              "text": "Leave it, promise a credit thread tomorrow."
+            }
+          ],
+          "order_in_family": "C",
+          "qid": "RECOGNITION_Q1"
+        },
+        {
+          "familyScreen": 5,
+          "options": [
+            {
+              "id": "A",
+              "lineCOF": "C",
+              "tells": [
+                "TELL/Recognition/Spotlight/broadcast-win"
+              ],
+              "text": "Share exact progress now, name who did what."
+            },
+            {
+              "id": "B",
+              "lineCOF": "O",
+              "tells": [
+                "TELL/Recognition/Diplomat/adjust-in-public"
+              ],
+              "text": "Tease the result now, plan the full reveal later."
+            }
+          ],
+          "order_in_family": "O",
+          "qid": "RECOGNITION_Q2"
+        },
+        {
+          "familyScreen": 5,
+          "options": [
+            {
+              "id": "A",
+              "lineCOF": "C",
+              "tells": [
+                "TELL/Boundary/Guardian/gate-criteria"
+              ],
+              "text": "Correct it publicly now."
+            },
+            {
+              "id": "B",
+              "lineCOF": "F",
+              "tells": [
+                "TELL/Truth/Architect/structure-proof"
+              ],
+              "text": "Let it slide, thank the right people in private."
+            }
+          ],
+          "order_in_family": "F",
+          "qid": "RECOGNITION_Q3"
+        }
+      ],
+      "schema": "question_bank.v1"
+    },
+    "stress": {
+      "family": "Stress",
+      "questions": [
+        {
+          "familyScreen": 7,
+          "options": [
+            {
+              "id": "A",
+              "lineCOF": "C",
+              "tells": [
+                "TELL/Stress/Catalyst/apply-pressure"
+              ],
+              "text": "Pick one route, keep the checks, and move."
+            },
+            {
+              "id": "B",
+              "lineCOF": "O",
+              "tells": [
+                "TELL/Stress/Artisan/refine-quietly"
+              ],
+              "text": "Move fast, announce the risk, monitor closely."
+            }
+          ],
+          "order_in_family": "C",
+          "qid": "STRESS_Q1"
+        },
+        {
+          "familyScreen": 7,
+          "options": [
+            {
+              "id": "A",
+              "lineCOF": "C",
+              "tells": [
+                "TELL/Stress/Artisan/fix-by-hand"
+              ],
+              "text": "Split into smaller checks, protect the standard."
+            },
+            {
+              "id": "B",
+              "lineCOF": "O",
+              "tells": [
+                "TELL/Stress/Catalyst/raise-stakes"
+              ],
+              "text": "Cut scope, deliver a smaller version today."
+            }
+          ],
+          "order_in_family": "O",
+          "qid": "STRESS_Q2"
+        },
+        {
+          "familyScreen": 7,
+          "options": [
+            {
+              "id": "A",
+              "lineCOF": "C",
+              "tells": [
+                "TELL/Recognition/Diplomat/smooth-conflict"
+              ],
+              "text": "Stop launch, post status, fix fully, then resume."
+            },
+            {
+              "id": "B",
+              "lineCOF": "F",
+              "tells": [
+                "TELL/Truth/Architect/trace-assumptions"
+              ],
+              "text": "Push a quick patch live, hide the issue, fix later."
+            }
+          ],
+          "order_in_family": "F",
+          "qid": "STRESS_Q3"
+        }
+      ],
+      "schema": "question_bank.v1"
+    },
+    "truth": {
+      "family": "Truth",
+      "questions": [
+        {
+          "familyScreen": 4,
+          "options": [
+            {
+              "id": "A",
+              "lineCOF": "C",
+              "tells": [
+                "TELL/Truth/Seeker/check-source"
+              ],
+              "text": "Check the source, redo the math, write assumptions."
+            },
+            {
+              "id": "B",
+              "lineCOF": "O",
+              "tells": [
+                "TELL/Truth/Architect/define-terms"
+              ],
+              "text": "Use it now, attach a bold \"uncertain\" label."
+            }
+          ],
+          "order_in_family": "C",
+          "qid": "TRUTH_Q1"
+        },
+        {
+          "familyScreen": 4,
+          "options": [
+            {
+              "id": "A",
+              "lineCOF": "C",
+              "tells": [
+                "TELL/Truth/Seeker/request-evidence"
+              ],
+              "text": "Give a careful forecast, show limits clearly."
+            },
+            {
+              "id": "B",
+              "lineCOF": "O",
+              "tells": [
+                "TELL/Truth/Architect/structure-proof"
+              ],
+              "text": "Post a confident forecast now, adjust as facts land."
+            }
+          ],
+          "order_in_family": "O",
+          "qid": "TRUTH_Q2"
+        },
+        {
+          "familyScreen": 4,
+          "options": [
+            {
+              "id": "A",
+              "lineCOF": "C",
+              "tells": [
+                "TELL/Pace/Navigator/one-clean-block"
+              ],
+              "text": "Share them as they are, note the risks, stand by them."
+            },
+            {
+              "id": "B",
+              "lineCOF": "F",
+              "tells": [
+                "TELL/Recognition/Diplomat/adjust-in-public"
+              ],
+              "text": "Smooth the results into a cleaner story, hide rough edges."
+            }
+          ],
+          "order_in_family": "F",
+          "qid": "TRUTH_Q3"
+        }
+      ],
+      "schema": "question_bank.v1"
+    }
+  },
+  "registries": {
+    "contrast_matrix": {
+      "pairs": [
+        {
+          "a": "FACE/Control/Sovereign",
+          "a_contrast_tells": [
+            "TELL/Control/Sovereign/sets-call",
+            "TELL/Control/Sovereign/locks-scope"
+          ],
+          "b": "FACE/Control/Rebel",
+          "b_contrast_tells": [
+            "TELL/Control/Rebel/challenges-frame",
+            "TELL/Control/Rebel/breaks-deadlock"
+          ],
+          "family": "Control"
+        },
+        {
+          "a": "FACE/Pace/Navigator",
+          "a_contrast_tells": [
+            "TELL/Pace/Navigator/one-clean-block",
+            "TELL/Pace/Navigator/timebox-step"
+          ],
+          "b": "FACE/Pace/Visionary",
+          "b_contrast_tells": [
+            "TELL/Pace/Visionary/start-now",
+            "TELL/Pace/Visionary/raise-ambition"
+          ],
+          "family": "Pace"
+        },
+        {
+          "a": "FACE/Boundary/Equalizer",
+          "a_contrast_tells": [
+            "TELL/Boundary/Equalizer/redraw-edge",
+            "TELL/Boundary/Equalizer/call-foul"
+          ],
+          "b": "FACE/Boundary/Guardian",
+          "b_contrast_tells": [
+            "TELL/Boundary/Guardian/enforce-check",
+            "TELL/Boundary/Guardian/gate-criteria"
+          ],
+          "family": "Boundary"
+        },
+        {
+          "a": "FACE/Truth/Seeker",
+          "a_contrast_tells": [
+            "TELL/Truth/Seeker/check-source",
+            "TELL/Truth/Seeker/request-evidence"
+          ],
+          "b": "FACE/Truth/Architect",
+          "b_contrast_tells": [
+            "TELL/Truth/Architect/structure-proof",
+            "TELL/Truth/Architect/define-terms"
+          ],
+          "family": "Truth"
+        },
+        {
+          "a": "FACE/Recognition/Spotlight",
+          "a_contrast_tells": [
+            "TELL/Recognition/Spotlight/make-visible",
+            "TELL/Recognition/Spotlight/claim-credit"
+          ],
+          "b": "FACE/Recognition/Diplomat",
+          "b_contrast_tells": [
+            "TELL/Recognition/Diplomat/balance-sides",
+            "TELL/Recognition/Diplomat/adjust-in-public"
+          ],
+          "family": "Recognition"
+        },
+        {
+          "a": "FACE/Bonding/Partner",
+          "a_contrast_tells": [
+            "TELL/Bonding/Partner/ask-prefer",
+            "TELL/Bonding/Partner/pair-through"
+          ],
+          "b": "FACE/Bonding/Provider",
+          "b_contrast_tells": [
+            "TELL/Bonding/Provider/cover-gap",
+            "TELL/Bonding/Provider/shield-team"
+          ],
+          "family": "Bonding"
+        },
+        {
+          "a": "FACE/Stress/Catalyst",
+          "a_contrast_tells": [
+            "TELL/Stress/Catalyst/apply-pressure",
+            "TELL/Stress/Catalyst/raise-stakes"
+          ],
+          "b": "FACE/Stress/Artisan",
+          "b_contrast_tells": [
+            "TELL/Stress/Artisan/refine-quietly",
+            "TELL/Stress/Artisan/fix-by-hand"
+          ],
+          "family": "Stress"
+        }
+      ],
+      "schema": "contrast_matrix.v1"
+    },
+    "faces": {
+      "faces": [
+        {
+          "family": "Control",
+          "id": "FACE/Control/Sovereign"
+        },
+        {
+          "family": "Control",
+          "id": "FACE/Control/Rebel"
+        },
+        {
+          "family": "Pace",
+          "id": "FACE/Pace/Visionary"
+        },
+        {
+          "family": "Pace",
+          "id": "FACE/Pace/Navigator"
+        },
+        {
+          "family": "Boundary",
+          "id": "FACE/Boundary/Equalizer"
+        },
+        {
+          "family": "Boundary",
+          "id": "FACE/Boundary/Guardian"
+        },
+        {
+          "family": "Truth",
+          "id": "FACE/Truth/Seeker"
+        },
+        {
+          "family": "Truth",
+          "id": "FACE/Truth/Architect"
+        },
+        {
+          "family": "Recognition",
+          "id": "FACE/Recognition/Spotlight"
+        },
+        {
+          "family": "Recognition",
+          "id": "FACE/Recognition/Diplomat"
+        },
+        {
+          "family": "Bonding",
+          "id": "FACE/Bonding/Partner"
+        },
+        {
+          "family": "Bonding",
+          "id": "FACE/Bonding/Provider"
+        },
+        {
+          "family": "Stress",
+          "id": "FACE/Stress/Catalyst"
+        },
+        {
+          "family": "Stress",
+          "id": "FACE/Stress/Artisan"
+        }
+      ],
+      "schema": "face_registry.v1"
+    },
+    "families": {
+      "families": [
+        {
+          "id": "FAM/Control",
+          "name": "Control"
+        },
+        {
+          "id": "FAM/Pace",
+          "name": "Pace"
+        },
+        {
+          "id": "FAM/Boundary",
+          "name": "Boundary"
+        },
+        {
+          "id": "FAM/Truth",
+          "name": "Truth"
+        },
+        {
+          "id": "FAM/Recognition",
+          "name": "Recognition"
+        },
+        {
+          "id": "FAM/Bonding",
+          "name": "Bonding"
+        },
+        {
+          "id": "FAM/Stress",
+          "name": "Stress"
+        }
+      ],
+      "schema": "family_registry.v1"
+    },
+    "tells": {
+      "schema": "tell_registry.v2",
+      "tells": [
+        {
+          "contrast": true,
+          "explicit": true,
+          "face_id": "FACE/Control/Sovereign",
+          "id": "TELL/Control/Sovereign/sets-call",
+          "priority": 1
+        },
+        {
+          "contrast": true,
+          "explicit": true,
+          "face_id": "FACE/Control/Sovereign",
+          "id": "TELL/Control/Sovereign/locks-scope",
+          "priority": 2
+        },
+        {
+          "contrast": true,
+          "explicit": false,
+          "face_id": "FACE/Control/Sovereign",
+          "id": "TELL/Control/Sovereign/decides-now",
+          "priority": 3
+        },
+        {
+          "contrast": true,
+          "explicit": true,
+          "face_id": "FACE/Control/Rebel",
+          "id": "TELL/Control/Rebel/challenges-frame",
+          "priority": 1
+        },
+        {
+          "contrast": true,
+          "explicit": true,
+          "face_id": "FACE/Control/Rebel",
+          "id": "TELL/Control/Rebel/breaks-deadlock",
+          "priority": 2
+        },
+        {
+          "contrast": true,
+          "explicit": false,
+          "face_id": "FACE/Control/Rebel",
+          "id": "TELL/Control/Rebel/escapes-constraint",
+          "priority": 3
+        },
+        {
+          "contrast": true,
+          "explicit": true,
+          "face_id": "FACE/Pace/Navigator",
+          "id": "TELL/Pace/Navigator/one-clean-block",
+          "priority": 1
+        },
+        {
+          "contrast": true,
+          "explicit": true,
+          "face_id": "FACE/Pace/Navigator",
+          "id": "TELL/Pace/Navigator/timebox-step",
+          "priority": 2
+        },
+        {
+          "contrast": true,
+          "explicit": false,
+          "face_id": "FACE/Pace/Navigator",
+          "id": "TELL/Pace/Navigator/sequence-path",
+          "priority": 3
+        },
+        {
+          "contrast": true,
+          "explicit": true,
+          "face_id": "FACE/Pace/Visionary",
+          "id": "TELL/Pace/Visionary/start-now",
+          "priority": 1
+        },
+        {
+          "contrast": true,
+          "explicit": true,
+          "face_id": "FACE/Pace/Visionary",
+          "id": "TELL/Pace/Visionary/raise-ambition",
+          "priority": 2
+        },
+        {
+          "contrast": true,
+          "explicit": false,
+          "face_id": "FACE/Pace/Visionary",
+          "id": "TELL/Pace/Visionary/jump-first",
+          "priority": 3
+        },
+        {
+          "contrast": true,
+          "explicit": true,
+          "face_id": "FACE/Boundary/Guardian",
+          "id": "TELL/Boundary/Guardian/enforce-check",
+          "priority": 1
+        },
+        {
+          "contrast": true,
+          "explicit": true,
+          "face_id": "FACE/Boundary/Guardian",
+          "id": "TELL/Boundary/Guardian/gate-criteria",
+          "priority": 2
+        },
+        {
+          "contrast": true,
+          "explicit": false,
+          "face_id": "FACE/Boundary/Guardian",
+          "id": "TELL/Boundary/Guardian/stop-scope-creep",
+          "priority": 3
+        },
+        {
+          "contrast": true,
+          "explicit": true,
+          "face_id": "FACE/Boundary/Equalizer",
+          "id": "TELL/Boundary/Equalizer/redraw-edge",
+          "priority": 1
+        },
+        {
+          "contrast": true,
+          "explicit": true,
+          "face_id": "FACE/Boundary/Equalizer",
+          "id": "TELL/Boundary/Equalizer/call-foul",
+          "priority": 2
+        },
+        {
+          "contrast": true,
+          "explicit": false,
+          "face_id": "FACE/Boundary/Equalizer",
+          "id": "TELL/Boundary/Equalizer/level-field",
+          "priority": 3
+        },
+        {
+          "contrast": true,
+          "explicit": true,
+          "face_id": "FACE/Truth/Seeker",
+          "id": "TELL/Truth/Seeker/check-source",
+          "priority": 1
+        },
+        {
+          "contrast": true,
+          "explicit": true,
+          "face_id": "FACE/Truth/Seeker",
+          "id": "TELL/Truth/Seeker/request-evidence",
+          "priority": 2
+        },
+        {
+          "contrast": true,
+          "explicit": false,
+          "face_id": "FACE/Truth/Seeker",
+          "id": "TELL/Truth/Seeker/correct-live",
+          "priority": 3
+        },
+        {
+          "contrast": true,
+          "explicit": true,
+          "face_id": "FACE/Truth/Architect",
+          "id": "TELL/Truth/Architect/structure-proof",
+          "priority": 1
+        },
+        {
+          "contrast": true,
+          "explicit": true,
+          "face_id": "FACE/Truth/Architect",
+          "id": "TELL/Truth/Architect/define-terms",
+          "priority": 2
+        },
+        {
+          "contrast": true,
+          "explicit": false,
+          "face_id": "FACE/Truth/Architect",
+          "id": "TELL/Truth/Architect/trace-assumptions",
+          "priority": 3
+        },
+        {
+          "contrast": true,
+          "explicit": true,
+          "face_id": "FACE/Recognition/Spotlight",
+          "id": "TELL/Recognition/Spotlight/make-visible",
+          "priority": 1
+        },
+        {
+          "contrast": true,
+          "explicit": true,
+          "face_id": "FACE/Recognition/Spotlight",
+          "id": "TELL/Recognition/Spotlight/claim-credit",
+          "priority": 2
+        },
+        {
+          "contrast": true,
+          "explicit": false,
+          "face_id": "FACE/Recognition/Spotlight",
+          "id": "TELL/Recognition/Spotlight/broadcast-win",
+          "priority": 3
+        },
+        {
+          "contrast": true,
+          "explicit": true,
+          "face_id": "FACE/Recognition/Diplomat",
+          "id": "TELL/Recognition/Diplomat/balance-sides",
+          "priority": 1
+        },
+        {
+          "contrast": true,
+          "explicit": true,
+          "face_id": "FACE/Recognition/Diplomat",
+          "id": "TELL/Recognition/Diplomat/adjust-in-public",
+          "priority": 2
+        },
+        {
+          "contrast": true,
+          "explicit": false,
+          "face_id": "FACE/Recognition/Diplomat",
+          "id": "TELL/Recognition/Diplomat/smooth-conflict",
+          "priority": 3
+        },
+        {
+          "contrast": true,
+          "explicit": true,
+          "face_id": "FACE/Bonding/Partner",
+          "id": "TELL/Bonding/Partner/ask-prefer",
+          "priority": 1
+        },
+        {
+          "contrast": true,
+          "explicit": true,
+          "face_id": "FACE/Bonding/Partner",
+          "id": "TELL/Bonding/Partner/pair-through",
+          "priority": 2
+        },
+        {
+          "contrast": true,
+          "explicit": false,
+          "face_id": "FACE/Bonding/Partner",
+          "id": "TELL/Bonding/Partner/share-context",
+          "priority": 3
+        },
+        {
+          "contrast": true,
+          "explicit": true,
+          "face_id": "FACE/Bonding/Provider",
+          "id": "TELL/Bonding/Provider/cover-gap",
+          "priority": 1
+        },
+        {
+          "contrast": true,
+          "explicit": true,
+          "face_id": "FACE/Bonding/Provider",
+          "id": "TELL/Bonding/Provider/shield-team",
+          "priority": 2
+        },
+        {
+          "contrast": true,
+          "explicit": false,
+          "face_id": "FACE/Bonding/Provider",
+          "id": "TELL/Bonding/Provider/quiet-help",
+          "priority": 3
+        },
+        {
+          "contrast": true,
+          "explicit": true,
+          "face_id": "FACE/Stress/Catalyst",
+          "id": "TELL/Stress/Catalyst/apply-pressure",
+          "priority": 1
+        },
+        {
+          "contrast": true,
+          "explicit": true,
+          "face_id": "FACE/Stress/Catalyst",
+          "id": "TELL/Stress/Catalyst/raise-stakes",
+          "priority": 2
+        },
+        {
+          "contrast": true,
+          "explicit": false,
+          "face_id": "FACE/Stress/Catalyst",
+          "id": "TELL/Stress/Catalyst/force-move",
+          "priority": 3
+        },
+        {
+          "contrast": true,
+          "explicit": true,
+          "face_id": "FACE/Stress/Artisan",
+          "id": "TELL/Stress/Artisan/refine-quietly",
+          "priority": 1
+        },
+        {
+          "contrast": true,
+          "explicit": true,
+          "face_id": "FACE/Stress/Artisan",
+          "id": "TELL/Stress/Artisan/fix-by-hand",
+          "priority": 2
+        },
+        {
+          "contrast": true,
+          "explicit": false,
+          "face_id": "FACE/Stress/Artisan",
+          "id": "TELL/Stress/Artisan/polish-edge",
+          "priority": 3
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "schema": "family_registry.v1",
+  "families": [
+    { "id": "FAM/Control",     "name": "Control" },
+    { "id": "FAM/Pace",        "name": "Pace" },
+    { "id": "FAM/Boundary",    "name": "Boundary" },
+    { "id": "FAM/Truth",       "name": "Truth" },
+    { "id": "FAM/Recognition", "name": "Recognition" },
+    { "id": "FAM/Bonding",     "name": "Bonding" },
+    { "id": "FAM/Stress",      "name": "Stress" }
+  ]
+}

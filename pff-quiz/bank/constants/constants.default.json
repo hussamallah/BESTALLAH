@@ -1,0 +1,52 @@
+{
+  "schema": "constants.v2",
+  "profiles": {
+    "DEFAULT": {
+      "PER_SCREEN_CAP": 0.40,
+      "LIT_MIN_QUESTIONS": 6,
+      "LIT_MIN_FAMILIES": 4,
+      "LIT_MIN_SIGNATURE": 2,
+      "LIT_MIN_CLEAN": 4,
+      "LIT_MAX_BROKEN": 1,
+      "LEAN_MIN_QUESTIONS": 4,
+      "LEAN_MIN_FAMILIES": 3,
+      "LEAN_MIN_SIGNATURE": 1,
+      "LEAN_MIN_CLEAN": 2,
+      "REQUIRE_CONTRAST": true,
+      "ALLOW_CLEAN_OVERRIDE": true,
+      "CLEAN_OVERRIDE": { "CLEAN": 6, "FAM": 5, "ALLOW_BROKEN": 2 },
+      "BROKEN_CAP_LIT": { "BROKEN_LT_CLEAN": true }
+    },
+    "STRICT": {
+      "PER_SCREEN_CAP": 0.40,
+      "LIT_MIN_QUESTIONS": 7,
+      "LIT_MIN_FAMILIES": 5,
+      "LIT_MIN_SIGNATURE": 3,
+      "LIT_MIN_CLEAN": 5,
+      "LIT_MAX_BROKEN": 1,
+      "LEAN_MIN_QUESTIONS": 5,
+      "LEAN_MIN_FAMILIES": 4,
+      "LEAN_MIN_SIGNATURE": 2,
+      "LEAN_MIN_CLEAN": 3,
+      "REQUIRE_CONTRAST": true,
+      "ALLOW_CLEAN_OVERRIDE": false,
+      "BROKEN_CAP_LIT": { "BROKEN_LT_CLEAN": true }
+    },
+    "LENIENT": {
+      "PER_SCREEN_CAP": 0.40,
+      "LIT_MIN_QUESTIONS": 5,
+      "LIT_MIN_FAMILIES": 3,
+      "LIT_MIN_SIGNATURE": 1,
+      "LIT_MIN_CLEAN": 3,
+      "LIT_MAX_BROKEN": 1,
+      "LEAN_MIN_QUESTIONS": 3,
+      "LEAN_MIN_FAMILIES": 2,
+      "LEAN_MIN_SIGNATURE": 1,
+      "LEAN_MIN_CLEAN": 1,
+      "REQUIRE_CONTRAST": true,
+      "ALLOW_CLEAN_OVERRIDE": true,
+      "CLEAN_OVERRIDE": { "CLEAN": 6, "FAM": 5, "ALLOW_BROKEN": 2 },
+      "BROKEN_CAP_LIT": { "BROKEN_LT_CLEAN": true }
+    }
+  }
+}

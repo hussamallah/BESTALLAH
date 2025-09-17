@@ -1,0 +1,19 @@
+{
+  "schema": "face_registry.v1",
+  "faces": [
+    { "id": "FACE/Control/Sovereign",     "family": "Control" },
+    { "id": "FACE/Control/Rebel",         "family": "Control" },
+    { "id": "FACE/Pace/Visionary",        "family": "Pace" },
+    { "id": "FACE/Pace/Navigator",        "family": "Pace" },
+    { "id": "FACE/Boundary/Equalizer",    "family": "Boundary" },
+    { "id": "FACE/Boundary/Guardian",     "family": "Boundary" },
+    { "id": "FACE/Truth/Seeker",          "family": "Truth" },
+    { "id": "FACE/Truth/Architect",       "family": "Truth" },
+    { "id": "FACE/Recognition/Spotlight", "family": "Recognition" },
+    { "id": "FACE/Recognition/Diplomat",  "family": "Recognition" },
+    { "id": "FACE/Bonding/Partner",       "family": "Bonding" },
+    { "id": "FACE/Bonding/Provider",      "family": "Bonding" },
+    { "id": "FACE/Stress/Catalyst",       "family": "Stress" },
+    { "id": "FACE/Stress/Artisan",        "family": "Stress" }
+  ]
+}

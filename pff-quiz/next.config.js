@@ -1,14 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Rewrite rule disabled - using mock mode
-  // async rewrites() {
-  //   return [
-  //     { 
-  //       source: "/api/engine/:path*", 
-  //       destination: `${process.env.NEXT_PUBLIC_ENGINE_URL || 'https://api.yourquiz.com'}/:path*` 
-  //     }
-  //   ];
-  // },
+  // Using real engine API routes in pages/api/engine/
+  // No rewrite needed
   // Suppress hydration warnings in development
   onDemandEntries: {
     // period (in ms) where the server will keep pages in the buffer

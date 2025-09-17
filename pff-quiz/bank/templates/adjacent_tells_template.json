@@ -1,0 +1,51 @@
+{
+  "schema": "adjacent_tells_template.v1",
+  "description": "Template for authoring adjacent tells across families",
+  "face_id": "FACE/FAMILY/FACE_NAME",
+  "tells": [
+    {
+      "id": "TELL/FAMILY/FACE_NAME/action-verb",
+      "face_id": "FACE/FAMILY/FACE_NAME",
+      "contrast": false,
+      "explicit": true,
+      "priority": 1,
+      "description": "Clear, explicit behavioral tell",
+      "usage_notes": "Use in signature family questions (C/O probes)"
+    },
+    {
+      "id": "TELL/FAMILY/FACE_NAME/action-verb-2",
+      "face_id": "FACE/FAMILY/FACE_NAME",
+      "contrast": false,
+      "explicit": true,
+      "priority": 2,
+      "description": "Secondary explicit behavioral tell",
+      "usage_notes": "Use in signature family questions (C/O probes)"
+    },
+    {
+      "id": "TELL/FAMILY/FACE_NAME/action-verb-3",
+      "face_id": "FACE/FAMILY/FACE_NAME",
+      "contrast": false,
+      "explicit": false,
+      "priority": 3,
+      "description": "Subtle, implicit behavioral tell",
+      "usage_notes": "Use in adjacent family questions (C/O/F probes)"
+    },
+    {
+      "id": "TELL/FAMILY/FACE_NAME/action-verb-4",
+      "face_id": "FACE/FAMILY/FACE_NAME",
+      "contrast": false,
+      "explicit": false,
+      "priority": 4,
+      "description": "Additional subtle behavioral tell",
+      "usage_notes": "Use in adjacent family questions (C/O/F probes)"
+    }
+  ],
+  "authoring_guidelines": {
+    "tell_naming": "Use verb-first format: 'action-verb' or 'action-verb-noun'",
+    "explicit_tells": "Should be clear, observable behaviors",
+    "implicit_tells": "Should be subtle, pattern-based behaviors",
+    "priority_1": "Most important tells for signature family",
+    "priority_2": "Secondary tells for signature family",
+    "priority_3_4": "Tells for use in adjacent families"
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "schema": "question_bank.v1",
+  "family": "Pace",
+  "questions": [
+    {
+      "qid": "PACE_Q1",
+      "familyScreen": 2,
+      "order_in_family": "C",
+      "options": [
+        {
+          "id": "A",
+          "text": "Complete one solid step now, finish and mark it done.",
+          "lineCOF": "C",
+          "tells": ["TELL/Pace/Visionary/start-now", "TELL/Control/Sovereign/decides-now"]
+        },
+        {
+          "id": "B",
+          "text": "Build a quick sample now, note what's missing.",
+          "lineCOF": "O",
+          "tells": ["TELL/Pace/Navigator/timebox-step", "TELL/Stress/Catalyst/force-move"]
+        }
+      ]
+    },
+    {
+      "qid": "PACE_Q2",
+      "familyScreen": 2,
+      "order_in_family": "O",
+      "options": [
+        {
+          "id": "A",
+          "text": "Finish the more important one fully, delay the other.",
+          "lineCOF": "C",
+          "tells": ["TELL/Pace/Navigator/one-clean-block", "TELL/Recognition/Spotlight/claim-credit"]
+        },
+        {
+          "id": "B",
+          "text": "Deliver lighter versions of both, with limits marked.",
+          "lineCOF": "O",
+          "tells": ["TELL/Pace/Visionary/raise-ambition", "TELL/Bonding/Partner/pair-through"]
+        }
+      ]
+    },
+    {
+      "qid": "PACE_Q3",
+      "familyScreen": 2,
+      "order_in_family": "F",
+      "options": [
+        {
+          "id": "A",
+          "text": "Delay one task, keep the other clean.",
+          "lineCOF": "C",
+          "tells": ["TELL/Control/Rebel/escapes-constraint", "TELL/Recognition/Diplomat/adjust-in-public"]
+        },
+        {
+          "id": "B",
+          "text": "Push both now, accept cracks, fix later.",
+          "lineCOF": "F",
+          "tells": ["TELL/Bonding/Provider/quiet-help", "TELL/Stress/Artisan/fix-by-hand"]
+        }
+      ]
+    }
+  ]
+}

@@ -15,10 +15,8 @@ class ApiClient {
 
   constructor() {
     this.baseUrl = API_BASE;
-    // Use mock mode if no real engine URL is set or if explicitly disabled
-    this.mockMode = !process.env.NEXT_PUBLIC_ENGINE_URL || 
-                   process.env.NEXT_PUBLIC_ENGINE_URL.includes('api.yourquiz.com') ||
-                   process.env.NEXT_PUBLIC_FORCE_REAL_API !== 'true';
+    // Use real engine API (Vercel serverless functions)
+    this.mockMode = false;
   }
 
   private async request<T>(

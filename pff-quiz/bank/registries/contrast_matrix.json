@@ -1,0 +1,96 @@
+{
+  "schema": "contrast_matrix.v1",
+  "pairs": [
+    {
+      "family": "Control",
+      "a": "FACE/Control/Sovereign",
+      "b": "FACE/Control/Rebel",
+      "a_contrast_tells": [
+        "TELL/Control/Sovereign/sets-call",
+        "TELL/Control/Sovereign/locks-scope"
+      ],
+      "b_contrast_tells": [
+        "TELL/Control/Rebel/challenges-frame",
+        "TELL/Control/Rebel/breaks-deadlock"
+      ]
+    },
+    {
+      "family": "Pace",
+      "a": "FACE/Pace/Navigator",
+      "b": "FACE/Pace/Visionary",
+      "a_contrast_tells": [
+        "TELL/Pace/Navigator/one-clean-block",
+        "TELL/Pace/Navigator/timebox-step"
+      ],
+      "b_contrast_tells": [
+        "TELL/Pace/Visionary/start-now",
+        "TELL/Pace/Visionary/raise-ambition"
+      ]
+    },
+    {
+      "family": "Boundary",
+      "a": "FACE/Boundary/Equalizer",
+      "b": "FACE/Boundary/Guardian",
+      "a_contrast_tells": [
+        "TELL/Boundary/Equalizer/redraw-edge",
+        "TELL/Boundary/Equalizer/call-foul"
+      ],
+      "b_contrast_tells": [
+        "TELL/Boundary/Guardian/enforce-check",
+        "TELL/Boundary/Guardian/gate-criteria"
+      ]
+    },
+    {
+      "family": "Truth",
+      "a": "FACE/Truth/Seeker",
+      "b": "FACE/Truth/Architect",
+      "a_contrast_tells": [
+        "TELL/Truth/Seeker/check-source",
+        "TELL/Truth/Seeker/request-evidence"
+      ],
+      "b_contrast_tells": [
+        "TELL/Truth/Architect/structure-proof",
+        "TELL/Truth/Architect/define-terms"
+      ]
+    },
+    {
+      "family": "Recognition",
+      "a": "FACE/Recognition/Spotlight",
+      "b": "FACE/Recognition/Diplomat",
+      "a_contrast_tells": [
+        "TELL/Recognition/Spotlight/make-visible",
+        "TELL/Recognition/Spotlight/claim-credit"
+      ],
+      "b_contrast_tells": [
+        "TELL/Recognition/Diplomat/balance-sides",
+        "TELL/Recognition/Diplomat/adjust-in-public"
+      ]
+    },
+    {
+      "family": "Bonding",
+      "a": "FACE/Bonding/Partner",
+      "b": "FACE/Bonding/Provider",
+      "a_contrast_tells": [
+        "TELL/Bonding/Partner/ask-prefer",
+        "TELL/Bonding/Partner/pair-through"
+      ],
+      "b_contrast_tells": [
+        "TELL/Bonding/Provider/cover-gap",
+        "TELL/Bonding/Provider/shield-team"
+      ]
+    },
+    {
+      "family": "Stress",
+      "a": "FACE/Stress/Catalyst",
+      "b": "FACE/Stress/Artisan",
+      "a_contrast_tells": [
+        "TELL/Stress/Catalyst/apply-pressure",
+        "TELL/Stress/Catalyst/raise-stakes"
+      ],
+      "b_contrast_tells": [
+        "TELL/Stress/Artisan/refine-quietly",
+        "TELL/Stress/Artisan/fix-by-hand"
+      ]
+    }
+  ]
+}

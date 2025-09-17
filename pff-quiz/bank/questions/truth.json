@@ -1,0 +1,63 @@
+{
+  "schema": "question_bank.v1",
+  "family": "Truth",
+  "questions": [
+    {
+      "qid": "TRUTH_Q1",
+      "familyScreen": 4,
+      "order_in_family": "C",
+      "options": [
+        {
+          "id": "A",
+          "text": "Check the source, redo the math, write assumptions.",
+          "lineCOF": "C",
+          "tells": ["TELL/Truth/Seeker/check-source", "TELL/Boundary/Equalizer/level-field"]
+        },
+        {
+          "id": "B",
+          "text": "Use it now, attach a bold \"uncertain\" label.",
+          "lineCOF": "O",
+          "tells": ["TELL/Truth/Architect/define-terms", "TELL/Pace/Visionary/start-now"]
+        }
+      ]
+    },
+    {
+      "qid": "TRUTH_Q2",
+      "familyScreen": 4,
+      "order_in_family": "O",
+      "options": [
+        {
+          "id": "A",
+          "text": "Give a careful forecast, show limits clearly.",
+          "lineCOF": "C",
+          "tells": ["TELL/Truth/Seeker/request-evidence", "TELL/Control/Sovereign/decides-now"]
+        },
+        {
+          "id": "B",
+          "text": "Post a confident forecast now, adjust as facts land.",
+          "lineCOF": "O",
+          "tells": ["TELL/Truth/Architect/structure-proof", "TELL/Stress/Catalyst/apply-pressure"]
+        }
+      ]
+    },
+    {
+      "qid": "TRUTH_Q3",
+      "familyScreen": 4,
+      "order_in_family": "F",
+      "options": [
+        {
+          "id": "A",
+          "text": "Share them as they are, note the risks, stand by them.",
+          "lineCOF": "C",
+          "tells": ["TELL/Pace/Navigator/one-clean-block", "TELL/Control/Rebel/escapes-constraint"]
+        },
+        {
+          "id": "B",
+          "text": "Smooth the results into a cleaner story, hide rough edges.",
+          "lineCOF": "F",
+          "tells": ["TELL/Recognition/Diplomat/adjust-in-public", "TELL/Stress/Artisan/refine-quietly"]
+        }
+      ]
+    }
+  ]
+}
