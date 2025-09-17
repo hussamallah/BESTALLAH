@@ -3,10 +3,10 @@
  * Loads bank_package.json and builds fast indices for engine
  */
 
-const fs = require('fs');
-const path = require('path');
-const crypto = require('crypto');
-const bankStorage = require('./bankStorage');
+import fs from 'fs';
+import path from 'path';
+import crypto from 'crypto';
+import bankStorage from './bankStorage.js';
 
 class BankLoader {
   constructor() {
@@ -462,4 +462,4 @@ class BankLoader {
   }
 }
 
-module.exports = BankLoader;
+export default BankLoader;

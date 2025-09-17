@@ -5,11 +5,11 @@
  * Single source of truth: bank_package.json
  */
 
-const crypto = require('crypto');
-const BankLoader = require('./bankLoader');
-const engineVersion = require('./version');
-const monitoring = require('./monitoring');
-const featureFlags = require('./featureFlags');
+import crypto from 'crypto';
+import BankLoader from './bankLoader.js';
+import engineVersion from './version.js';
+import monitoring from './monitoring.js';
+import featureFlags from './featureFlags.js';
 
 class PFFEngine {
   constructor() {
@@ -1294,34 +1294,31 @@ class PFFEngine {
 const engine = new PFFEngine();
 
 // Export the 7 core functions plus version info - Batch 2 API
-module.exports = {
-  // Core API functions (Batch 2)
-  initSession: (sessionSeed, bankPath) => engine.initSession(sessionSeed, bankPath),
-  setPicks: (sessionId, pickedFamilies) => engine.setPicks(sessionId, pickedFamilies),
-  getNextQuestion: (sessionId) => engine.getNextQuestion(sessionId),
-  submitAnswer: (sessionId, qid, optionKey, ts, latencyMs) => engine.submitAnswer(sessionId, qid, optionKey, ts, latencyMs),
-  finalizeSession: (sessionId) => engine.finalizeSession(sessionId),
-  resumeSession: (sessionId) => engine.resumeSession(sessionId),
-  abortSession: (sessionId, reason) => engine.abortSession(sessionId, reason),
-  
-  // Version and status info
-  getVersionInfo: () => engineVersion.getVersionInfo(),
-  getReleaseNotes: () => engineVersion.getReleaseNotes(),
-  getStatus: () => engineVersion.getStatus(),
-  getFingerprint: () => engineVersion.generateFingerprint(),
-  
-  // Monitoring and observability
-  getDashboardData: () => monitoring.getDashboardData(),
-  getAlerts: () => monitoring.getAlerts(),
-  clearAlerts: () => monitoring.clearAlerts(),
-  resetMetrics: () => monitoring.resetMetrics(),
-  
-  // Feature flags and kill switches
-  getFeatureFlags: () => featureFlags.getAllFlags(),
-  getKillSwitches: () => featureFlags.getAllKillSwitches(),
-  getConfiguration: () => featureFlags.getAllConfiguration(),
-  validateConfiguration: () => featureFlags.validateConfiguration(),
-  overrideFlag: (name, value) => featureFlags.overrideFlag(name, value),
-  overrideKillSwitch: (name, value) => featureFlags.overrideKillSwitch(name, value),
-  resetOverrides: () => featureFlags.resetOverrides()
-};
+export const initSession = (sessionSeed, bankPath) => engine.initSession(sessionSeed, bankPath);
+export const setPicks = (sessionId, pickedFamilies) => engine.setPicks(sessionId, pickedFamilies);
+export const getNextQuestion = (sessionId) => engine.getNextQuestion(sessionId);
+export const submitAnswer = (sessionId, qid, optionKey, ts, latencyMs) => engine.submitAnswer(sessionId, qid, optionKey, ts, latencyMs);
+export const finalizeSession = (sessionId) => engine.finalizeSession(sessionId);
+export const resumeSession = (sessionId) => engine.resumeSession(sessionId);
+export const abortSession = (sessionId, reason) => engine.abortSession(sessionId, reason);
+
+// Version and status info
+export const getVersionInfo = () => engineVersion.getVersionInfo();
+export const getReleaseNotes = () => engineVersion.getReleaseNotes();
+export const getStatus = () => engineVersion.getStatus();
+export const getFingerprint = () => engineVersion.generateFingerprint();
+
+// Monitoring and observability
+export const getDashboardData = () => monitoring.getDashboardData();
+export const getAlerts = () => monitoring.getAlerts();
+export const clearAlerts = () => monitoring.clearAlerts();
+export const resetMetrics = () => monitoring.resetMetrics();
+
+// Feature flags and kill switches
+export const getFeatureFlags = () => featureFlags.getAllFlags();
+export const getKillSwitches = () => featureFlags.getAllKillSwitches();
+export const getConfiguration = () => featureFlags.getAllConfiguration();
+export const validateConfiguration = () => featureFlags.validateConfiguration();
+export const overrideFlag = (name, value) => featureFlags.overrideFlag(name, value);
+export const overrideKillSwitch = (name, value) => featureFlags.overrideKillSwitch(name, value);
+export const resetOverrides = () => featureFlags.resetOverrides();

@@ -301,4 +301,4 @@ class FeatureFlags {
 // Create singleton instance
 const featureFlags = new FeatureFlags();
 
-module.exports = featureFlags;
+export default featureFlags;

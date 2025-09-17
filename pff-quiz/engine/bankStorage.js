@@ -3,9 +3,9 @@
  * Ensures bank immutability and provides read-only access
  */
 
-const fs = require('fs');
-const path = require('path');
-const crypto = require('crypto');
+import fs from 'fs';
+import path from 'path';
+import crypto from 'crypto';
 
 class BankStorage {
   constructor() {
@@ -225,4 +225,4 @@ if (process.env.ALLOWED_BANK_HASHES) {
   }
 }
 
-module.exports = bankStorage;
+export default bankStorage;

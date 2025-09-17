@@ -3,7 +3,7 @@
  * Tracks engine version, constants profile, and compatibility
  */
 
-const crypto = require('crypto');
+import crypto from 'crypto';
 
 class EngineVersion {
   constructor() {
@@ -146,4 +146,4 @@ class EngineVersion {
 // Create singleton instance
 const engineVersion = new EngineVersion();
 
-module.exports = engineVersion;
+export default engineVersion;

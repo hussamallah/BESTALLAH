@@ -3,7 +3,7 @@
  * Tracks sessions, performance, and distribution metrics
  */
 
-const EventEmitter = require('events');
+import { EventEmitter } from 'events';
 
 class EngineMonitoring extends EventEmitter {
   constructor() {
@@ -380,4 +380,4 @@ class EngineMonitoring extends EventEmitter {
 // Create singleton instance
 const monitoring = new EngineMonitoring();
 
-module.exports = monitoring;
+export default monitoring;
